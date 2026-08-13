@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Astro Divine - Astrologer Purushottam</title>
     <style>
-        /* यह CSS आपकी वेबसाइट को मोबाइल के लिए एकदम सही और सुंदर बनाती है */
         body { 
             background-color: #0a0f1e; 
             color: #fff; 
@@ -22,7 +21,7 @@
             max-width: 500px; 
             width: 100%;
         }
-        /* यह हिस्सा आपकी फोटो को एक प्रीमियम फ्रेम और शैडो देता है */
+        /* आपकी फोटो के लिए एक प्रीमियम फ्रेम */
         .photo-box {
             width: 100%;
             margin-bottom: 25px;
@@ -30,39 +29,38 @@
         .photo-box img {
             width: 100%;
             height: auto;
-            border-radius: 20px; /* फोटो के कोनों को हल्का गोल करता है */
-            box-shadow: 0 15px 40px rgba(0,0,0,0.7); /* फोटो के पीछे एक गहरी छाया (शैडो) डालता है */
-            border: 3px solid #d4af37; /* फोटो के चारों तरफ एक सुनहरा (गोल्डन) बॉर्डर */
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+            border: 3px solid #d4af37; /* सुनहरा बॉर्डर */
         }
-        /* यह नीचे वाले तीनों सोशल मीडिया बटनों के लिए डिज़ाइन है */
+        /* सोशल मीडिया बटनों के लिए डिज़ाइन */
         a { 
             display: block; 
             background: #151c2f; 
             padding: 18px; 
             margin: 18px 0; 
             border-radius: 12px; 
-            color: #d4af37; /* बटन के टेक्स्ट का रंग */
+            color: #d4af37; 
             text-decoration: none; 
             font-size: 1.3rem; 
             font-weight: bold;
-            border: 1px solid #d4af37; /* बटन का सुनहरा बॉर्डर */
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4); /* बटन पर हल्की छाया */
-            transition: transform 0.2s; /* क्लिक करने पर हल्का इफ़ेक्ट */
+            border: 1px solid #d4af37; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            transition: transform 0.2s; 
         }
         a:hover {
-            transform: scale(1.02); /* माउस ले जाने पर बटन हल्का ज़ूम होगा */
+            transform: scale(1.02); 
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- यहाँ आपकी असली फोटो आएगी -->
-        <!-- [जरूरी] src="astro_divine_photo.png" की जगह अपनी फोटो का असली नाम (जैसे ganesh.png) लिखें -->
+        <!-- [नया और आसान तरीका] आपकी फोटो यहाँ एकदम सही सेट हो जाएगी -->
         <div class="photo-box">
-            <img src="astro_divine_photo.png" alt="Astro Divine - Astrologer Purushottam">
+            <!-- यहाँ 'astro.png' आपकी फोटो का नाम है, इसे बदलें मत -->
+            <img src="astro.png" alt="Astro Divine - Astrologer Purushottam">
         </div>
         
-        <!-- संपर्क के लिए बटन - आप लिंक और रंग बदल सकते हैं -->
         <a href="https://wa.me/919145311647" style="color: #25D366;">WhatsApp पर संपर्क करें</a>
         <a href="https://www.instagram.com/astrodivinecare?igsh=Y2ZhamNhZHNzMXQx" style="color: #E1306C;">Instagram पर फॉलो करें</a>
         <a href="https://youtube.com/@astrodivinecare?si=FTx0XaVWMrYGwuAD" style="color: #FF0000;">YouTube चैनल देखें</a>
