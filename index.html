@@ -17,12 +17,37 @@
             max-width: 500px; 
             margin: auto; 
         }
-        img { 
-            width: 100%; 
-            border-radius: 15px; 
-            margin-bottom: 20px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        .header-card {
+            background: linear-gradient(135deg, #151c2f, #0a0f1e);
             border: 2px solid #bfa363;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        h1 {
+            color: #d4af37;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        .sub {
+            color: #bfa363;
+            font-size: 1.1rem;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        .name {
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        .divider {
+            width: 60px;
+            height: 2px;
+            background-color: #d4af37;
+            margin: 15px auto;
         }
         a { 
             display: block; 
@@ -40,8 +65,16 @@
 </head>
 <body>
     <div class="container">
-        <img src="https://github.com/astrodivinecare333-cloud/Astro-Divine/blob/main/watermarked_img_14114563519928104763.png?raw=true" alt="Astro Divine Astrologer Purushottam">
+        <!-- यह वही डिज़ाइन है जो फोटो में था, अब यह कोडिंग से सीधे काम करेगा और कभी फेल नहीं होगा -->
+        <div class="header-card">
+            <div style="font-size: 1.5rem; color: #d4af37; margin-bottom: 10px;">श्री गणेशाय नमः</div>
+            <div class="divider"></div>
+            <h1>Astro Divine</h1>
+            <div class="name">Astrologer Purushottam</div>
+            <div class="sub">Unlock Your Cosmic Destiny</div>
+        </div>
         
+        <!-- संपर्क के लिए बटन -->
         <a href="https://wa.me/919145311647" style="color: #25D366;">WhatsApp पर संपर्क करें</a>
         <a href="https://www.instagram.com/astrodivinecare?igsh=Y2ZhamNhZHNzMXQx" style="color: #E1306C;">Instagram पर फॉलो करें</a>
         <a href="https://youtube.com/@astrodivinecare?si=FTx0XaVWMrYGwuAD" style="color: #FF0000;">YouTube चैनल देखें</a>
