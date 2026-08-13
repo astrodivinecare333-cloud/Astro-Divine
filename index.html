@@ -5,60 +5,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Astro Divine - Astrologer Purushottam</title>
     <style>
-        body {
-            margin: 0;
-            padding: 20px;
-            background-color: #0a0f1e;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
+        body { 
+            background-color: #0a0f1e; 
+            color: #fff; 
+            text-align: center; 
+            margin: 0; 
+            padding: 20px; 
             font-family: 'Georgia', serif;
         }
-        .container {
-            max-width: 500px;
-            width: 100%;
-            text-align: center;
+        .container { 
+            max-width: 500px; 
+            margin: auto; 
         }
-        /* यह आपकी फोटो के लिए एकदम सही फ्रेम है */
-        .photo-box {
-            width: 100%;
-            margin-bottom: 20px;
-        }
-        .photo-box img {
-            width: 100%;
-            height: auto;
+        .header-card {
+            background: linear-gradient(135deg, #151c2f, #0a0f1e);
+            border: 2px solid #bfa363;
             border-radius: 15px;
+            padding: 25px 20px;
+            margin-bottom: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-            border: 2px solid #d4af37;
         }
-        .social-button {
-            display: block;
-            background-color: #151c2f;
+        .ganesh {
+            font-size: 1.6rem;
             color: #d4af37;
-            text-align: center;
-            padding: 16px;
-            margin: 15px 0;
-            border-radius: 10px;
-            text-decoration: none;
-            font-size: 1.2rem;
+            margin-bottom: 10px;
             font-weight: bold;
-            border: 1px solid #d4af37;
+        }
+        h1 {
+            color: #d4af37;
+            font-size: 2rem;
+            margin: 10px 0;
+            letter-spacing: 1px;
+        }
+        .sub {
+            color: #bfa363;
+            font-size: 1.1rem;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        .name {
+            color: #ffffff;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-top: 15px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .divider {
+            width: 70px;
+            height: 2px;
+            background-color: #bfa363;
+            margin: 15px auto;
+        }
+        a { 
+            display: block; 
+            background: #151c2f; 
+            padding: 15px; 
+            margin: 15px 0; 
+            border-radius: 10px; 
+            color: #d4af37; 
+            text-decoration: none; 
+            font-size: 1.2rem; 
+            font-weight: bold;
+            border: 1px solid #bfa363; 
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- यहाँ आपकी असली फोटो आएगी -->
-        <div class="photo-box">
-            <img src="https://raw.githubusercontent.com/astrodivinecare333-cloud/Astro-Divine/main/watermarked_img_14114563519928104763.png" alt="Astro Divine Astrologer Purushottam">
+        <div class="header-card">
+            <div class="ganesh">श्री गणेशाय नमः</div>
+            <div class="divider"></div>
+            <h1>Astro Divine</h1>
+            <div class="sub">Unlock Your Cosmic Destiny</div>
+            <div class="divider" style="width: 40px; opacity: 0.6;"></div>
+            <!-- आपका नाम बिल्कुल नीचे सही जगह पर सेट कर दिया गया है -->
+            <div class="name">Astrologer Purushottam</div>
         </div>
         
-        <!-- नीचे आपके तीनों सोशल मीडिया बटन -->
-        <a href="https://wa.me/919145311647" class="social-button" style="color: #25D366;">WhatsApp पर संपर्क करें</a>
-        <a href="https://www.instagram.com/astrodivinecare?igsh=Y2ZhamNhZHNzMXQx" class="social-button" style="color: #E1306C;">Instagram पर फॉलो करें</a>
-        <a href="https://youtube.com/@astrodivinecare?si=FTx0XaVWMrYGwuAD" class="social-button" style="color: #FF0000;">YouTube चैनल देखें</a>
+        <!-- सोशल मीडिया लिंक्स -->
+        <a href="https://wa.me/919145311647" style="color: #25D366;">WhatsApp पर संपर्क करें</a>
+        <a href="https://www.instagram.com/astrodivinecare?igsh=Y2ZhamNhZHNzMXQx" style="color: #E1306C;">Instagram पर फॉलो करें</a>
+        <a href="https://youtube.com/@astrodivinecare?si=FTx0XaVWMrYGwuAD" style="color: #FF0000;">YouTube चैनल देखें</a>
     </div>
 </body>
 </html>
