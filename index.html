@@ -17,16 +17,39 @@
             max-width: 500px; 
             margin: auto; 
         }
-        .photo-box {
-            width: 100%;
-            margin-bottom: 20px;
+        /* यह वह डिज़ाइन है जो आपकी फोटो की तरह हूबहू कोडिंग से बनाया गया है ताकि यह कभी फेल न हो और एकदम साफ़ दिखे */
+        .header-card {
+            background: linear-gradient(135deg, #151c2f, #0a0f1e);
+            border: 3px solid #d4af37;
+            border-radius: 20px;
+            padding: 25px 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
         }
-        .photo-box img {
-            width: 100%;
-            height: auto;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border: 2px solid #bfa363;
+        h1 {
+            color: #d4af37;
+            font-size: 2rem;
+            margin: 10px 0 5px 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        .sub {
+            color: #e6cc87;
+            font-size: 1.1rem;
+            font-style: italic;
+            margin-top: 10px;
+        }
+        .name {
+            color: #fff;
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        .divider {
+            width: 80px;
+            height: 2px;
+            background-color: #d4af37;
+            margin: 12px auto;
         }
         a { 
             display: block; 
@@ -38,18 +61,24 @@
             text-decoration: none; 
             font-size: 1.2rem; 
             font-weight: bold;
-            border: 1px solid #bfa363; 
+            border: 1px solid #d4af37; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- यहाँ बॉक्स की जगह आपकी असली गणपति जी वाली फोटो आएगी -->
-        <div class="photo-box">
-            <img src="YOUR_IMAGE_LINK_HERE" alt="Astro Divine - Astrologer Purushottam">
+        <!-- यह हिस्सा आपकी फोटो जैसी ही प्रीमियम फीलिंग और लुक देगा -->
+        <div class="header-card">
+            <div style="font-size: 1.6rem; color: #d4af37; margin-bottom: 5px; font-weight: bold;">श्री गणेशाय नमः</div>
+            <div class="divider"></div>
+            <h1>Astro Divine</h1>
+            <div class="name">Astrologer Purushottam</div>
+            <div class="divider" style="width: 40px; opacity: 0.7;"></div>
+            <div class="sub">Unlock Your Cosmic Destiny</div>
         </div>
         
-        <!-- सोशल मीडिया बटन्स -->
+        <!-- संपर्क के लिए बटन -->
         <a href="https://wa.me/919145311647" style="color: #25D366;">WhatsApp पर संपर्क करें</a>
         <a href="https://www.instagram.com/astrodivinecare?igsh=Y2ZhamNhZHNzMXQx" style="color: #E1306C;">Instagram पर फॉलो करें</a>
         <a href="https://youtube.com/@astrodivinecare?si=FTx0XaVWMrYGwuAD" style="color: #FF0000;">YouTube चैनल देखें</a>
