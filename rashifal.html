@@ -4,37 +4,184 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>दैनिक राशिफल - Astro Divine</title>
+    <!-- भाषा बदलने के लिए स्टाइल -->
     <style>
+        .goog-te-combo {
+            background: #000b1a;
+            color: #d4af37;
+            border: 1px solid #d4af37;
+            padding: 6px 10px;
+            border-radius: 5px;
+            font-family: 'Georgia', serif;
+            cursor: pointer;
+        }
+        .goog-logo-link, .goog-te-banner-frame { display: none !important; }
+        body { top: 0 !important; }
+        
         body { background: linear-gradient(135deg, #001f3f 0%, #000b1a 100%); color: #d4af37; text-align: center; padding: 15px; font-family: 'Georgia', serif; min-height: 100vh; }
-        .royal-box { background: rgba(0, 31, 63, 0.85); border: 3px solid #d4af37; border-radius: 20px; padding: 20px; margin: 15px auto; max-width: 450px; text-align: left; box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
+        .royal-box { background: rgba(0, 31, 63, 0.85); border: 3px solid #d4af37; border-radius: 20px; padding: 20px; margin: 15px auto; max-width: 500px; text-align: left; box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
         .logo { width: 100%; border-radius: 12px; border: 1px solid #d4af37; margin-bottom: 15px; }
         h2 { color: #d4af37; text-align: center; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; font-size: 1.3rem; }
-        h3 { color: #f3c653; margin-bottom: 10px; font-size: 1.1rem; border-bottom: 1px solid #d4af37; padding-bottom: 5px; }
-        p { font-size: 0.95rem; line-height: 1.6; margin: 5px 0; }
+        h3 { color: #f3c653; font-size: 1.1rem; border-bottom: 1px solid #d4af37; padding-bottom: 5px; margin-top: 0; }
+        p { font-size: 0.95rem; line-height: 1.6; margin: 10px 0; color: #fff; }
+        .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; background: rgba(0, 0, 0, 0.3); padding: 10px; border-radius: 10px; }
+        .details-grid p { margin: 5px 0; font-size: 0.9rem; color: #d4af37; }
         .back-link { display: block; text-align: center; margin-top: 20px; color: #d4af37; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
     <div class="royal-box" style="text-align: center;">
         <img src="ganesh.png" class="logo" alt="Astro Divine Logo">
-        <h2>🔮 दैनिक राशिफल</h2>
-        <p style="font-weight: bold;">शुक्रवार | 14 अगस्त 2026</p>
+        
+        <!-- भाषा बदलने वाला बटन -->
+        <div id="google_translate_element" style="margin: 10px 0;"></div>
+        <script type="text/javascript">
+            function googleTranslateElementInit() {
+                new google.translate.TranslateElement({
+                    pageLanguage: 'hi',
+                    includedLanguages: 'hi,mr,en',
+                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+                }, 'google_translate_element');
+            }
+        </script>
+        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+        <h2>✨ दैनिक राशिफल</h2>
+        <p style="text-align: center; font-size: 0.9rem; color: #f3c653;">जानें अपना आज का दिन और विशेष उपाय</p>
     </div>
+    
+    <!-- मेष राशि -->
     <div class="royal-box">
-        <h3>♈ मेष से ♓ मीन</h3>
-        <p>• <b>मेष:</b> सफलता और आर्थिक लाभ के योग।</p>
-        <p>• <b>वृषभ:</b> कार्यक्षेत्र में नई प्रगति।</p>
-        <p>• <b>मिथुन:</b> संवाद से बिगड़े काम बनेंगे।</p>
-        <p>• <b>कर्क:</b> स्वास्थ्य में सुधार होगा।</p>
-        <p>• <b>सिंह:</b> सकारात्मक ऊर्जा महसूस होगी।</p>
-        <p>• <b>कन्या:</b> आर्थिक स्थिति बेहतर होगी।</p>
-        <p>• <b>तुला:</b> व्यवसाय में नए अवसर।</p>
-        <p>• <b>वृश्चिक:</b> मान-सम्मान की प्राप्ति।</p>
-        <p>• <b>धनु:</b> पारिवारिक सुख बढ़ेगा।</p>
-        <p>• <b>मकर:</b> करियर में नई ऊंचाइयां।</p>
-        <p>• <b>कुंभ:</b> बिगड़े काम संवरेंगे।</p>
-        <p>• <b>मीन:</b> मन प्रसन्न रहेगा।</p>
+        <h3>♈ मेष (Aries)</h3>
+        <p><strong>राशिफल:</strong> कार्यक्षेत्र में नए अवसर मिलेंगे। परिवार का पूरा सहयोग रहेगा, लेकिन गुस्से पर नियंत्रण रखें।</p>
+        <div class="details-grid">
+            <p>🎨 <strong>लकी कलर:</strong> लाल</p>
+            <p>🔢 <strong>लकी नंबर:</strong> 9</p>
+        </div>
+        <p style="margin-top: 10px;">🔱 <strong>उपाय:</strong> हनुमान जी को सिंदूर चढ़ाएं।</p>
     </div>
+
+    <!-- वृषभ राशि -->
+    <div class="royal-box">
+        <h3>♉ वृषभ (Taurus)</h3>
+        <p><strong>राशिफल:</strong> आर्थिक स्थिति मजबूत होगी। रुका हुआ धन प्राप्त हो सकता है। सेहत का ध्यान रखें।</p>
+        <div class="details-grid">
+            <p>🎨 <strong>लकी कलर:</strong> गुलाबी</p>
+            <p>🔢 <strong>लकी नंबर:</strong> 6</p>
+        </div>
+        <p style="margin-top: 10px;">🔱 <strong>उपाय:</strong> गरीबों को सफेद वस्त्र दान करें।</p>
+    </div>
+
+    <!-- मिथुन राशि -->
+    <div class="royal-box">
+        <h3>♊ मिथुन (Gemini)</h3>
+        <p><strong>राशिफल:</strong> यात्रा के योग बन रहे हैं। बुद्धि और कौशल से बिगड़े हुए काम भी आसानी से बन जाएंगे।</p>
+        <div class="details-grid">
+            <p>🎨 <strong>लकी कलर:</strong> हरा</p>
+            <p>🔢 <strong>लकी नंबर:</strong> 5</p>
+        </div>
+        <p style="margin-top: 10px;">🔱 <strong>उपाय:</strong> गणेश जी को दूर्वा अर्पित करें।</p>
+    </div>
+
+    <!-- कर्क राशि -->
+    <div class="royal-box">
+        <h3>♋ कर्क (Cancer)</h3>
+        <p><strong>राशिफल:</strong> मन में थोड़ा असमंजस रह सकता है। सोच-समझकर ही किसी बड़े निवेश का निर्णय लें।</p>
+        <div class="details-grid">
+            <p>🎨 <strong>लकी कलर:</strong> सफेद</p>
+            <p>🔢 <strong>लकी नंबर:</strong> 2</p>
+        </div>
+        <p style="margin-top: 10px;">🔱 <strong>उपाय:</strong> शिवलिंग पर कच्चा दूध चढ़ाएं।</p>
+    </div>
+
+    <!-- सिंह राशि -->
+    <div class="royal-box">
+        <h3>♌ सिंह (Leo)</h3>
+        <p><strong>राशिफल:</strong> मान-सम्मान में वृद्धि होगी। अधिकारियों का सहयोग मिलेगा। आत्मविश्वास उच्च स्तर पर रहेगा।</p>
+        <div class="details-grid">
+            <p>🎨 <strong>लकी कलर:</strong> सुनहरा</p>
+            <p>🔢 <strong>लकी नंबर:</strong> 1</p>
+        </div>
+        <p style="margin-top: 10px;">🔱 <strong>उपाय:</strong> सूर्य देव को तांबे के लोटे से जल दें।</p>
+    </div>
+
+    <!-- कन्या राशि -->
+    <div class="royal-box">
+        <h3>♍ कन्या (Virgo)</h3>
+        <p><strong>राशिफल:</strong> छात्रों के लिए दिन बहुत शुभ है। मित्रों की मदद से कोई रुका हुआ सरकारी काम पूरा हो सकता है।</p>
+        <div class="details-grid">
+            <p>🎨 <strong>लकी कलर:</strong> फिरोजा</p>
+            <p>🔢 <strong>लकी नंबर:</strong> 5</p>
+        </div>
+        <p style="margin-top: 10px;">🔱 <strong>उपाय:</strong> गाय को हरी घास खिलाएं।</p>
+    </div>
+
+    <!-- तुला राशि -->
+    <div class="royal-box">
+        <h3>♎ तुला (Libra)</h3>
+        <p><strong>राशिफल:</strong> वैवाहिक जीवन सुखमय रहेगा। व्यापार में साझेदारी से बड़ा लाभ मिलने की संभावना है।</p>
+        <div class="details-grid">
+            <p>🎨 <strong>लकी कलर:</strong> हल्का नीला</p>
+            <p>🔢 <strong>लकी नंबर:</strong> 7</p>
+        </div>
+        <p style="margin-top: 10px;">🔱 <strong>उपाय:</strong> माता लक्ष्मी की पूजा करें।</p>
+    </div>
+
+    <!-- वृश्चिक राशि -->
+    <div class="royal-box">
+        <h3>♏ वृश्चिक (Scorpio)</h3>
+        <p><strong>राशिफल:</strong> गुप्त शत्रुओं से सावधान रहें। स्वास्थ्य के प्रति थोड़ी सतर्कता बरतना आवश्यक है।</p>
+        <div class="details-grid">
+            <p>🎨 <strong>लकी कलर:</strong> मैरून</p>
+            <p>🔢 <strong>लकी नंबर:</strong> 9</p>
+        </div>
+        <p style="margin-top: 10px;">🔱 <strong>उपाय:</strong> सुंदरकांड का पाठ करें।</p>
+    </div>
+
+    <!-- धनु राशि -->
+    <div class="royal-box">
+        <h3>♐ धनु (Sagittarius)</h3>
+        <p><strong>राशिफल:</strong> धार्मिक कार्यों में रुचि बढ़ेगी। भाग्य का पूरा साथ मिलेगा और लंबे समय से अटके काम पूरे होंगे।</p>
+        <div class="details-grid">
+            <p>🎨 <strong>लकी कलर:</strong> पीला</p>
+            <p>🔢 <strong>लकी नंबर:</strong> 3</p>
+        </div>
+        <p style="margin-top: 10px;">🔱 <strong>उपाय:</strong> पीपल के पेड़ के पास दीपक जलाएं।</p>
+    </div>
+
+    <!-- मकर राशि -->
+    <div class="royal-box">
+        <h3>♑ मकर (Capricorn)</h3>
+        <p><strong>राशिफल:</strong> कार्यस्थल पर अधिक मेहनत करनी पड़ सकती है। संपत्ति से जुड़े मामलों में फायदा मिल सकता है।</p>
+        <div class="details-grid">
+            <p>🎨 <strong>लकी कलर:</strong> नीला</p>
+            <p>🔢 <strong>लकी नंबर:</strong> 8</p>
+        </div>
+        <p style="margin-top: 10px;">🔱 <strong>उपाय:</strong> शनि देव के मंत्र का जाप करें।</p>
+    </div>
+
+    <!-- कुंभ राशि -->
+    <div class="royal-box">
+        <h3>♒ कुंभ (Aquarius)</h3>
+        <p><strong>राशिफल:</strong> नए लोगों से संपर्क बनेगा जो भविष्य में फायदेमंद साबित होंगे। आर्थिक पक्ष मजबूत रहेगा।</p>
+        <div class="details-grid">
+            <p>🎨 <strong>लकी कलर:</strong> बैंगनी</p>
+            <p>🔢 <strong>लकी नंबर:</strong> 4</p>
+        </div>
+        <p style="margin-top: 10px;">🔱 <strong>उपाय:</strong> किसी जरूरतमंद को काले तिल का दान करें।</p>
+    </div>
+
+    <!-- मीन राशि -->
+    <div class="royal-box">
+        <h3>♓ मीन (Pisces)</h3>
+        <p><strong>राशिफल:</strong> मन प्रसन्न रहेगा। परिवार के साथ किसी धार्मिक स्थल की यात्रा पर जाने का प्रोग्राम बन सकता है।</p>
+        <div class="details-grid">
+            <p>🎨 <strong>लकी कलर:</strong> केसरी</p>
+            <p>🔢 <strong>लकी नंबर:</strong> 3</p>
+        </div>
+        <p style="margin-top: 10px;">🔱 <strong>उपाय:</strong> विष्णु सहस्रनाम का पाठ करें।</p>
+    </div>
+
     <div class="royal-box" style="text-align: center;">
         <a href="index.html" class="back-link">← वापस होम पेज पर जाएं</a>
     </div>
