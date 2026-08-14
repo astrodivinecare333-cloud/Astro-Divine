@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>कुंडली मिलान - Astro Divine</title>
+    <style>
+        body { background: linear-gradient(135deg, #001f3f 0%, #000b1a 100%); color: #d4af37; font-family: 'Georgia', serif; margin: 0; padding: 20px; min-height: 100vh; }
+        .container { max-width: 480px; margin: auto; background: rgba(0, 31, 63, 0.9); border: 2px solid #d4af37; border-radius: 20px; padding: 20px; box-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
+        h2 { text-align: center; color: #f3c653; margin-bottom: 20px; font-size: 1.3rem; }
+        
+        .section-title { color: #f3c653; font-size: 1rem; border-bottom: 1px solid #d4af37; padding-bottom: 5px; margin: 20px 0 10px; font-weight: bold; }
+        
+        label { display: block; margin: 10px 0 3px; font-size: 0.85rem; color: #f3c653; font-weight: bold; }
+        input[type="text"], input[type="date"], input[type="time"] { width: 100%; padding: 10px; border: 1px solid #d4af37; border-radius: 8px; background: #000b1a; color: #fff; font-size: 0.95rem; box-sizing: border-box; outline: none; margin-bottom: 8px; }
+        
+        .boy-box, .girl-box { background: rgba(0, 11, 26, 0.6); border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 12px; padding: 12px; margin-bottom: 15px; }
+        
+        button { width: 100%; background: #d4af37; color: #000b1a; padding: 15px; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 15px; transition: 0.3s; }
+        button:hover { background: #f3c653; }
+        
+        .back-link { display: block; text-align: center; margin-top: 15px; color: #d4af37; text-decoration: none; font-size: 0.9rem; }
+        .goog-te-combo { background: #000b1a; color: #d4af37; border: 1px solid #d4af37; padding: 5px; border-radius: 5px; width: 100%; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- भाषा विकल्प -->
+    <div id="google_translate_element"></div>
+    
+    <h2>💖 कुंडली मिलान (Gun Milan) 💖</h2>
+
+    <form action="#">
+        <!-- वर का विवरण -->
+        <div class="boy-box">
+            <div class="section-title">🤵 वर का विवरण (Boy's Details)</div>
+            
+            <label>👤 वर का नाम</label>
+            <input type="text" placeholder="पूरा नाम / Full Name">
+
+            <label>📅 जन्म तिथि</label>
+            <input type="date">
+
+            <label>⏰ जन्म समय</label>
+            <input type="time">
+
+            <label>📍 जन्म स्थान</label>
+            <input type="text" list="cities" placeholder="शहर का नाम / City...">
+        </div>
+
+        <!-- वधू का विवरण -->
+        <div class="girl-box">
+            <div class="section-title">👰 वधू का विवरण (Girl's Details)</div>
+            
+            <label>👤 वधू का नाम</label>
+            <input type="text" placeholder="पूरा नाम / Full Name">
+
+            <label>📅 जन्म तिथि</label>
+            <input type="date">
+
+            <label>⏰ जन्म समय</label>
+            <input type="time">
+
+            <label>📍 जन्म स्थान</label>
+            <input type="text" list="cities" placeholder="शहर का नाम / City...">
+        </div>
+
+        <!-- शहरों की लिस्ट दोनों के लिए -->
+        <datalist id="cities">
+            <option value="Mumbai / मुंबई, Maharashtra">
+            <option value="Pune / पुणे, Maharashtra">
+            <option value="Nagpur / नागपुर, Maharashtra">
+            <option value="Nashik / नाशिक, Maharashtra">
+            <option value="Shirdi / शिर्डी, Maharashtra">
+            <option value="Delhi / दिल्ली">
+            <option value="Bangalore / बेंगलुरु, Karnataka">
+            <option value="Hyderabad / हैदराबाद, Telangana">
+            <option value="Ahmedabad / अहमदाबाद, Gujarat">
+            <option value="Chennai / चेन्नई, Tamil Nadu">
+            <option value="Kolkata / कोलकाता, West Bengal">
+            <option value="Jaipur / जयपुर, Rajasthan">
+            <option value="Lucknow / लखनऊ, Uttar Pradesh">
+            <option value="Indore / इंदौर, Madhya Pradesh">
+            <option value="Patna / पटना, Bihar">
+            <option value="Chandigarh / चंडीगढ़">
+            <option value="Varanasi / वाराणसी, Uttar Pradesh">
+        </datalist>
+
+        <button type="submit">✨ गुण मिलान देखें (Check Match)</button>
+    </form>
+
+    <a href="index.html" class="back-link">← होम पेज पर वापस जाएं</a>
+</div>
+
+<!-- ट्रांसलेट स्क्रिप्ट -->
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'hi', includedLanguages: 'hi,mr,en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</body>
+</html>
