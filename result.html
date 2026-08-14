@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>कुंडली फलादेश - Astro Divine</title>
+    <style>
+        body { background: linear-gradient(135deg, #001f3f 0%, #000b1a 100%); color: #d4af37; font-family: 'Georgia', serif; margin: 0; padding: 15px; min-height: 100vh; }
+        .container { max-width: 480px; margin: auto; }
+        
+        /* हेडर और प्रोफाइल कार्ड */
+        .header { background: #d4af37; color: #000b1a; padding: 15px; text-align: center; font-weight: bold; font-size: 1.2rem; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .profile-card { background: rgba(0, 31, 63, 0.9); border: 2px solid #d4af37; border-radius: 15px; padding: 15px; margin-bottom: 20px; box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
+        .profile-card p { margin: 8px 0; font-size: 0.95krem; color: #fff; }
+        .profile-card span { color: #f3c653; font-weight: bold; }
+
+        /* सेक्शन बॉक्स */
+        .section-box { background: rgba(0, 31, 63, 0.9); border: 2px solid #d4af37; border-radius: 15px; padding: 15px; margin-bottom: 15px; }
+        .section-title { color: #f3c653; font-size: 1.1rem; border-bottom: 1px solid #d4af37; padding-bottom: 5px; margin-bottom: 10px; font-weight: bold; }
+        
+        /* चार्ट या ग्रिड */
+        .chart-placeholder { text-align: center; padding: 30px; border: 1px dashed #d4af37; border-radius: 10px; color: #fff; background: #000b1a; margin-bottom: 10px; }
+        
+        .prediction-text { font-size: 0.9rem; line-height: 1.6; color: #e6e6e6; }
+
+        /* बटन और लिंक्स */
+        .btn { display: block; width: 100%; background: #d4af37; color: #000b1a; padding: 14px; border: none; border-radius: 10px; font-size: 1rem; font-weight: bold; text-align: center; text-decoration: none; margin-top: 15px; box-sizing: border-box; }
+        .btn:hover { background: #f3c653; }
+        
+        .goog-te-combo { background: #000b1a; color: #d4af37; border: 1px solid #d4af37; padding: 5px; border-radius: 5px; margin-bottom: 15px; width: 100%; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- भाषा विकल्प -->
+    <div id="google_translate_element"></div>
+
+    <div class="header">✨ Astro Divine - जन्म कुंडली विश्लेषण ✨</div>
+
+    <!-- यूज़र का विवरण बॉक्स -->
+    <div class="profile-card">
+        <p>👤 नाम: <span id="res-name">Aarryamaan Dabhade</span></p>
+        <p>📅 जन्म तिथि: <span id="res-date">11-09-1999</span></p>
+        <p>⏰ जन्म समय: <span id="res-time">15:55</span></p>
+        <p>📍 जन्म स्थान: <span id="res-place">Shirdi, Maharashtra</span></p>
+    </div>
+
+    <!-- लग्न चार्ट बॉक्स -->
+    <div class="section-box">
+        <div class="section-title">🪐 लग्न चक्र (Lagn Chart)</div>
+        <div class="chart-placeholder">
+            [ लग्न कुंडली चक्र यहाँ प्रदर्शित होगा ]
+        </div>
+    </div>
+
+    <!-- मुख्य फलादेश -->
+    <div class="section-box">
+        <div class="section-title">🔮 संक्षिप्त फलादेश एवं भविष्यफल</div>
+        <p class="prediction-text">
+            आपकी कुंडली के अनुसार आपका व्यक्तित्व प्रभावशाली है। आपके जीवन में नेतृत्व करने की क्षमता उत्तम है। वर्तमान गोचर आपके करियर और व्यापार के लिए बेहद अनुकूल दिशा में आगे बढ़ रहा है। नियमित रूप से इष्ट आराधना करने से विशेष लाभ मिलेगा।
+        </p>
+    </div>
+
+    <!-- शुभ योग एवं रत्न -->
+    <div class="section-box">
+        <div class="section-title">💎 भाग्यशाली रत्न एवं अंक</div>
+        <p class="prediction-text">
+            • <b>शुभ रत्न:</b> माणिक्य या पुखराज (ज्योतिषी की सलाह से पहनें)<br>
+            • <b>शुभ अंक:</b> 1, 3, 9<br>
+            • <b>शुभ रंग:</b> सुनहरा (Golden) और रॉयल ब्लू
+        </p>
+    </div>
+
+    <a href="kundali.html" class="btn">← नई कुंडली देखें (Back)</a>
+</div>
+
+<!-- ट्रांसलेट स्क्रिप्ट -->
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'hi', includedLanguages: 'hi,mr,en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</body>
+</html>
