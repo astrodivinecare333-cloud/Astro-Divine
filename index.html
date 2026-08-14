@@ -3,56 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Astro Divine - Royal Astrology</title>
+    <title>Astro Divine - वैदिक ज्योतिष एवं कुंडली पोर्टल</title>
     <style>
+        * { box-sizing: border-box; }
         body { 
             background: linear-gradient(135deg, #001f3f 0%, #000b1a 100%); 
             color: #d4af37; 
-            text-align: center; 
-            padding: 15px; 
-            font-family: 'Georgia', serif;
-            min-height: 100vh;
-        }
-        .royal-box { 
-            background: rgba(0, 31, 63, 0.85); 
-            border: 3px solid #d4af37; 
-            border-radius: 20px; 
+            font-family: 'Georgia', serif; 
+            margin: 0; 
             padding: 20px; 
-            margin: 15px auto; 
-            max-width: 450px; 
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+            min-height: 100vh; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .photo { width: 100%; border-radius: 12px; border: 1px solid #d4af37; margin-bottom: 20px; display: block; }
-        h2 { color: #d4af37; text-transform: uppercase; letter-spacing: 2px; font-size: 1.2rem; margin-bottom: 20px; }
-        a { 
-            display: block; 
+        .container { 
+            max-width: 800px; 
+            width: 100%;
+            background: rgba(0, 31, 63, 0.95); 
+            border: 2px solid #d4af37; 
+            border-radius: 15px; 
+            padding: 30px; 
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5); 
+            text-align: center;
+        }
+        .header { 
             background: #d4af37; 
-            color: #001f3f; 
-            padding: 14px; 
-            margin: 15px 0; 
-            text-decoration: none; 
-            border-radius: 50px; 
+            color: #000b1a; 
+            padding: 20px; 
             font-weight: bold; 
-            border: 2px solid #d4af37;
-            font-size: 1rem;
+            font-size: 1.6rem; 
+            border-radius: 10px; 
+            margin-bottom: 25px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: #f3c653;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .menu-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+            gap: 20px; 
+            margin-bottom: 20px; 
+        }
+        .menu-card { 
+            background: rgba(0, 11, 26, 0.9); 
+            border: 1px solid #d4af37; 
+            border-radius: 10px; 
+            padding: 20px; 
+            text-decoration: none; 
+            color: #d4af37; 
+            transition: 0.3s; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .menu-card:hover { 
+            background: rgba(212, 175, 55, 0.15); 
+            transform: translateY(-3px);
+            border-color: #f3c653;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+        .menu-card h3 { 
+            margin: 0 0 8px 0; 
+            color: #f3c653; 
+            font-size: 1.2rem; 
+        }
+        .menu-card p { 
+            margin: 0; 
+            font-size: 0.9rem; 
+            color: #ccc; 
+            text-align: center; 
+        }
+        .footer-note {
+            margin-top: 25px;
+            font-size: 0.85rem;
+            color: #888;
         }
     </style>
 </head>
 <body>
 
-    <div class="royal-box">
-        <img src="ganesh.png" class="photo" alt="Astro Divine">
-        <h2>Astrologer Purushottam</h2>
-        
-        <!-- नए अलग-अलग बटन -->
-        <a href="panchang.html">📅 दैनिक पंचांग</a>
-        <a href="rashifal.html">🔮 दैनिक राशिफल</a>
-        <a href="birthday.html">🎉 जन्मदिन विशेष</a>
-        
-        <h2 style="margin-top: 30px; font-size: 1rem;">CONSULTATION & CONTACT</h2>
-        <a href="kundali.html" style="background: transparent; color: #d4af37;">📜 कुंडली विश्लेषण फॉर्म</a>
-        <a href="https://wa.me/919145311647" style="background: transparent; color: #d4af37;">WhatsApp पर संपर्क करें</a>
+<div class="container">
+    <div class="header">🌟 Astro Divine - वैदिक ज्योतिष पोर्टल 🌟</div>
+    
+    <div class="subtitle">
+        सटीक वैदिक गणना, जन्म कुंडली विश्लेषण, वार्षिक राशिफल और गुण मिलान की एक संपूर्ण डिजिटल दुनिया में आपका स्वागत है।
     </div>
+
+    <!-- मेनू ऑप्शंस / पेजेस के लिंक्स -->
+    <div class="menu-grid">
+        <a href="kundali.html" class="menu-card">
+            <h3>📝 कुंडली विवरण दर्ज करें</h3>
+            <p>नया जन्म विवरण और स्थान भरकर विश्लेषण शुरू करें।</p>
+        </a>
+
+        <a href="result.html" class="menu-card">
+            <h3>📊 संपूर्ण कुंडली विश्लेषण</h3>
+            <p>पंचांग, D-1/D-9 चार्ट, योग, दोष, रत्न और उपाय देखें।</p>
+        </a>
+
+        <a href="varshphal.html" class="menu-card">
+            <h3>📜 वार्षिक राशिफल (वर्षफल)</h3>
+            <p>वर्षेश, मुथा स्थिति और 12 महीनों का विस्तृत फलादेश।</p>
+        </a>
+
+        <a href="milan.html" class="menu-card">
+            <h3>💍 अष्टकूट कुंडली मिलान</h3>
+            <p>36 गुण मिलान, मांगलिक विचार और आपसी सामंजस्य।</p>
+        </a>
+    </div>
+
+    <div class="footer-note">
+        &copy; Astro Divine | Astrologer Purushottam
+    </div>
+</div>
 
 </body>
 </html>
