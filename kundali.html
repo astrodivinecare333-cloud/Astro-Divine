@@ -12,8 +12,12 @@
         input[type="text"], input[type="date"], input[type="time"] { width: 100%; padding: 12px; border: 1px solid #d4af37; border-radius: 8px; background: #000b1a; color: #fff; font-size: 1rem; box-sizing: border-box; outline: none; }
         .radio-group { display: flex; justify-content: center; gap: 25px; margin-bottom: 20px; color: #fff; }
         .radio-group label { display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 1rem; }
-        button { width: 100%; background: #d4af37; color: #000b1a; padding: 15px; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 25px; transition: 0.3s; }
+        
+        /* बटन लिंक स्टाइल */
+        .btn-link { display: block; width: 100%; text-decoration: none; margin-top: 25px; }
+        button { width: 100%; background: #d4af37; color: #000b1a; padding: 15px; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; }
         button:hover { background: #f3c653; }
+        
         .goog-te-combo { background: #000b1a; color: #d4af37; border: 1px solid #d4af37; padding: 5px; border-radius: 5px; }
     </style>
 </head>
@@ -38,30 +42,40 @@
     <label>⏰ जन्म समय</label>
     <input type="time">
 
-    <label>📍 जन्म स्थान (शहर/राज्य)</label>
+    <label>📍 जन्म स्थान (दुनियाभर के शहर)</label>
     <input type="text" list="cities" placeholder="शहर का नाम खोजें / Search City...">
     
+    <!-- दुनियाभर के प्रमुख शहर और देश -->
     <datalist id="cities">
-        <option value="Mumbai / मुंबई, Maharashtra">
-        <option value="Pune / पुणे, Maharashtra">
-        <option value="Nagpur / नागपुर, Maharashtra">
-        <option value="Nashik / नाशिक, Maharashtra">
-        <option value="Shirdi / शिर्डी, Maharashtra">
-        <option value="Delhi / दिल्ली">
-        <option value="Bangalore / बेंगलुरु, Karnataka">
-        <option value="Hyderabad / हैदराबाद, Telangana">
-        <option value="Ahmedabad / अहमदाबाद, Gujarat">
-        <option value="Chennai / चेन्नई, Tamil Nadu">
-        <option value="Kolkata / कोलकाता, West Bengal">
-        <option value="Jaipur / जयपुर, Rajasthan">
-        <option value="Lucknow / लखनऊ, Uttar Pradesh">
-        <option value="Indore / इंदौर, Madhya Pradesh">
-        <option value="Patna / पटना, Bihar">
-        <option value="Chandigarh / चंडीगढ़">
-        <option value="Varanasi / वाराणसी, Uttar Pradesh">
+        <!-- भारत के प्रमुख शहर -->
+        <option value="Mumbai / मुंबई, India">
+        <option value="Delhi / दिल्ली, India">
+        <option value="Pune / पुणे, India">
+        <option value="Shirdi / शिर्डी, India">
+        <option value="Bangalore / बेंगलुरु, India">
+        <option value="Hyderabad / हैदराबाद, India">
+        <option value="Kolkata / कोलकाता, India">
+        <option value="Chennai / चेन्नई, India">
+        <option value="Ahmedabad / अहमदाबाद, India">
+        <option value="Jaipur / जयपुर, India">
+        
+        <!-- अंतर्राष्ट्रीय (World) प्रमुख शहर -->
+        <option value="Dubai / दुबई, UAE">
+        <option value="London / लंदन, UK">
+        <option value="New York / न्यू यॉर्क, USA">
+        <option value="Toronto / टोरंटो, Canada">
+        <option value="Singapore / सिंगापुर">
+        <option value="Sydney / सिडनी, Australia">
+        <option value="Muscat / मस्कट, Oman">
+        <option value="Doha / दोहा, Qatar">
+        <option value="Riyadh / रियाद, Saudi Arabia">
+        <option value="Kuala Lumpur / कुआलालंपुर, Malaysia">
     </datalist>
 
-    <button type="button">✨ पुष्ट करें और आगे बढ़ें</button>
+    <!-- रिजल्ट पेज पर ले जाने वाला लिंक बटन -->
+    <a href="result.html" class="btn-link">
+        <button type="button">✨ पुष्ट करें और आगे बढ़ें</button>
+    </a>
 </div>
 
 <script type="text/javascript">
