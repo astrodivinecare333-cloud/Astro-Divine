@@ -36,9 +36,11 @@
         }
         .logo-frame img {
             width: 100%;
-            height: auto;
+            max-height: 200px;
+            object-fit: contain;
             border-radius: 10px;
             display: block;
+            margin-bottom: 10px;
         }
         .brand-title {
             font-size: 1.5rem;
@@ -81,19 +83,19 @@
 <div class="container">
     <!-- गणेश जी वाला लोगो फ्रेम -->
     <div class="logo-frame">
-        <img src="logo.png" alt="Astro Divine Logo" onerror="this.style.display='none'">
-        <h2 style="margin: 10px 0 0 0; font-size: 1.2rem; color: #f3c653;">श्री गणेशाय नमः</h2>
-        <div style="font-size: 0.85rem; color: #ccc; margin-top: 5px;">Unlock Your Cosmic Destiny</div>
+        <img src="ganesh.png" alt="Ganesh Logo">
+        <h2 style="margin: 5px 0 0 0; font-size: 1.2rem; color: #f3c653;">श्री गणेशाय नमः</h2>
+        <div style="font-size: 0.85rem; color: #ccc; margin-top: 3px;">Unlock Your Cosmic Destiny</div>
     </div>
 
     <div class="brand-title">ASTROLOGER PURUSHOTTAM</div>
 
     <!-- मुख्य सेवाएं -->
-    <a href="#" class="menu-btn">📅 दैनिक पंचांग</a>
-    <a href="#" class="menu-btn">🔮 दैनिक राशिफल</a>
+    <a href="panchang.html" class="menu-btn">📅 दैनिक पंचांग</a>
+    <a href="rashifal.html" class="menu-btn">🔮 दैनिक राशिफल</a>
     <a href="varshphal.html" class="menu-btn">📜 वार्षिक राशिफल (वर्षफल)</a>
     <a href="milan.html" class="menu-btn">💍 अष्टकूट कुंडली मिलान</a>
-    <a href="#" class="menu-btn">🎉 जन्मदिन विशेष</a>
+    <a href="birthday.html" class="menu-btn">🎉 जन्मदिन विशेष</a>
 
     <div class="section-heading">Consultation & Contact</div>
 
