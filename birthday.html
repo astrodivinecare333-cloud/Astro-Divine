@@ -4,7 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>जन्मदिन विशेष - Astro Divine</title>
+    <!-- भाषा बदलने के लिए स्टाइल (यह हमने हेड में जोड़ दिया है) -->
     <style>
+        .goog-te-combo {
+            background: #000b1a;
+            color: #d4af37;
+            border: 1px solid #d4af37;
+            padding: 6px 10px;
+            border-radius: 5px;
+            font-family: 'Georgia', serif;
+            cursor: pointer;
+        }
+        .goog-logo-link, .goog-te-banner-frame { display: none !important; }
+        body { top: 0 !important; }
+        
         body { background: linear-gradient(135deg, #001f3f 0%, #000b1a 100%); color: #d4af37; text-align: center; padding: 15px; font-family: 'Georgia', serif; min-height: 100vh; }
         .royal-box { background: rgba(0, 31, 63, 0.85); border: 3px solid #d4af37; border-radius: 20px; padding: 20px; margin: 15px auto; max-width: 450px; text-align: left; box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
         .logo { width: 100%; border-radius: 12px; border: 1px solid #d4af37; margin-bottom: 15px; }
@@ -17,21 +30,39 @@
 <body>
     <div class="royal-box" style="text-align: center;">
         <img src="ganesh.png" class="logo" alt="Astro Divine Logo">
+        
+        <!-- भाषा बदलने वाला बटन यहाँ लोगो के ठीक नीचे आएगा -->
+        <div id="google_translate_element" style="margin: 10px 0;"></div>
+        <script type="text/javascript">
+            function googleTranslateElementInit() {
+                new google.translate.TranslateElement({
+                    pageLanguage: 'hi',
+                    includedLanguages: 'hi,mr,en',
+                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+                }, 'google_translate_element');
+            }
+        </script>
+        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
         <h2>🎉 जन्मदिन विशेष</h2>
         <p style="font-weight: bold;">14 अगस्त को जन्मे जातकों के लिए</p>
     </div>
+    
     <div class="royal-box">
         <h3>🦁 व्यक्तित्व</h3>
         <p>साहसी, बुद्धिमान और नेचुरल लीडर। आप बातचीत में कुशल और व्यापारिक सोच के धनी हैं।</p>
     </div>
+    
     <div class="royal-box">
         <h3>📈 भविष्य</h3>
         <p>करियर में तरक्की के नए रास्ते खुलेंगे और आर्थिक लाभ प्राप्त होगा।</p>
     </div>
+    
     <div class="royal-box">
         <h3>🔱 उपाय</h3>
         <p>सूर्य देव को प्रतिदिन अर्घ्य दें और गणेश जी को दूर्वा चढ़ाएं।</p>
     </div>
+    
     <div class="royal-box" style="text-align: center;">
         <a href="index.html" class="back-link">← वापस होम पेज पर जाएं</a>
     </div>
