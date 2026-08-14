@@ -2,28 +2,66 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <title>कुंडली विश्लेषण - Astro Divine</title>
+    <title>कुंडली प्रोफाइल - Astro Divine</title>
     <style>
-        body { background: linear-gradient(135deg, #001f3f 0%, #000b1a 100%); color: #d4af37; text-align: center; padding: 20px; font-family: 'Georgia', serif; }
-        .royal-box { background: rgba(0, 31, 63, 0.85); border: 3px solid #d4af37; border-radius: 20px; padding: 20px; max-width: 450px; margin: auto; }
-        h2 { color: #d4af37; margin-bottom: 20px; }
-        input, select, textarea { width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #d4af37; background: #000b1a; color: #d4af37; }
-        button { background: #d4af37; color: #001f3f; padding: 12px 25px; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; }
-        .back-link { display: block; margin-top: 20px; color: #d4af37; text-decoration: none; }
+        body { background-color: #ffffff; color: #333; font-family: sans-serif; padding: 0; margin: 0; }
+        .header { background: #f9a825; color: white; padding: 15px; text-align: center; font-weight: bold; font-size: 1.2rem; }
+        .container { padding: 20px; max-width: 500px; margin: auto; }
+        
+        /* लिंग चयन */
+        .gender-select { display: flex; justify-content: center; gap: 40px; margin: 20px 0; }
+        
+        /* बड़े इनपुट फील्ड्स */
+        label { display: block; font-weight: bold; margin-bottom: 5px; color: #555; }
+        input { 
+            width: 100%; padding: 15px; margin-bottom: 20px; 
+            border: 1px solid #ccc; border-radius: 8px; font-size: 1rem; box-sizing: border-box; 
+        }
+        .row { display: flex; gap: 10px; }
+        .row input { width: 50%; }
+        
+        button { 
+            width: 100%; background: #5e35b1; color: white; padding: 18px; 
+            border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer;
+        }
     </style>
 </head>
 <body>
-    <div class="royal-box">
-        <h2>📜 कुंडली विश्लेषण</h2>
-        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-            <input type="text" name="name" placeholder="अपना नाम लिखें" required>
-            <input type="date" name="dob" required>
-            <input type="time" name="tob" required>
-            <input type="text" name="pob" placeholder="जन्म स्थान" required>
-            <textarea name="message" placeholder="आपकी समस्या/प्रश्न" rows="4"></textarea>
-            <button type="submit">सबमिट करें</button>
+
+    <div class="header">नया प्रोफाइल जोड़ें</div>
+
+    <div class="container">
+        <!-- भाषा का विकल्प (यह बटन हम बाद में और बढ़ाएंगे) -->
+        <div style="text-align: right; margin-bottom: 10px;">
+            <small>भाषा: हिंदी | English | मराठी</small>
+        </div>
+
+        <form action="#">
+            <div class="gender-select">
+                <label><input type="radio" name="gender" value="male"> पुरुष</label>
+                <label><input type="radio" name="gender" value="female"> स्त्री</label>
+            </div>
+
+            <label>नाम</label>
+            <input type="text" placeholder="नाम लिखें">
+
+            <div class="row">
+                <div>
+                    <label>जन्म तिथि</label>
+                    <input type="date">
+                </div>
+                <div>
+                    <label>जन्म समय</label>
+                    <input type="time">
+                </div>
+            </div>
+
+            <label>जन्म स्थान</label>
+            <input type="text" placeholder="शहर का नाम लिखें">
+
+            <button type="submit">पुष्ट करें और आगे बढ़ें</button>
         </form>
-        <a href="index.html" class="back-link">← वापस होम पेज</a>
     </div>
+
 </body>
 </html>
