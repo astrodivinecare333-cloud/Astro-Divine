@@ -2,66 +2,63 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <title>कुंडली प्रोफाइल - Astro Divine</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>कुंडली विश्लेषण - Astro Divine</title>
     <style>
-        body { background-color: #ffffff; color: #333; font-family: sans-serif; padding: 0; margin: 0; }
-        .header { background: #f9a825; color: white; padding: 15px; text-align: center; font-weight: bold; font-size: 1.2rem; }
-        .container { padding: 20px; max-width: 500px; margin: auto; }
+        /* ब्रांडिंग और थीम */
+        body { background: linear-gradient(135deg, #001f3f 0%, #000b1a 100%); color: #d4af37; font-family: 'Georgia', serif; margin: 0; padding: 20px; min-height: 100vh; }
+        .container { max-width: 450px; margin: auto; background: rgba(0, 31, 63, 0.9); border: 2px solid #d4af37; border-radius: 20px; padding: 25px; box-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
+        h2 { text-align: center; color: #f3c653; margin-bottom: 20px; }
         
-        /* लिंग चयन */
-        .gender-select { display: flex; justify-content: center; gap: 40px; margin: 20px 0; }
+        /* फॉर्म डिजाइन */
+        label { display: block; margin: 15px 0 5px; font-size: 0.9rem; color: #f3c653; }
+        input[type="text"], input[type="date"], input[type="time"] { width: 100%; padding: 12px; border: 1px solid #d4af37; border-radius: 8px; background: #000b1a; color: #fff; font-size: 1rem; box-sizing: border-box; }
         
-        /* बड़े इनपुट फील्ड्स */
-        label { display: block; font-weight: bold; margin-bottom: 5px; color: #555; }
-        input { 
-            width: 100%; padding: 15px; margin-bottom: 20px; 
-            border: 1px solid #ccc; border-radius: 8px; font-size: 1rem; box-sizing: border-box; 
-        }
-        .row { display: flex; gap: 10px; }
-        .row input { width: 50%; }
+        .radio-group { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; }
+        .radio-group label { display: flex; align-items: center; gap: 5px; cursor: pointer; color: #fff; }
         
-        button { 
-            width: 100%; background: #5e35b1; color: white; padding: 18px; 
-            border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer;
-        }
+        button { width: 100%; background: #d4af37; color: #000b1a; padding: 15px; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 25px; transition: 0.3s; }
+        button:hover { background: #f3c653; }
+        
+        /* गूगल ट्रांसलेट */
+        .goog-te-combo { background: #000b1a; color: #d4af37; border: 1px solid #d4af37; padding: 5px; border-radius: 5px; }
     </style>
 </head>
 <body>
 
-    <div class="header">नया प्रोफाइल जोड़ें</div>
+<div class="container">
+    <!-- भाषा विकल्प -->
+    <div id="google_translate_element" style="text-align: center; margin-bottom: 15px;"></div>
+    
+    <h2>📜 नया प्रोफाइल जोड़ें</h2>
 
-    <div class="container">
-        <!-- भाषा का विकल्प (यह बटन हम बाद में और बढ़ाएंगे) -->
-        <div style="text-align: right; margin-bottom: 10px;">
-            <small>भाषा: हिंदी | English | मराठी</small>
-        </div>
-
-        <form action="#">
-            <div class="gender-select">
-                <label><input type="radio" name="gender" value="male"> पुरुष</label>
-                <label><input type="radio" name="gender" value="female"> स्त्री</label>
-            </div>
-
-            <label>नाम</label>
-            <input type="text" placeholder="नाम लिखें">
-
-            <div class="row">
-                <div>
-                    <label>जन्म तिथि</label>
-                    <input type="date">
-                </div>
-                <div>
-                    <label>जन्म समय</label>
-                    <input type="time">
-                </div>
-            </div>
-
-            <label>जन्म स्थान</label>
-            <input type="text" placeholder="शहर का नाम लिखें">
-
-            <button type="submit">पुष्ट करें और आगे बढ़ें</button>
-        </form>
+    <div class="radio-group">
+        <label><input type="radio" name="gender" value="male" checked> ♂️ पुरुष</label>
+        <label><input type="radio" name="gender" value="female"> ♀️ स्त्री</label>
     </div>
+
+    <label>👤 नाम</label>
+    <input type="text" placeholder="अपना नाम लिखें">
+
+    <label>📅 जन्म तिथि</label>
+    <input type="date">
+
+    <label>⏰ जन्म समय</label>
+    <input type="time">
+
+    <label>📍 जन्म स्थान</label>
+    <input type="text" placeholder="शहर का नाम लिखें">
+
+    <button type="button">✨ पुष्ट करें और आगे बढ़ें</button>
+</div>
+
+<!-- ट्रांसलेट स्क्रिप्ट -->
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'hi', includedLanguages: 'hi,mr,en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 </body>
 </html>
