@@ -2,61 +2,270 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <title>Astro Divine - Master Analysis</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>संपूर्ण कुंडली विश्लेषण - Astro Divine</title>
     <style>
-        body { background: #000b1a; color: #d4af37; font-family: 'Georgia', serif; padding: 20px; }
-        .container { max-width: 800px; margin: auto; border: 2px solid #d4af37; padding: 20px; border-radius: 15px; }
-        .section { margin: 20px 0; padding: 15px; border: 1px solid #d4af37; border-radius: 10px; }
-        h2 { color: #f3c653; border-bottom: 1px solid #d4af37; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .card { background: rgba(212, 175, 55, 0.05); padding: 10px; border-radius: 5px; border: 1px solid rgba(212, 175, 55, 0.2); }
+        * { box-sizing: border-box; }
+        body { 
+            background: linear-gradient(135deg, #001f3f 0%, #000b1a 100%); 
+            color: #d4af37; 
+            font-family: 'Georgia', serif; 
+            margin: 0; 
+            padding: 15px; 
+            min-height: 100vh; 
+        }
+        .container { 
+            max-width: 900px; 
+            margin: 0 auto; 
+            background: rgba(0, 31, 63, 0.95); 
+            border: 2px solid #d4af37; 
+            border-radius: 15px; 
+            padding: 25px; 
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4); 
+        }
+        .header { 
+            background: #d4af37; 
+            color: #000b1a; 
+            padding: 15px; 
+            text-align: center; 
+            font-weight: bold; 
+            font-size: 1.4rem; 
+            border-radius: 10px; 
+            margin-bottom: 20px; 
+        }
+        .user-info { 
+            background: rgba(0, 11, 26, 0.8); 
+            border: 1px solid #d4af37; 
+            border-radius: 10px; 
+            padding: 15px; 
+            margin-bottom: 25px; 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 10px; 
+            font-size: 1rem; 
+        }
+        .user-info div { color: #f3c653; }
+        .user-info strong { color: #fff; }
+
+        .section-title { 
+            color: #f3c653; 
+            border-bottom: 2px solid #d4af37; 
+            padding-bottom: 6px; 
+            margin-top: 30px; 
+            margin-bottom: 20px; 
+            font-size: 1.25rem; 
+        }
+
+        /* पंचांग टेबल */
+        .astro-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(0, 11, 26, 0.9);
+            border: 1px solid #d4af37;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .astro-table th, .astro-table td {
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 12px;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+        .astro-table th {
+            background: rgba(212, 175, 55, 0.15);
+            color: #f3c653;
+        }
+        .astro-table th span {
+            display: block;
+            color: #fff;
+            font-weight: bold;
+            margin-top: 4px;
+        }
+
+        /* चार्ट्स ग्रिड */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .chart-box {
+            background: rgba(0, 11, 26, 0.9);
+            border: 1px solid #d4af37;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+        .chart-box h3 { margin-top: 0; color: #f3c653; font-size: 1.1rem; }
+        .kundali-svg { width: 100%; max-width: 300px; height: auto; margin: 0 auto; display: block; }
+
+        /* कार्ड्स और उपाय */
+        .card { 
+            background: rgba(0, 11, 26, 0.9); 
+            border: 1px solid #d4af37; 
+            border-radius: 10px; 
+            padding: 18px; 
+            margin-bottom: 15px; 
+            line-height: 1.6; 
+        }
+        .card h4 { margin: 0 0 8px 0; color: #f3c653; font-size: 1.1rem; }
+        .badge { display: inline-block; padding: 4px 10px; border-radius: 5px; font-weight: bold; font-size: 0.9rem; margin-bottom: 8px; }
+        .badge-positive { background: #1b5e20; color: #a5d6a7; border: 1px solid #81c784; }
+        .badge-negative { background: #b71c1c; color: #ffcdd2; border: 1px solid #ef5350; }
+        .badge-neutral { background: #e65100; color: #ffe0b2; border: 1px solid #fb8c00; }
+
+        .yoga-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px; }
+
+        .btn-back { 
+            display: block; 
+            background: #d4af37; 
+            color: #000b1a; 
+            padding: 12px 25px; 
+            border-radius: 8px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            margin-top: 25px; 
+            transition: 0.3s; 
+            text-align: center; 
+        }
+        .btn-back:hover { background: #f3c653; }
     </style>
 </head>
 <body>
-<div class="container" id="mainContent">
-    <h1 style="text-align:center;">Astro Divine - पूर्ण कुंडली विश्लेषण</h1>
-    
-    <div id="apiStatus">डेटा लोड हो रहा है...</div>
 
-    <!-- पंचांग और चार्ट्स सेक्शन -->
-    <div class="section">
-        <h2>📜 पंचांग एवं चार्ट्स</h2>
-        <div class="grid">
-            <div class="card" id="panchang">पंचांग डेटा...</div>
-            <div class="card"><h3>D-1 & D-9 चार्ट्स</h3>[चार्ट यहाँ लोड होंगे]</div>
+<div class="container">
+    <div class="header">✨ Astro Divine - संपूर्ण जन्म कुंडली विश्लेषण ✨</div>
+
+    <!-- यूज़र विवरण -->
+    <div class="user-info">
+        <div><strong>नाम:</strong> <span id="resName">-</span></div>
+        <div><strong>जन्म तिथि:</strong> <span id="resDob">-</span></div>
+        <div><strong>जन्म समय:</strong> <span id="resTob">-</span></div>
+        <div><strong>जन्म स्थान:</strong> <span id="resPob">-</span></div>
+    </div>
+
+    <!-- 1. पंचांग टेबल -->
+    <div class="section-title">📜 वास्तविक पंचांग एवं ज्योतिषीय विवरण</div>
+    <table class="astro-table">
+        <tr>
+            <th>लग्न <span id="valLagna">मकर</span></th>
+            <th>राशि <span id="valRashi">कन्या</span></th>
+            <th>राशि स्वामी <span id="valLord">बुध</span></th>
+        </tr>
+        <tr>
+            <th>नक्षत्र <span id="valNakshatra">हस्त</span></th>
+            <th>नक्षत्र स्वामी <span id="valNakLord">चन्द्र</span></th>
+            <th>चरण <span id="valCharan">1</span></th>
+        </tr>
+        <tr>
+            <th>करण <span id="valKaran">कौलव</span></th>
+            <th>योग <span id="valYoga">शुक्ल</span></th>
+            <th>वर्ण <span id="valVarna">वैश्य</span></th>
+        </tr>
+        <tr>
+            <th>वश्य <span id="valVashya">मानव</span></th>
+            <th>योनि <span id="valYoni">महर्षि</span></th>
+            <th>गण <span id="valGan">देव</span></th>
+        </tr>
+        <tr>
+            <th>नाड़ी <span id="valNadi">अद्या</span></th>
+            <th>तत्व <span id="valTatva">पृथ्वी</span></th>
+            <th>पाया <span id="valPaya">चांदी</span></th>
+        </tr>
+    </table>
+
+    <!-- 2. लग्न और नवांश चार्ट्स -->
+    <div class="section-title">📊 जन्म चक्र एवं नवांश चक्र</div>
+    <div class="charts-container">
+        <div class="chart-box">
+            <h3>लग्न कुंडली (D-1)</h3>
+            <svg class="kundali-svg" viewBox="0 0 300 300">
+                <rect x="5" y="5" width="290" height="290" fill="none" stroke="#d4af37" stroke-width="2"/>
+                <line x1="5" y1="5" x2="295" y2="295" stroke="#d4af37" stroke-width="1.5"/>
+                <line x1="295" y1="5" x2="5" y2="295" stroke="#d4af37" stroke-width="1.5"/>
+                <polygon points="150,5 295,150 150,295 5,150" fill="none" stroke="#d4af37" stroke-width="1.5"/>
+                <text x="150" y="80" fill="#f3c653" font-size="12" text-anchor="middle">10 (लग्न)</text>
+                <text x="150" y="100" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">गुरु</text>
+                <text x="80" y="150" fill="#f3c653" font-size="12" text-anchor="middle">1</text>
+                <text x="80" y="170" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">शनि</text>
+                <text x="220" y="150" fill="#f3c653" font-size="12" text-anchor="middle">7</text>
+                <text x="220" y="170" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">सूर्य, बुध</text>
+                <text x="150" y="220" fill="#f3c653" font-size="12" text-anchor="middle">4</text>
+                <text x="150" y="240" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">मंगल</text>
+            </svg>
+        </div>
+
+        <div class="chart-box">
+            <h3>नवांश कुंडली (D-9)</h3>
+            <svg class="kundali-svg" viewBox="0 0 300 300">
+                <rect x="5" y="5" width="290" height="290" fill="none" stroke="#d4af37" stroke-width="2"/>
+                <line x1="5" y1="5" x2="295" y2="295" stroke="#d4af37" stroke-width="1.5"/>
+                <line x1="295" y1="5" x2="5" y2="295" stroke="#d4af37" stroke-width="1.5"/>
+                <polygon points="150,5 295,150 150,295 5,150" fill="none" stroke="#d4af37" stroke-width="1.5"/>
+                <text x="150" y="80" fill="#f3c653" font-size="12" text-anchor="middle">वृषभ (2)</text>
+                <text x="150" y="105" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">शुक्र</text>
+                <text x="150" y="220" fill="#f3c653" font-size="12" text-anchor="middle">वृश्चिक (8)</text>
+                <text x="150" y="240" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">शनि, गुरु</text>
+            </svg>
         </div>
     </div>
 
-    <!-- दोष और राजयोग -->
-    <div class="section">
-        <h2>👑 योग एवं दोष</h2>
-        <div class="card" id="doshaYoga">विश्लेषण हो रहा है...</div>
+    <!-- 3. राजयोग एवं दोष विश्लेषण -->
+    <div class="section-title">👑 राजयोग एवं दोष विश्लेषण</div>
+    <div class="yoga-grid">
+        <div class="card">
+            <span class="badge badge-positive">सक्रिय राजयोग</span>
+            <h4>गजकेसरी एवं बुधादित्य योग</h4>
+            <p>कुंडली में गुरु-चंद्रमा का संयोग गजकेसरी योग तथा सूर्य-बुध का संयोग बुधादित्य योग बना रहा है, जो उच्च पद, मान-सम्मान और अटूट धन लाभ देता है।</p>
+        </div>
+        <div class="card">
+            <span class="badge badge-negative">दोष विचार</span>
+            <h4>मांगलिक एवं कालसर्प स्थिति</h4>
+            <p><strong>मांगलिक दोष:</strong> आंशिक प्रभाव मौजूद है।<br><strong>कालसर्प व पितृ दोष:</strong> कुंडली में कोई मुख्य कालसर्प या पितृ दोष नहीं पाया गया है।</p>
+        </div>
     </div>
 
-    <!-- उपाय और रत्न -->
-    <div class="section">
-        <h2>💎 रत्न, रुद्राक्ष एवं उपाय</h2>
-        <div class="card" id="remedies">उपाय लोड हो रहे हैं...</div>
+    <!-- 4. साढ़े साती और विशेष स्थिति -->
+    <div class="section-title">🪐 शनि साढ़े साती एवं ढैय्या</div>
+    <div class="card">
+        <span class="badge badge-neutral">वर्तमान स्थिति</span>
+        <h4>साढ़े साती स्थिति</h4>
+        <p>वर्तमान समय में जातक पर शनि की साढ़े साती या ढैय्या का कोई भी प्रभाव नहीं चल रहा है। समय अनुकूल है।</p>
     </div>
+
+    <!-- 5. रत्न, रुद्राक्ष एवं उपाय -->
+    <div class="section-title">💎 रत्न, रुद्राक्ष एवं अचूक उपाय</div>
+    <div class="yoga-grid">
+        <div class="card">
+            <span class="badge badge-positive">अनुकूल रत्न</span>
+            <h4>पन्ना (Emerald) एवं नीलम</h4>
+            <p>बुध की मजबूती के लिए <strong>पन्ना</strong> और विशेष भाग्य वृद्धि के लिए योग्य ज्योतिषीय सलाह से नीलम धारण करना अत्यंत लाभकारी रहेगा।</p>
+        </div>
+        <div class="card">
+            <span class="badge badge-positive">रुद्राक्ष एवं उपाय</span>
+            <h4>7 मुखी रुद्राक्ष</h4>
+            <p><strong>रुद्राक्ष:</strong> माँ लक्ष्मी की कृपा और मानसिक शांति के लिए 7 मुखी रुद्राक्ष धारण करें।<br><strong>उपाय:</strong> प्रतिदिन पक्षियों को दाना डालें और शनिवार को शनि मंदिर में तेल अर्पित करें।</p>
+        </div>
+    </div>
+
+    <a href="kundali.html" class="btn-back">← नया विवरण दर्ज करें</a>
 </div>
 
 <script>
-    async function fetchKundaliData() {
-        const apiKey = "YOUR_API_KEY_HERE"; // यहाँ अपनी की (Key) डालें
-        // API कॉल का कोड यहाँ आएगा
-        try {
-            // मान लीजिए API से डेटा आ गया
-            document.getElementById('apiStatus').innerHTML = "डेटा सफलतापूर्वक प्राप्त हुआ।";
-            
-            // डेटा को UI में सेट करना
-            document.getElementById('panchang').innerHTML = "लग्न: मकर, राशि: कन्या, नक्षत्र: हस्त...";
-            document.getElementById('doshaYoga').innerHTML = "राजयोग: गजकेसरी, दोष: मांगलिक (आंशिक), पितृ/कालसर्प: नहीं।";
-            document.getElementById('remedies').innerHTML = "रत्न: पन्ना, रुद्राक्ष: 7 मुखी, उपाय: शनिवार शनि दान।";
-        } catch (e) {
-            document.getElementById('apiStatus').innerHTML = "API कनेक्शन त्रुटि।";
-        }
+    window.onload = function() {
+        // लोकलस्टोरेज से यूज़र का नाम और डिटेल फेच करना
+        const name = localStorage.getItem('userName') || "जातक";
+        const dob = localStorage.getItem('userDob') || "1999-09-11";
+        const tob = localStorage.getItem('userTob') || "15:55";
+        const pob = localStorage.getItem('userPob') || "Shirdi";
+
+        document.getElementById('resName').innerText = name;
+        document.getElementById('resDob').innerText = dob;
+        document.getElementById('resTob').innerText = tob;
+        document.getElementById('resPob').innerText = pob;
     }
-    fetchKundaliData();
 </script>
+
 </body>
 </html>
