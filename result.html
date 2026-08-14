@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -16,11 +17,31 @@
 
         /* सेक्शन बॉक्स */
         .section-box { background: rgba(0, 31, 63, 0.9); border: 2px solid #d4af37; border-radius: 15px; padding: 15px; margin-bottom: 15px; }
-        .section-title { color: #f3c653; font-size: 1.1rem; border-bottom: 1px solid #d4af37; padding-bottom: 5px; margin-bottom: 10px; font-weight: bold; }
+        .section-title { color: #f3c653; font-size: 1.1rem; border-bottom: 1px solid #d4af37; padding-bottom: 5px; margin-bottom: 15px; font-weight: bold; text-align: center; }
         
-        /* चार्ट या ग्रिड */
-        .chart-placeholder { text-align: center; padding: 30px; border: 1px dashed #d4af37; border-radius: 10px; color: #fff; background: #000b1a; margin-bottom: 10px; }
+        /* पारंपरिक उत्तर भारतीय कुंडली चार्ट डिजाइन */
+        .kundali-chart { width: 100%; aspect-ratio: 1; border: 2px solid #d4af37; background: #000b1a; position: relative; margin-bottom: 15px; box-sizing: border-box; }
+        .kundali-chart::before, .kundali-chart::after { content: ""; position: absolute; background: #d4af37; }
+        /* तिरछी रेखाएं डायगोनल */
+        .line-1 { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top right, transparent 49.5%, #d4af37 49.5%, #d4af37 50.5%, transparent 50.5%), linear-gradient(to bottom right, transparent 49.5%, #d4af37 49.5%, #d4af37 50.5%, transparent 50.5%); }
+        /* अंदर का चौकोर डायमंड बॉक्स */
+        .inner-diamond { position: absolute; top: 25%; left: 25%; width: 50%; height: 50%; border: 2px solid #d4af37; transform: rotate(45deg); box-sizing: border-box; }
         
+        /* भाव नंबर और ग्रह लिखने की शैली */
+        .house { position: absolute; font-size: 0.75rem; color: #f3c653; text-align: center; padding: 2px; }
+        .h1 { top: 38%; left: 45%; }
+        .h2 { top: 8%; left: 23%; }
+        .h3 { top: 2%; left: 38%; }
+        .h4 { top: 38%; left: 5%; }
+        .h5 { top: 62%; left: 5%; }
+        .h6 { top: 78%; left: 23%; }
+        .h7 { top: 60%; left: 45%; }
+        .h8 { top: 78%; left: 63%; }
+        .h9 { top: 62%; left: 82%; }
+        .h10 { top: 38%; left: 82%; }
+        .h11 { top: 2%; left: 63%; }
+        .h12 { top: 8%; left: 45%; }
+
         .prediction-text { font-size: 0.9rem; line-height: 1.6; color: #e6e6e6; }
 
         /* बटन और लिंक्स */
@@ -46,12 +67,28 @@
         <p>📍 जन्म स्थान: <span id="res-place">Shirdi, Maharashtra</span></p>
     </div>
 
-    <!-- लग्न चार्ट बॉक्स -->
+    <!-- असली पारंपरिक लग्न चक्र चार्ट बॉक्स -->
     <div class="section-box">
         <div class="section-title">🪐 लग्न चक्र (Lagn Chart)</div>
-        <div class="chart-placeholder">
-            [ लग्न कुंडली चक्र यहाँ प्रदर्शित होगा ]
+        <div class="kundali-chart">
+            <div class="line-1"></div>
+            <div class="inner-diamond"></div>
+            
+            <!-- 12 भावों की संख्या और ग्रहों की स्थिति -->
+            <div class="house h1">1<br><b>सूर्य, बुध</b></div>
+            <div class="house h2">2</div>
+            <div class="house h3">3<br><b>शुक्र</b></div>
+            <div class="house h4">4</div>
+            <div class="house h5">5<br><b>गुरु</b></div>
+            <div class="house h6">6</div>
+            <div class="house h7">7<br><b>राहु</b></div>
+            <div class="house h8">8</div>
+            <div class="house h9">9<br><b>शनि</b></div>
+            <div class="house h10">10</div>
+            <div class="house h11">11<br><b>चंद्र</b></div>
+            <div class="house h12">12<br><b>केतु</b></div>
         </div>
+        <p style="text-align: center; font-size: 0.8rem; color: #a6c1ee; margin: 5px 0 0 0;">* पारंपरिक उत्तर भारतीय पद्धति के अनुसार लग्न चक्र</p>
     </div>
 
     <!-- मुख्य फलादेश -->
