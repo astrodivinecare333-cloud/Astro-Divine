@@ -3,53 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Astro Divine</title>
+    <title>Astro Divine - Royal Astrology</title>
     <style>
+        /* रॉयल ब्लू बैकग्राउंड */
         body { 
-            background-color: #0a0f1e; 
-            color: #fff; 
+            background: linear-gradient(135deg, #001f3f 0%, #000b1a 100%); 
+            color: #d4af37; 
             text-align: center; 
             padding: 20px; 
-            font-family: 'Georgia', serif; 
+            font-family: 'Georgia', serif;
+            min-height: 100vh;
         }
-        /* वही बॉर्डर स्टाइल जो फोटो में है */
-        .box-style { 
-            background: #0a0f1e; 
-            border: 2px solid #d4af37; 
-            border-radius: 20px; 
-            padding: 20px; 
+        
+        /* गोल्डन बॉर्डर और रॉयल लुक बॉक्स */
+        .royal-box { 
+            background: rgba(0, 31, 63, 0.8); 
+            border: 3px solid #d4af37; 
+            border-radius: 25px; 
+            padding: 25px; 
             margin: 20px auto; 
-            max-width: 400px; 
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+            max-width: 450px; 
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
         }
-        .photo { width: 100%; border-radius: 15px; margin-bottom: 10px; }
         
-        h2 { color: #d4af37; font-size: 1.4rem; margin-bottom: 20px; border-bottom: 1px solid #d4af37; display: inline-block; padding-bottom: 5px; }
+        .photo { width: 100%; border-radius: 15px; border: 2px solid #d4af37; margin-bottom: 20px; }
         
+        h2 { color: #d4af37; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
+        
+        /* गोल्डन बटन स्टाइल */
         a { 
             display: block; 
-            background: #151c2f; 
-            color: #d4af37; 
+            background: #d4af37; 
+            color: #001f3f; 
             padding: 15px; 
             margin: 15px 0; 
             text-decoration: none; 
-            border-radius: 10px; 
+            border-radius: 50px; 
             font-weight: bold; 
-            border: 1px solid #d4af37; 
+            border: 2px solid #d4af37;
+            transition: 0.3s;
         }
-        a:hover { background: #d4af37; color: #0a0f1e; }
+        a:hover { background: transparent; color: #d4af37; }
     </style>
 </head>
 <body>
 
-    <!-- फोटो वाला बॉक्स -->
-    <div class="box-style">
+    <!-- प्रोफाइल फोटो बॉक्स -->
+    <div class="royal-box">
         <img src="ganesh.png" class="photo" alt="Astro Divine">
     </div>
 
-    <!-- कांटेक्ट वाला बॉक्स -->
-    <div class="box-style">
-        <h2 class="section-title">Consultation & Contact</h2>
+    <!-- कंसल्टेशन बॉक्स -->
+    <div class="royal-box">
+        <h2>Consultation & Contact</h2>
         <a href="https://wa.me/919145311647">WhatsApp पर संपर्क करें</a>
         <a href="https://www.instagram.com/astrodivinecare?igsh=Y2ZhamNhZHNzMXQx">Instagram पर फॉलो करें</a>
         <a href="https://youtube.com/@astrodivinecare?si=FTx0XaVWMrYGwuAD">YouTube चैनल देखें</a>
