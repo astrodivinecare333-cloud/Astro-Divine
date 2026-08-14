@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -6,119 +5,155 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>कुंडली फलादेश - Astro Divine</title>
     <style>
-        body { background: linear-gradient(135deg, #001f3f 0%, #000b1a 100%); color: #d4af37; font-family: 'Georgia', serif; margin: 0; padding: 15px; min-height: 100vh; }
-        .container { max-width: 480px; margin: auto; }
-        
-        /* हेडर और प्रोफाइल कार्ड */
-        .header { background: #d4af37; color: #000b1a; padding: 15px; text-align: center; font-weight: bold; font-size: 1.2rem; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .profile-card { background: rgba(0, 31, 63, 0.9); border: 2px solid #d4af37; border-radius: 15px; padding: 15px; margin-bottom: 20px; box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
-        .profile-card p { margin: 8px 0; font-size: 0.95rem; color: #fff; }
-        .profile-card span { color: #f3c653; font-weight: bold; }
-
-        /* सेक्शन बॉक्स */
-        .section-box { background: rgba(0, 31, 63, 0.9); border: 2px solid #d4af37; border-radius: 15px; padding: 15px; margin-bottom: 15px; }
-        .section-title { color: #f3c653; font-size: 1.1rem; border-bottom: 1px solid #d4af37; padding-bottom: 5px; margin-bottom: 15px; font-weight: bold; text-align: center; }
-        
-        /* पारंपरिक उत्तर भारतीय कुंडली चार्ट डिजाइन */
-        .kundali-chart { width: 100%; aspect-ratio: 1; border: 2px solid #d4af37; background: #000b1a; position: relative; margin-bottom: 15px; box-sizing: border-box; }
-        .kundali-chart::before, .kundali-chart::after { content: ""; position: absolute; background: #d4af37; }
-        /* तिरछी रेखाएं डायगोनल */
-        .line-1 { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top right, transparent 49.5%, #d4af37 49.5%, #d4af37 50.5%, transparent 50.5%), linear-gradient(to bottom right, transparent 49.5%, #d4af37 49.5%, #d4af37 50.5%, transparent 50.5%); }
-        /* अंदर का चौकोर डायमंड बॉक्स */
-        .inner-diamond { position: absolute; top: 25%; left: 25%; width: 50%; height: 50%; border: 2px solid #d4af37; transform: rotate(45deg); box-sizing: border-box; }
-        
-        /* भाव नंबर और ग्रह लिखने की शैली */
-        .house { position: absolute; font-size: 0.75rem; color: #f3c653; text-align: center; padding: 2px; }
-        .h1 { top: 38%; left: 45%; }
-        .h2 { top: 8%; left: 23%; }
-        .h3 { top: 2%; left: 38%; }
-        .h4 { top: 38%; left: 5%; }
-        .h5 { top: 62%; left: 5%; }
-        .h6 { top: 78%; left: 23%; }
-        .h7 { top: 60%; left: 45%; }
-        .h8 { top: 78%; left: 63%; }
-        .h9 { top: 62%; left: 82%; }
-        .h10 { top: 38%; left: 82%; }
-        .h11 { top: 2%; left: 63%; }
-        .h12 { top: 8%; left: 45%; }
-
-        .prediction-text { font-size: 0.9rem; line-height: 1.6; color: #e6e6e6; }
-
-        /* बटन और लिंक्स */
-        .btn { display: block; width: 100%; background: #d4af37; color: #000b1a; padding: 14px; border: none; border-radius: 10px; font-size: 1rem; font-weight: bold; text-align: center; text-decoration: none; margin-top: 15px; box-sizing: border-box; }
-        .btn:hover { background: #f3c653; }
-        
-        .goog-te-combo { background: #000b1a; color: #d4af37; border: 1px solid #d4af37; padding: 5px; border-radius: 5px; margin-bottom: 15px; width: 100%; }
+        body { 
+            background: linear-gradient(135deg, #001f3f 0%, #000b1a 100%); 
+            color: #d4af37; 
+            font-family: 'Georgia', serif; 
+            margin: 0; 
+            padding: 20px; 
+            min-height: 100vh; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: rgba(0, 31, 63, 0.95); 
+            border: 2px solid #d4af37; 
+            border-radius: 15px; 
+            padding: 25px; 
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4); 
+        }
+        .header { 
+            background: #d4af37; 
+            color: #000b1a; 
+            padding: 15px; 
+            text-align: center; 
+            font-weight: bold; 
+            font-size: 1.3rem; 
+            border-radius: 10px; 
+            margin-bottom: 20px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
+        }
+        .user-info { 
+            background: rgba(0, 11, 26, 0.8); 
+            border: 1px solid #d4af37; 
+            border-radius: 10px; 
+            padding: 15px; 
+            margin-bottom: 20px; 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: space-between; 
+            font-size: 1rem; 
+        }
+        .user-info div { 
+            margin: 5px 10px; 
+            color: #f3c653; 
+        }
+        .section-title { 
+            color: #f3c653; 
+            border-bottom: 1px solid #d4af37; 
+            padding-bottom: 5px; 
+            margin-top: 25px; 
+            margin-bottom: 15px; 
+            font-size: 1.2rem; 
+        }
+        .card-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); 
+            gap: 15px; 
+        }
+        .card { 
+            background: rgba(0, 11, 26, 0.9); 
+            border: 1px solid #d4af37; 
+            border-radius: 10px; 
+            padding: 15px; 
+            text-align: center; 
+        }
+        .card h3 { 
+            margin-top: 0; 
+            color: #d4af37; 
+            font-size: 1.1rem; 
+        }
+        .btn-back { 
+            display: inline-block; 
+            background: #d4af37; 
+            color: #000b1a; 
+            padding: 10px 20px; 
+            border-radius: 8px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            margin-top: 25px; 
+            transition: 0.3s; 
+        }
+        .btn-back:hover { 
+            background: #f3c653; 
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- भाषा विकल्प -->
-    <div id="google_translate_element"></div>
+    <div class="header">✨ Astro Divine - संपूर्ण जन्म कुंडली विश्लेषण ✨</div>
 
-    <div class="header">✨ Astro Divine - जन्म कुंडली विश्लेषण ✨</div>
-
-    <!-- यूज़र का विवरण बॉक्स -->
-    <div class="profile-card">
-        <p>👤 नाम: <span id="res-name">Aarryamaan Dabhade</span></p>
-        <p>📅 जन्म तिथि: <span id="res-date">11-09-1999</span></p>
-        <p>⏰ जन्म समय: <span id="res-time">15:55</span></p>
-        <p>📍 जन्म स्थान: <span id="res-place">Shirdi, Maharashtra</span></p>
+    <!-- यूज़र का विवरण जो kundali.html से आया है -->
+    <div class="user-info" id="userInfoBox">
+        <div><strong>नाम:</strong> <span id="resName">-</span></div>
+        <div><strong>जन्म तिथि:</strong> <span id="resDob">-</span></div>
+        <div><strong>जन्म समय:</strong> <span id="resTob">-</span></div>
+        <div><strong>जन्म स्थान:</strong> <span id="resPob">-</span></div>
     </div>
 
-    <!-- असली पारंपरिक लग्न चक्र चार्ट बॉक्स -->
-    <div class="section-box">
-        <div class="section-title">🪐 लग्न चक्र (Lagn Chart)</div>
-        <div class="kundali-chart">
-            <div class="line-1"></div>
-            <div class="inner-diamond"></div>
-            
-            <!-- 12 भावों की संख्या और ग्रहों की स्थिति -->
-            <div class="house h1">1<br><b>सूर्य, बुध</b></div>
-            <div class="house h2">2</div>
-            <div class="house h3">3<br><b>शुक्र</b></div>
-            <div class="house h4">4</div>
-            <div class="house h5">5<br><b>गुरु</b></div>
-            <div class="house h6">6</div>
-            <div class="house h7">7<br><b>राहु</b></div>
-            <div class="house h8">8</div>
-            <div class="house h9">9<br><b>शनि</b></div>
-            <div class="house h10">10</div>
-            <div class="house h11">11<br><b>चंद्र</b></div>
-            <div class="house h12">12<br><b>केतु</b></div>
+    <!-- मुख्य कुंडलियाँ (D-1, चंद्र और D-9) -->
+    <div class="section-title">📊 मुख्य कुंडलियाँ एवं वर्ग चार्ट</div>
+    <div class="card-grid">
+        <div class="card">
+            <h3>लग्न चार्ट (D-1)</h3>
+            <p>प्राथमिक जीवन, शरीर और व्यक्तित्व का विश्लेषण।</p>
         </div>
-        <p style="text-align: center; font-size: 0.8rem; color: #a6c1ee; margin: 5px 0 0 0;">* पारंपरिक उत्तर भारतीय पद्धति के अनुसार लग्न चक्र</p>
+        <div class="card">
+            <h3>चंद्र चार्ट</h3>
+            <p>मानसिक स्थिति, स्वभाव और भावनात्मक बल।</p>
+        </div>
+        <div class="card">
+            <h3>नवांश चार्ट (D-9)</h3>
+            <p>विवाह, भाग्य और जीवन के उत्तरार्ध का सूक्ष्म फलादेश।</p>
+        </div>
     </div>
 
-    <!-- मुख्य फलादेश -->
-    <div class="section-box">
-        <div class="section-title">🔮 संक्षिप्त फलादेश एवं भविष्यफल</div>
-        <p class="prediction-text">
-            आपकी कुंडली के अनुसार आपका व्यक्तित्व प्रभावशाली है। आपके जीवन में नेतृत्व करने की क्षमता उत्तम है। वर्तमान गोचर आपके करियर और व्यापार के लिए बेहद अनुकूल दिशा में आगे बढ़ रहा है। नियमित रूप से इष्ट आराधना करने से विशेष लाभ मिलेगा।
-        </p>
+    <!-- दोष विचार -->
+    <div class="section-title">⚠️ दोष विचार एवं विश्लेषण</div>
+    <div class="card">
+        <p>कालसर्प दोष, मांगलिक दोष और अन्य प्रमुख योगों की स्थिति यहाँ प्रदर्शित होगी ताकि सटीक निवारण किया जा सके।</p>
     </div>
 
-    <!-- शुभ योग एवं रत्न -->
-    <div class="section-box">
-        <div class="section-title">💎 भाग्यशाली रत्न एवं अंक</div>
-        <p class="prediction-text">
-            • <b>शुभ रत्न:</b> माणिक्य या पुखराज (ज्योतिषी की सलाह से पहनें)<br>
-            • <b>शुभ अंक:</b> 1, 3, 9<br>
-            • <b>शुभ रंग:</b> सुनहरा (Golden) और रॉयल ब्लू
-        </p>
+    <!-- रत्न एवं उपाय -->
+    <div class="section-title">💎 रत्न, पूजा एवं उपाय</div>
+    <div class="card">
+        <p>कुंडली के ग्रहों के बल के आधार पर अनुकूल रत्न, रुद्राक्ष, दान और आवश्यक पूजा-पाठ के निर्देश।</p>
     </div>
 
-    <a href="kundali.html" class="btn">← नई कुंडली देखें (Back)</a>
+    <!-- महादशा -->
+    <div class="section-title">⏳ विंशोत्तरी महादशा एवं अंतर्दशा</div>
+    <div class="card">
+        <p>वर्तमान में चल रहे ग्रह चक्र और जीवन पर उनके प्रभाव का काल-क्रम।</p>
+    </div>
+
+    <a href="kundali.html" class="btn-back">← नया विवरण दर्ज करें</a>
 </div>
 
-<!-- ट्रांसलेट स्क्रिप्ट -->
-<script type="text/javascript">
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({pageLanguage: 'hi', includedLanguages: 'hi,mr,en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+<script>
+    // लोकल स्टोरेज से डेटा लोड करके रिजल्ट पेज पर दिखाना
+    window.onload = function() {
+        const name = localStorage.getItem('userName');
+        const dob = localStorage.getItem('userDob');
+        const tob = localStorage.getItem('userTob');
+        const pob = localStorage.getItem('userPob');
+
+        if(name) document.getElementById('resName').innerText = name;
+        if(dob) document.getElementById('resDob').innerText = dob;
+        if(tob) document.getElementById('resTob').innerText = tob;
+        if(pob) document.getElementById('resPob').innerText = pob;
     }
 </script>
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 </body>
 </html>
