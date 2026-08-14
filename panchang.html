@@ -4,36 +4,111 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>दैनिक पंचांग - Astro Divine</title>
+    <!-- भाषा बदलने के लिए स्टाइल -->
     <style>
+        .goog-te-combo {
+            background: #000b1a;
+            color: #d4af37;
+            border: 1px solid #d4af37;
+            padding: 6px 10px;
+            border-radius: 5px;
+            font-family: 'Georgia', serif;
+            cursor: pointer;
+        }
+        .goog-logo-link, .goog-te-banner-frame { display: none !important; }
+        body { top: 0 !important; }
+        
         body { background: linear-gradient(135deg, #001f3f 0%, #000b1a 100%); color: #d4af37; text-align: center; padding: 15px; font-family: 'Georgia', serif; min-height: 100vh; }
-        .royal-box { background: rgba(0, 31, 63, 0.85); border: 3px solid #d4af37; border-radius: 20px; padding: 20px; margin: 15px auto; max-width: 450px; text-align: left; box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
+        .royal-box { background: rgba(0, 31, 63, 0.85); border: 3px solid #d4af37; border-radius: 20px; padding: 20px; margin: 15px auto; max-width: 500px; text-align: left; box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
         .logo { width: 100%; border-radius: 12px; border: 1px solid #d4af37; margin-bottom: 15px; }
         h2 { color: #d4af37; text-align: center; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; font-size: 1.3rem; }
-        h3 { color: #f3c653; text-align: center; margin-bottom: 20px; font-size: 1.1rem; border-bottom: 1px solid #d4af37; padding-bottom: 8px; }
-        p { font-size: 0.95rem; line-height: 1.6; margin: 10px 0; }
-        .scroll-box { background: #fff8dc; color: #2c1d0c; border: 2px solid #d4af37; border-radius: 12px; padding: 15px; margin-bottom: 20px; }
+        h3 { color: #f3c653; font-size: 1.1rem; border-bottom: 1px solid #d4af37; padding-bottom: 5px; margin-top: 0; }
+        p { font-size: 0.95rem; line-height: 1.6; margin: 8px 0; color: #fff; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; background: rgba(0, 0, 0, 0.3); padding: 12px; border-radius: 10px; }
+        .grid-2 p { margin: 4px 0; font-size: 0.9rem; color: #d4af37; }
+        
+        /* शुभ और अशुभ समय के बॉक्स */
+        .lucky-box { background: rgba(46, 125, 50, 0.3); border: 2px solid #4caf50; border-radius: 12px; padding: 12px; margin-top: 15px; text-align: center; }
+        .unlucky-box { background: rgba(198, 40, 40, 0.3); border: 2px solid #ef5350; border-radius: 12px; padding: 12px; margin-top: 15px; text-align: center; }
+        
         .back-link { display: block; text-align: center; margin-top: 20px; color: #d4af37; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
     <div class="royal-box" style="text-align: center;">
         <img src="ganesh.png" class="logo" alt="Astro Divine Logo">
-        <h2>📅 दैनिक पंचांग</h2>
-        <p style="text-align: center; font-weight: bold;">शुक्रवार | 14 अगस्त 2026</p>
+        
+        <!-- भाषा बदलने वाला बटन -->
+        <div id="google_translate_element" style="margin: 10px 0;"></div>
+        <script type="text/javascript">
+            function googleTranslateElementInit() {
+                new google.translate.TranslateElement({
+                    pageLanguage: 'hi',
+                    includedLanguages: 'hi,mr,en',
+                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+                }, 'google_translate_element');
+            }
+        </script>
+        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+        <h2>📅 आज का पंचांग</h2>
+        <p style="text-align: center; font-size: 0.9rem; color: #f3c653;">शुक्रवार, 14 अगस्त 2026 | मुंबई, महाराष्ट्र</p>
     </div>
+    
+    <!-- मुख्य खगोलीय विवरण -->
     <div class="royal-box">
-        <div class="scroll-box">
-            <h3>पंचांग विवरण</h3>
-            <p><b>तिथि:</b> प्रतिपदा</p>
-            <p><b>नक्षत्र:</b> पूर्वाफाल्गुनी</p>
-            <p><b>योग:</b> शिव</p>
-            <p><b>करण:</b> कौलव</p>
-            <p><b>दिनमान:</b> 13:28 Hrs</p>
+        <h3>✨ खगोलीय एवं पंचांग गणना</h3>
+        <div class="grid-2">
+            <p>☀️ <strong>सूर्य राशि:</strong> कर्क</p>
+            <p>🌙 <strong>चंद्र राशि:</strong> सिंह</p>
+            <p>📜 <strong>विक्रम संवत:</strong> 2083</p>
+            <p>📜 <strong>शक संवत:</strong> 1948</p>
+            <p>🌧️ <strong>ऋतु:</strong> वर्षा</p>
+            <p>🌍 <strong>अयन:</strong> दक्षिणायन</p>
         </div>
-        <h3>✨ शुभ मुहूर्त & राहुकाल</h3>
-        <p><b>शुभ मुहूर्त (Abhijit):</b> 13:28 Hrs</p>
-        <p><b>राहुकाल:</b> 13:59 Hrs</p>
     </div>
+
+    <!-- सूर्योदय एवं चंद्रमा विवरण -->
+    <div class="royal-box">
+        <h3>🌅 सूर्य और चंद्रमा स्थिति</h3>
+        <div class="grid-2">
+            <p>🌄 <strong>सूर्योदय:</strong> 06:19 AM</p>
+            <p>🌇 <strong>सूर्यास्त:</strong> 07:06 PM</p>
+            <p>🌕 <strong>चंद्रोदय:</strong> 07:41 AM</p>
+            <p>🌑 <strong>चंद्रास्त:</strong> 08:19 PM</p>
+        </div>
+        <p style="margin-top: 10px; text-align: center;">🌿 <strong>ऋतु:</strong> वर्षा ऋतु</p>
+    </div>
+
+    <!-- मुख्य तिथियां और नक्षत्र -->
+    <div class="royal-box">
+        <h3>⭐ तिथि, नक्षत्र एवं योग</h3>
+        <p>📿 <strong>तिथि:</strong> शुक्ल द्वितीया (18:48:24 तक)</p>
+        <p>✨ <strong>नक्षत्र:</strong> पूर्व फाल्गुनी (27:44:36 तक)</p>
+        <p>⚡ <strong>योग:</strong> परिधि (09:28:39 तक)</p>
+        <p>🎊 <strong>आज के त्योहार:</strong> चन्द्र दर्शन (Chandra Darshan)</p>
+    </div>
+
+    <!-- शुभ और अशुभ समय -->
+    <div class="royal-box">
+        <h3>⏰ आज का शुभ व अशुभ समय</h3>
+        
+        <div class="lucky-box">
+            <p style="color: #4caf50; font-weight: bold; margin: 0;">🟢 अभिजित मुहूर्त (शुभ)</p>
+            <p style="color: #fff; font-size: 1.1rem; margin: 5px 0 0 0;">12:18 PM से 13:08 PM</p>
+        </div>
+
+        <div class="unlucky-box">
+            <p style="color: #ef5350; font-weight: bold; margin: 0;">🔴 राहुकाल (अशुभ)</p>
+            <p style="color: #fff; font-size: 1.1rem; margin: 5px 0 0 0;">11:07 AM से 12:43 PM</p>
+        </div>
+
+        <div class="unlucky-box" style="border-color: #ffa726; background: rgba(255, 167, 38, 0.3);">
+            <p style="color: #ffa726; font-weight: bold; margin: 0;">⚠️ यमघण्ट काल</p>
+            <p style="color: #fff; font-size: 1.1rem; margin: 5px 0 0 0;">15:55 PM से 17:31 PM</p>
+        </div>
+    </div>
+
     <div class="royal-box" style="text-align: center;">
         <a href="index.html" class="back-link">← वापस होम पेज पर जाएं</a>
     </div>
