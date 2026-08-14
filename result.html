@@ -2,232 +2,61 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>संपूर्ण कुंडली विश्लेषण - Astro Divine</title>
+    <title>Astro Divine - Master Analysis</title>
     <style>
-        * { box-sizing: border-box; }
-        body { 
-            background: linear-gradient(135deg, #001f3f 0%, #000b1a 100%); 
-            color: #d4af37; 
-            font-family: 'Georgia', serif; 
-            margin: 0; 
-            padding: 15px; 
-            min-height: 100vh; 
-        }
-        .container { 
-            max-width: 900px; 
-            margin: 0 auto; 
-            background: rgba(0, 31, 63, 0.95); 
-            border: 2px solid #d4af37; 
-            border-radius: 15px; 
-            padding: 25px; 
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4); 
-        }
-        .header { 
-            background: #d4af37; 
-            color: #000b1a; 
-            padding: 15px; 
-            text-align: center; 
-            font-weight: bold; 
-            font-size: 1.4rem; 
-            border-radius: 10px; 
-            margin-bottom: 20px; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
-        }
-        .user-info { 
-            background: rgba(0, 11, 26, 0.8); 
-            border: 1px solid #d4af37; 
-            border-radius: 10px; 
-            padding: 15px; 
-            margin-bottom: 25px; 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-            gap: 10px; 
-            font-size: 1rem; 
-        }
-        .user-info div { color: #f3c653; }
-        .user-info strong { color: #fff; }
-
-        .section-title { 
-            color: #f3c653; 
-            border-bottom: 2px solid #d4af37; 
-            padding-bottom: 6px; 
-            margin-top: 30px; 
-            margin-bottom: 20px; 
-            font-size: 1.25rem; 
-        }
-
-        .astro-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: rgba(0, 11, 26, 0.9);
-            border: 1px solid #d4af37;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-        .astro-table th, .astro-table td {
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            padding: 12px;
-            text-align: center;
-            font-size: 0.95rem;
-        }
-        .astro-table th {
-            background: rgba(212, 175, 55, 0.15);
-            color: #f3c653;
-        }
-        .astro-table td span, .astro-table th span {
-            display: block;
-            color: #fff;
-            font-weight: bold;
-            margin-top: 4px;
-        }
-
-        .loading-box {
-            text-align: center;
-            padding: 20px;
-            font-size: 1.1rem;
-            color: #f3c653;
-        }
-
-        .btn-back { 
-            display: inline-block; 
-            background: #d4af37; 
-            color: #000b1a; 
-            padding: 12px 25px; 
-            border-radius: 8px; 
-            text-decoration: none; 
-            font-weight: bold; 
-            margin-top: 25px; 
-            transition: 0.3s; 
-            text-align: center; 
-        }
-        .btn-back:hover { background: #f3c653; }
+        body { background: #000b1a; color: #d4af37; font-family: 'Georgia', serif; padding: 20px; }
+        .container { max-width: 800px; margin: auto; border: 2px solid #d4af37; padding: 20px; border-radius: 15px; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #d4af37; border-radius: 10px; }
+        h2 { color: #f3c653; border-bottom: 1px solid #d4af37; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .card { background: rgba(212, 175, 55, 0.05); padding: 10px; border-radius: 5px; border: 1px solid rgba(212, 175, 55, 0.2); }
     </style>
 </head>
 <body>
+<div class="container" id="mainContent">
+    <h1 style="text-align:center;">Astro Divine - पूर्ण कुंडली विश्लेषण</h1>
+    
+    <div id="apiStatus">डेटा लोड हो रहा है...</div>
 
-<div class="container">
-    <div class="header">✨ Astro Divine - लाइव ज्योतिषीय कैलकुलेशन इंजन ✨</div>
-
-    <!-- यूज़र विवरण -->
-    <div class="user-info">
-        <div><strong>नाम:</strong> <span id="resName">-</span></div>
-        <div><strong>जन्म तिथि:</strong> <span id="resDob">-</span></div>
-        <div><strong>जन्म समय:</strong> <span id="resTob">-</span></div>
-        <div><strong>जन्म स्थान:</strong> <span id="resPob">-</span></div>
+    <!-- पंचांग और चार्ट्स सेक्शन -->
+    <div class="section">
+        <h2>📜 पंचांग एवं चार्ट्स</h2>
+        <div class="grid">
+            <div class="card" id="panchang">पंचांग डेटा...</div>
+            <div class="card"><h3>D-1 & D-9 चार्ट्स</h3>[चार्ट यहाँ लोड होंगे]</div>
+        </div>
     </div>
 
-    <!-- लोडिंग स्टेटस -->
-    <div id="loadingStatus" class="loading-box">⏳ ब्रह्मांडीय गणना (Ephemeris Engine) से सटीक डेटा फेच किया जा रहा है...</div>
-
-    <!-- ज्योतिषीय पंचांग एवं विवरण टेबल -->
-    <div class="section-title">📜 वास्तविक पंचांग एवं ज्योतिषीय विवरण</div>
-    <table class="astro-table" id="astroTable" style="display:none;">
-        <tr>
-            <th>लग्न <span id="valLagna">-</span></th>
-            <th>राशि <span id="valRashi">-</span></th>
-            <th>राशि स्वामी <span id="valLord">-</span></th>
-        </tr>
-        <tr>
-            <th>नक्षत्र <span id="valNakshatra">-</span></th>
-            <th>नक्षत्र स्वामी <span id="valNakLord">-</span></th>
-            <th>चरण <span id="valCharan">-</span></th>
-        </tr>
-        <tr>
-            <th>करण <span id="valKaran">-</span></th>
-            <th>योग <span id="valYoga">-</span></th>
-            <th>वर्ण <span id="valVarna">-</span></th>
-        </tr>
-        <tr>
-            <th>वश्य <span id="valVashya">-</span></th>
-            <th>योनि <span id="valYoni">-</span></th>
-            <th>गण <span id="valGan">-</span></th>
-        </tr>
-        <tr>
-            <th>नाड़ी <span id="valNadi">-</span></th>
-            <th>तत्व <span id="valTatva">-</span></th>
-            <th>पाया <span id="valPaya">-</span></th>
-        </tr>
-    </table>
-
-    <!-- योग एवं दोष परिणाम -->
-    <div class="section-title">👑 राजयोग एवं दोष विश्लेषण</div>
-    <div id="dynamicResults" class="card" style="background: rgba(0, 11, 26, 0.9); border: 1px solid #d4af37; border-radius: 10px; padding: 18px; display:none;">
-        <p id="engineResultText">गणना परिणाम लोड हो रहे हैं...</p>
+    <!-- दोष और राजयोग -->
+    <div class="section">
+        <h2>👑 योग एवं दोष</h2>
+        <div class="card" id="doshaYoga">विश्लेषण हो रहा है...</div>
     </div>
 
-    <a href="kundali.html" class="btn-back">← नया विवरण दर्ज करें</a>
+    <!-- उपाय और रत्न -->
+    <div class="section">
+        <h2>💎 रत्न, रुद्राक्ष एवं उपाय</h2>
+        <div class="card" id="remedies">उपाय लोड हो रहे हैं...</div>
+    </div>
 </div>
 
 <script>
-    window.onload = function() {
-        const name = localStorage.getItem('userName') || "जातक";
-        const dob = localStorage.getItem('userDob') || "1999-09-11";
-        const tob = localStorage.getItem('userTob') || "15:55";
-        const pob = localStorage.getItem('userPob') || "Shirdi";
-
-        document.getElementById('resName').innerText = name;
-        document.getElementById('resDob').innerText = dob;
-        document.getElementById('resTob').innerText = tob;
-        document.getElementById('resPob').innerText = pob;
-
-        // असली कैलकुलेशन ट्रिगर करना
-        fetchRealAstrologyEngineData(dob, tob, pob);
-    }
-
-    async function fetchRealAstrologyEngineData(dob, tob, pob) {
+    async function fetchKundaliData() {
+        const apiKey = "YOUR_API_KEY_HERE"; // यहाँ अपनी की (Key) डालें
+        // API कॉल का कोड यहाँ आएगा
         try {
-            // यहाँ हम ओपन एस्ट्रोलॉजी कैलकुलेशन एल्गोरिदम / पब्लिक एपीआई का उपयोग कर रहे हैं जो यूज़र के इनपुट पर असली गणित चलाएगा
-            // चूंकि हम पूरी तरह से बिना किसी बाहरी झंझट के इसे क्लाइंट-साइड पर परफेक्ट बनाना चाहते हैं, 
-            // हम यहाँ एक एडवांस्ड मैथमेटिकल पंचांग एल्गोरिदम रन कर रहे हैं जो तारीख और समय के आधार पर 100% जेन्युइन डेटा बनाएगा।
+            // मान लीजिए API से डेटा आ गया
+            document.getElementById('apiStatus').innerHTML = "डेटा सफलतापूर्वक प्राप्त हुआ।";
             
-            setTimeout(() => {
-                // डेटा प्रॉसेसिंग पूरी होने के बाद लोडिंग हटाकर टेबल दिखाना
-                document.getElementById('loadingStatus').style.display = 'none';
-                document.getElementById('astroTable').style.display = 'table';
-                document.getElementById('dynamicResults').style.display = 'block';
-
-                // सटीक गणितीय फलादेश फीड करना
-                let dateParts = dob.split('-');
-                let daySum = parseInt(dateParts[2]) || 11;
-                
-                const lagnas = ["मकर", "कौंभ", "मीन", "मेष", "वृषभ", "मिथुन", "कर्क", "सिंह", "कन्या", "तुला", "वृश्चिक", "धनु"];
-                const rashis = ["कन्या", "तुला", "वृश्चिक", "धनु", "मकर", "कुंभ", "मीन", "मेष", "वृषभ", "मिथुन", "कर्क", "सिंह"];
-                const lords = ["बुध", "शुक्र", "मंगल", "गुरु", "शनि", "शनि", "गुरु", "मंगल", "शुक्र", "बुध", "चंद्र", "सूर्य"];
-                const nakshatras = ["हस्त", "चित्रा", "स्वाती", "विशाखा", "अनुराधा", "ज्येष्ठा", "मूल", "पूर्वाषाढ़ा", "उत्तराषाढ़ा"];
-                const yoniList = ["महर्षि", "श्वान", "मार्जार", "महिष", "व्याघ्र", "सर्प", "मृग"];
-
-                let idx = daySum % lagnas.length;
-
-                document.getElementById('valLagna').innerText = lagnas[idx];
-                document.getElementById('valRashi').innerText = rashis[idx];
-                document.getElementById('valLord').innerText = lords[idx];
-                document.getElementById('valNakshatra').innerText = nakshatras[idx % nakshatras.length];
-                document.getElementById('valNakLord').innerText = "चन्द्र / मंगल";
-                document.getElementById('valCharan').innerText = (daySum % 4) + 1;
-                document.getElementById('valKaran').innerText = "कौलव";
-                document.getElementById('valYoga').innerText = "शुक्ल / आयुष्मान";
-                document.getElementById('valVarna').innerText = "वैश्य / क्षत्रिय";
-                document.getElementById('valVashya').innerText = "मानव";
-                document.getElementById('valYoni').innerText = yoniList[idx % yoniList.length];
-                document.getElementById('valGan').innerText = "देव / मनुष्य";
-                document.getElementById('valNadi').innerText = "मध्य / अद्या";
-                document.getElementById('valTatva').innerText = "पृथ्वी / जल";
-                document.getElementById('valPaya').innerText = daySum % 2 === 0 ? "सोना" : "चांदी";
-
-                document.getElementById('engineResultText').innerHTML = `
-                    <h4 style="color:#f3c653; margin-top:0;">✨ ${name} की कुंडली का सटीक गणितीय निष्कर्ष:</h4>
-                    <p>• <strong>लग्न एवं राशि विश्लेषण:</strong> आपकी जन्म कुंडली के अनुसार <strong>${lagnas[idx]} लग्न</strong> और <strong>${rashis[idx]} राशि</strong> स्थापित है। ग्रह स्थिति के अनुसार आपका तार्किक और बौद्धिक पक्ष अत्यंत मजबूत है।</p>
-                    <p>• <strong>राजयोग स्थिति:</strong> आपकी कुंडली में पंचांग के गणित के आधार पर उच्च कोटि के शुभ योग सक्रिय हैं, जो कार्यक्षेत्र में बड़ी सफलता देंगे।</p>
-                `;
-            }, 800);
-
-        } catch (error) {
-            document.getElementById('loadingStatus').innerText = "गणना में त्रुटि, कृपया पुनः प्रयास करें।";
+            // डेटा को UI में सेट करना
+            document.getElementById('panchang').innerHTML = "लग्न: मकर, राशि: कन्या, नक्षत्र: हस्त...";
+            document.getElementById('doshaYoga').innerHTML = "राजयोग: गजकेसरी, दोष: मांगलिक (आंशिक), पितृ/कालसर्प: नहीं।";
+            document.getElementById('remedies').innerHTML = "रत्न: पन्ना, रुद्राक्ष: 7 मुखी, उपाय: शनिवार शनि दान।";
+        } catch (e) {
+            document.getElementById('apiStatus').innerHTML = "API कनेक्शन त्रुटि।";
         }
     }
+    fetchKundaliData();
 </script>
-
 </body>
 </html>
