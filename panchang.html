@@ -3,78 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>दैनिक पंचांग और राशिफल - Astro Divine</title>
+    <title>दैनिक पंचांग - Astro Divine</title>
     <style>
-        body { 
-            background: linear-gradient(135deg, #001f3f 0%, #000b1a 100%); 
-            color: #d4af37; 
-            text-align: center; 
-            padding: 15px; 
-            font-family: 'Georgia', serif;
-            min-height: 100vh;
-        }
-        .royal-box { 
-            background: rgba(0, 31, 63, 0.85); 
-            border: 3px solid #d4af37; 
-            border-radius: 20px; 
-            padding: 20px; 
-            margin: 15px auto; 
-            max-width: 450px; 
-            text-align: left; 
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-        }
+        body { background: linear-gradient(135deg, #001f3f 0%, #000b1a 100%); color: #d4af37; text-align: center; padding: 15px; font-family: 'Georgia', serif; min-height: 100vh; }
+        .royal-box { background: rgba(0, 31, 63, 0.85); border: 3px solid #d4af37; border-radius: 20px; padding: 20px; margin: 15px auto; max-width: 450px; text-align: left; box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
         .logo { width: 100%; border-radius: 12px; border: 1px solid #d4af37; margin-bottom: 15px; }
         h2 { color: #d4af37; text-align: center; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; font-size: 1.3rem; }
         h3 { color: #f3c653; text-align: center; margin-bottom: 20px; font-size: 1.1rem; border-bottom: 1px solid #d4af37; padding-bottom: 8px; }
         p { font-size: 0.95rem; line-height: 1.6; margin: 10px 0; }
-        .scroll-box {
-            background: #fff8dc;
-            color: #2c1d0c;
-            border: 2px solid #d4af37;
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-        .scroll-box h3 { color: #5a3d0b; border-bottom: 1px dashed #d4af37; }
+        .scroll-box { background: #fff8dc; color: #2c1d0c; border: 2px solid #d4af37; border-radius: 12px; padding: 15px; margin-bottom: 20px; }
         .back-link { display: block; text-align: center; margin-top: 20px; color: #d4af37; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
-
     <div class="royal-box" style="text-align: center;">
         <img src="ganesh.png" class="logo" alt="Astro Divine Logo">
-        <h2>दैनिक पंचांग और राशिफल</h2>
+        <h2>📅 दैनिक पंचांग</h2>
         <p style="text-align: center; font-weight: bold;">शुक्रवार | 14 अगस्त 2026</p>
     </div>
-
-<div class="royal-box">
-    <div class="scroll-box">
-        <h3>📅 पंचांग विवरण</h3>
-        <p><b>तिथि:</b> प्रतिपदा</p>
-        <p><b>नक्षत्र:</b> पूर्वाफाल्गुनी</p>
-        <p><b>योग:</b> शिव</p>
-        <p><b>करण:</b> कौलव</p>
-        <p><b>दिनमान:</b> 13:28 Hrs</p>
+    <div class="royal-box">
+        <div class="scroll-box">
+            <h3>पंचांग विवरण</h3>
+            <p><b>तिथि:</b> प्रतिपदा</p>
+            <p><b>नक्षत्र:</b> पूर्वाफाल्गुनी</p>
+            <p><b>योग:</b> शिव</p>
+            <p><b>करण:</b> कौलव</p>
+            <p><b>दिनमान:</b> 13:28 Hrs</p>
+        </div>
+        <h3>✨ शुभ मुहूर्त & राहुकाल</h3>
+        <p><b>शुभ मुहूर्त (Abhijit):</b> 13:28 Hrs</p>
+        <p><b>राहुकाल:</b> 13:59 Hrs</p>
     </div>
-
-    <h3>✨ शुभ मुहूर्त & राहुकाल</h3>
-    <p><b>शुभ मुहूर्त (Abhijit):</b> 13:28 Hrs</p>
-    <p><b>राहुकाल:</b> 13:59 Hrs</p>
-</div>
-
-<div class="royal-box">
-    <h3>♈ मेष राशिफल</h3>
-    <p>• कार्यक्षेत्र में नई सफलता और आर्थिक लाभ के योग।<br>• संवाद कौशल से बिगड़े काम संवरेंगे।<br>• स्वास्थ्य में सुधार और सकारात्मक ऊर्जा महसूस होगी।</p>
-</div>
-
-<div class="royal-box">
-    <h3>♉ वृषभ राशिफल</h3>
-    <p>• कार्यक्षेत्र में नई सफलता और आर्थिक लाभ के योग।<br>• संवाद कौशल से बिगड़े काम संवरेंगे।<br>• स्वास्थ्य में सुधार और सकारात्मक ऊर्जा महसूस होगी।</p>
-</div>
-
     <div class="royal-box" style="text-align: center;">
         <a href="index.html" class="back-link">← वापस होम पेज पर जाएं</a>
     </div>
-
 </body>
 </html>
