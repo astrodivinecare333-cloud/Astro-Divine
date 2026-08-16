@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -10,7 +11,7 @@
             color: #ffffff;
             font-family: sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 15px;
         }
         .container {
             max-width: 600px;
@@ -23,23 +24,54 @@
         h2 {
             text-align: center;
             color: #ffcc00;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        .sub-title {
+            text-align: center;
+            color: #ffcc00;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+        .section-box {
+            background: #0b192c;
+            border: 1px solid #ffcc00;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .section-title {
+            color: #ffcc00;
+            font-size: 15px;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed #ffcc00;
+            padding-bottom: 5px;
         }
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+        }
+        .row {
+            display: flex;
+            gap: 10px;
+        }
+        .col {
+            flex: 1;
         }
         label {
             display: block;
-            margin-bottom: 5px;
-            font-size: 14px;
+            margin-bottom: 3px;
+            font-size: 12px;
+            color: #a0d2eb;
         }
-        input, select {
+        input {
             width: 100%;
-            padding: 10px;
+            padding: 8px;
             border-radius: 5px;
             border: 1px solid #ccc;
             box-sizing: border-box;
             background: #f9f9f9;
             color: #333;
+            font-size: 14px;
         }
         button {
             width: 100%;
@@ -56,10 +88,9 @@
         button:hover {
             background-color: #e6b800;
         }
-        /* रिजल्ट सेक्शन शुरू में छुपा रहेगा */
         #result-section {
             display: none;
-            margin-top: 30px;
+            margin-top: 10px;
         }
         .score-box {
             background: #0b192c;
@@ -80,57 +111,93 @@
         }
         th, td {
             border: 1px solid #ddd;
-            padding: 10px;
+            padding: 8px;
             text-align: center;
-            font-size: 14px;
+            font-size: 13px;
         }
         th {
             background-color: #b85d00;
             color: white;
+        }
+        #loading {
+            display: none;
+            text-align: center;
+            color: #ffcc00;
+            font-size: 15px;
+            margin: 20px 0;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>✨ Astro Divine - अष्टकूट कुंडली मिलान ✨</h2>
+    <h2>✨ Astro Divine ✨</h2>
+    <div class="sub-title">अष्टकूट कुंडली मिलान एवं विस्तृत विश्लेषण</div>
 
-    <!-- स्टेप 1: जन्म विवरण फॉर्म -->
+    <!-- फॉर्म सेक्शन -->
     <div id="input-form">
-        <p style="text-align: center; color: #ffcc00; font-size: 14px;">कृपया वर और वधु की जानकारी दर्ज करें</p>
         
-        <h3 style="color: #ffcc00; border-bottom: 1px solid #ffcc00; padding-bottom: 5px;">वर की जानकारी (Boy's Details)</h3>
-        <div class="form-group">
-            <label>वर का नाम:</label>
-            <input type="text" id="boy-name" placeholder="नाम दर्ज करें">
-        </div>
-        <div class="form-group">
-            <label>जन्म तिथि, समय और स्थान:</label>
-            <input type="text" id="boy-details" placeholder="जैसे: 12-05-1998, 10:30 AM, दिल्ली">
+        <!-- वर की जानकारी बॉक्स -->
+        <div class="section-box">
+            <div class="section-title">👦 वर की जानकारी (Boy's Details)</div>
+            <div class="form-group">
+                <label>वर का पूरा नाम:</label>
+                <input type="text" id="boy-name" placeholder="नाम दर्ज करें">
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label>जन्म तिथि (DOB):</label>
+                    <input type="date" id="boy-dob">
+                </div>
+                <div class="col">
+                    <label>जन्म समय (Time):</label>
+                    <input type="time" id="boy-time">
+                </div>
+            </div>
+            <div class="form-group" style="margin-top: 10px;">
+                <label>जन्म स्थान (Birth Place):</label>
+                <input type="text" id="boy-place" placeholder="शहर / गाँव का नाम">
+            </div>
         </div>
 
-        <h3 style="color: #ffcc00; border-bottom: 1px solid #ffcc00; padding-bottom: 5px; margin-top: 25px;">वधु की जानकारी (Girl's Details)</h3>
-        <div class="form-group">
-            <label>वधु का नाम:</label>
-            <input type="text" id="girl-name" placeholder="नाम दर्ज करें">
-        </div>
-        <div class="form-group">
-            <label>जन्म तिथि, समय और स्थान:</label>
-            <input type="text" id="girl-details" placeholder="जैसे: 15-08-2000, 02:15 PM, मुंबई">
+        <!-- वधु की जानकारी बॉक्स -->
+        <div class="section-box">
+            <div class="section-title">👧 वधु की जानकारी (Girl's Details)</div>
+            <div class="form-group">
+                <label>वधु का पूरा नाम:</label>
+                <input type="text" id="girl-name" placeholder="नाम दर्ज करें">
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label>जन्म तिथि (DOB):</label>
+                    <input type="date" id="girl-dob">
+                </div>
+                <div class="col">
+                    <label>जन्म समय (Time):</label>
+                    <input type="time" id="girl-time">
+                </div>
+            </div>
+            <div class="form-group" style="margin-top: 10px;">
+                <label>जन्म स्थान (Birth Place):</label>
+                <input type="text" id="girl-place" placeholder="शहर / गाँव का नाम">
+            </div>
         </div>
 
         <button onclick="calculateMilan()">कुंडली मिलान करें</button>
     </div>
 
-    <!-- स्टेप 2: रिजल्ट सेक्शन (जो बटन दबाने के बाद दिखेगा) -->
+    <!-- लोडिंग टेक्स्ट -->
+    <div id="loading">⏳ कुंडलियों का मिलान किया जा रहा है, कृपया प्रतीक्षा करें...</div>
+
+    <!-- रिजल्ट सेक्शन -->
     <div id="result-section">
         <div class="score-box">
-            <h3 style="margin: 0 0 10px 0; color: #ffffff;">कुल गुण मिलान स्कोर</h3>
-            <div style="font-size: 36px; font-weight: bold; color: #ffcc00;">28.5 / 36</div>
-            <p style="margin: 5px 0 0 0; font-size: 13px; color: #a0d2eb;">उत्तम मिलान: विवाह के लिए यह कुंडली अत्यंत शुभ है।</p>
+            <h3 style="margin: 0 0 10px 0; color: #ffffff; font-size: 16px;">कुल गुण मिलान स्कोर</h3>
+            <div style="font-size: 32px; font-weight: bold; color: #ffcc00;">28.5 / 36</div>
+            <p style="margin: 5px 0 0 0; font-size: 12px; color: #a0d2eb;">उत्तम मिलान: विवाह के लिए यह कुंडली अत्यंत शुभ है।</p>
         </div>
 
-        <h3 style="font-size: 15px; color: #ffcc00;">📜 अष्टकूट गुण मिलान विवरण (36 गुणों में से)</h3>
+        <h3 style="font-size: 14px; color: #ffcc00;">📜 अष्टकूट गुण मिलान विवरण (36 गुणों में से)</h3>
         <table>
             <tr>
                 <th>गुण (Koot)</th>
@@ -138,78 +205,42 @@
                 <th>प्राप्त अंक</th>
                 <th>कुल अंक</th>
             </tr>
-            <tr>
-                <td>वर्ण</td>
-                <td>मानसिक अहंकार एवं कार्य स्वभाव</td>
-                <td>1.0</td>
-                <td>1.0</td>
-            </tr>
-            <tr>
-                <td>वश्य</td>
-                <td>पारस्परिक आकर्षण एवं प्रभाव</td>
-                <td>2.0</td>
-                <td>2.0</td>
-            </tr>
-            <tr>
-                <td>तारा</td>
-                <td>जन्म नक्षत्र मिलान एवं भाग्य</td>
-                <td>3.0</td>
-                <td>3.0</td>
-            </tr>
-            <tr>
-                <td>योनि</td>
-                <td>शारीरिक और जैविक मिलान</td>
-                <td>4.0</td>
-                <td>4.0</td>
-            </tr>
-            <tr>
-                <td>ग्रह मैत्री</td>
-                <td>मानसिक मैत्री एवं बौद्धिक स्तर</td>
-                <td>5.0</td>
-                <td>5.0</td>
-            </tr>
-            <tr>
-                <td>गण</td>
-                <td>स्वभाव एवं प्रवृत्ति मिलान</td>
-                <td>6.0</td>
-                <td>6.0</td>
-            </tr>
-            <tr>
-                <td>भकूट</td>
-                <td>प्रेम, परिवार और सुख-शांति</td>
-                <td>7.0</td>
-                <td>7.0</td>
-            </tr>
-            <tr>
-                <td>नाड़ी</td>
-                <td>संतान स्वास्थ्य एवं वंश वृद्धि</td>
-                <td>0.5</td>
-                <td>8.0</td>
-            </tr>
+            <tr><td>वर्ण</td><td>मानसिक अहंकार</td><td>1.0</td><td>1.0</td></tr>
+            <tr><td>वश्य</td><td>पारस्परिक आकर्षण</td><td>2.0</td><td>2.0</td></tr>
+            <tr><td>तारा</td><td>जन्म नक्षत्र मिलान</td><td>3.0</td><td>3.0</td></tr>
+            <tr><td>योनि</td><td>शारीरिक मिलान</td><td>4.0</td><td>4.0</td></tr>
+            <tr><td>ग्रह मैत्री</td><td>मानसिक मैत्री</td><td>5.0</td><td>5.0</td></tr>
+            <tr><td>गण</td><td>स्वभाव एवं प्रवृत्ति</td><td>6.0</td><td>6.0</td></tr>
+            <tr><td>भकूट</td><td>प्रेम और सुख-शांति</td><td>7.0</td><td>7.0</td></tr>
+            <tr><td>नाड़ी</td><td>संतान स्वास्थ्य</td><td>0.5</td><td>8.0</td></tr>
         </table>
 
-        <button onclick="resetForm()" style="background-color: #555; color: #fff; margin-top: 20px;">नई कुंडली मिलान करें</button>
+        <button onclick="resetForm()" style="background-color: #555; color: #fff; margin-top: 15px;">नई कुंडली मिलान करें</button>
     </div>
 </div>
 
 <script>
     function calculateMilan() {
-        // फॉर्म की वैल्यू चेक कर सकते हैं अगर जरूरी हो
         const boyName = document.getElementById('boy-name').value;
         const girlName = document.getElementById('girl-name').value;
+        const boyDob = document.getElementById('boy-dob').value;
+        const girlDob = document.getElementById('girl-dob').value;
 
-        if(!boyName || !girlName) {
-            alert("कृपया वर और वधु दोनों के नाम दर्ज करें!");
+        if(!boyName || !girlName || !boyDob || !girlDob) {
+            alert("कृपया वर और वधु दोनों के नाम और जन्म तिथि अवश्य दर्ज करें!");
             return;
         }
 
-        // फॉर्म छुपाएं और रिजल्ट दिखाएं
         document.getElementById('input-form').style.display = 'none';
-        document.getElementById('result-section').style.display = 'block';
+        document.getElementById('loading').style.display = 'block';
+
+        setTimeout(function() {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('result-section').style.display = 'block';
+        }, 1500);
     }
 
     function resetForm() {
-        // दोबारा फॉर्म दिखाएं और रिजल्ट छुपाएं
         document.getElementById('input-form').style.display = 'block';
         document.getElementById('result-section').style.display = 'none';
     }
