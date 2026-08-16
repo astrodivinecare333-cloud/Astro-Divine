@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Astro Divine - अष्टकूट कुंडली मिलान</title>
+    <title>Astro Divine - अष्टकूट कुंडली मिलान एवं विश्लेषण</title>
     <style>
         body {
             background-color: #0b192c;
@@ -63,15 +62,21 @@
             font-size: 12px;
             color: #a0d2eb;
         }
-        input {
+        input, select {
             width: 100%;
-            padding: 8px;
+            padding: 9px;
             border-radius: 5px;
             border: 1px solid #ccc;
             box-sizing: border-box;
             background: #f9f9f9;
             color: #333;
             font-size: 14px;
+        }
+        .hint-text {
+            font-size: 11px;
+            color: #a0d2eb;
+            margin-top: 3px;
+            font-style: italic;
         }
         button {
             width: 100%;
@@ -100,24 +105,27 @@
             border-radius: 8px;
             margin-bottom: 20px;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
+        .report-card {
             background: #ffffff;
             color: #333;
+            padding: 15px;
             border-radius: 6px;
-            overflow: hidden;
+            margin-top: 10px;
+            font-size: 14px;
         }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-            font-size: 13px;
+        .report-card h3 {
+            color: #b85d00;
+            margin-top: 0;
+            font-size: 16px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
         }
-        th {
-            background-color: #b85d00;
-            color: white;
+        .dosh-item {
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 4px;
         }
         #loading {
             display: none;
@@ -136,10 +144,15 @@
 
     <!-- फॉर्म सेक्शन -->
     <div id="input-form">
-        
-        <!-- वर की जानकारी बॉक्स -->
+        <!-- वर की जानकारी -->
         <div class="section-box">
             <div class="section-title">👦 वर की जानकारी (Boy's Details)</div>
+            <div class="form-group">
+                <label>सेव की गई प्रोफाइल से चुनें:</label>
+                <select id="boy-saved-select" onchange="fillBoyProfile()">
+                    <option value="">-- पुरानी प्रोफाइल चुनें (वैकल्पिक) --</option>
+                </select>
+            </div>
             <div class="form-group">
                 <label>वर का पूरा नाम:</label>
                 <input type="text" id="boy-name" placeholder="नाम दर्ज करें">
@@ -157,12 +170,19 @@
             <div class="form-group" style="margin-top: 10px;">
                 <label>जन्म स्थान (Birth Place):</label>
                 <input type="text" id="boy-place" placeholder="शहर / गाँव का नाम">
+                <div class="hint-text">💡 उदाहरण: Shirdi, Maharashtra</div>
             </div>
         </div>
 
-        <!-- वधु की जानकारी बॉक्स -->
+        <!-- वधु की जानकारी -->
         <div class="section-box">
             <div class="section-title">👧 वधु की जानकारी (Girl's Details)</div>
+            <div class="form-group">
+                <label>सेव की गई प्रोफाइल से चुनें:</label>
+                <select id="girl-saved-select" onchange="fillGirlProfile()">
+                    <option value="">-- पुरानी प्रोफाइल चुनें (वैकल्पिक) --</option>
+                </select>
+            </div>
             <div class="form-group">
                 <label>वधु का पूरा नाम:</label>
                 <input type="text" id="girl-name" placeholder="नाम दर्ज करें">
@@ -180,56 +200,138 @@
             <div class="form-group" style="margin-top: 10px;">
                 <label>जन्म स्थान (Birth Place):</label>
                 <input type="text" id="girl-place" placeholder="शहर / गाँव का नाम">
+                <div class="hint-text">💡 उदाहरण: Mumbai, India</div>
             </div>
         </div>
 
-        <button onclick="calculateMilan()">कुंडली मिलान करें</button>
+        <button onclick="calculateKundaliMilan()">कुंडली मिलान एवं विश्लेषण देखें</button>
     </div>
 
-    <!-- लोडिंग टेक्स्ट -->
-    <div id="loading">⏳ कुंडलियों का मिलान किया जा रहा है, कृपया प्रतीक्षा करें...</div>
+    <!-- लोडिंग -->
+    <div id="loading">⏳ नक्षत्रों और गुणों का मिलान किया जा रहा है...</div>
 
-    <!-- रिजल्ट सेक्शन -->
+    <!-- रिजल्ट / रिपोर्ट सेक्शन -->
     <div id="result-section">
         <div class="score-box">
-            <h3 style="margin: 0 0 10px 0; color: #ffffff; font-size: 16px;">कुल गुण मिलान स्कोर</h3>
-            <div style="font-size: 32px; font-weight: bold; color: #ffcc00;">28.5 / 36</div>
-            <p style="margin: 5px 0 0 0; font-size: 12px; color: #a0d2eb;">उत्तम मिलान: विवाह के लिए यह कुंडली अत्यंत शुभ है।</p>
+            <h3 id="display-couple-names" style="margin: 0 0 5px 0; color: #ffcc00; font-size: 17px;">वर व वधु का मिलान</h3>
+            <div style="font-size: 36px; font-weight: bold; color: #ffffff; margin-top: 5px;">28.5 / 36</div>
+            <p style="margin: 8px 0 0 0; font-size: 14px; color: #ffcc00; font-weight: bold;">उत्तम मिलान: विवाह के लिए यह बंधन अत्यंत शुभ है!</p>
         </div>
 
-        <h3 style="font-size: 14px; color: #ffcc00;">📜 अष्टकूट गुण मिलान विवरण (36 गुणों में से)</h3>
-        <table>
-            <tr>
-                <th>गुण (Koot)</th>
-                <th>विचार विषय</th>
-                <th>प्राप्त अंक</th>
-                <th>कुल अंक</th>
-            </tr>
-            <tr><td>वर्ण</td><td>मानसिक अहंकार</td><td>1.0</td><td>1.0</td></tr>
-            <tr><td>वश्य</td><td>पारस्परिक आकर्षण</td><td>2.0</td><td>2.0</td></tr>
-            <tr><td>तारा</td><td>जन्म नक्षत्र मिलान</td><td>3.0</td><td>3.0</td></tr>
-            <tr><td>योनि</td><td>शारीरिक मिलान</td><td>4.0</td><td>4.0</td></tr>
-            <tr><td>ग्रह मैत्री</td><td>मानसिक मैत्री</td><td>5.0</td><td>5.0</td></tr>
-            <tr><td>गण</td><td>स्वभाव एवं प्रवृत्ति</td><td>6.0</td><td>6.0</td></tr>
-            <tr><td>भकूट</td><td>प्रेम और सुख-शांति</td><td>7.0</td><td>7.0</td></tr>
-            <tr><td>नाड़ी</td><td>संतान स्वास्थ्य</td><td>0.5</td><td>8.0</td></tr>
-        </table>
+        <div class="report-card">
+            <h3>📊 अष्टकूट गुण मिलान विवरण</h3>
+            <div class="dosh-item"><span>वर्ण मिलान (अध्यात्म/मानसिकता):</span> <strong>1.0 / 1.0</strong></div>
+            <div class="dosh-item"><span>वश्य मिलान (पारस्परिक आकर्षण):</span> <strong>2.0 / 2.0</strong></div>
+            <div class="dosh-item"><span>तारा मिलान (भाग्य और स्वास्थ्य):</span> <strong>3.0 / 3.0</strong></div>
+            <div class="dosh-item"><span>योनि मिलान (शारीरिक/मानसिक सुख):</span> <strong>4.0 / 4.0</strong></div>
+            <div class="dosh-item"><span>ग्रह मैत्री (विचार और मित्रता):</span> <strong>5.0 / 5.0</strong></div>
+            <div class="dosh-item"><span>गण मिलान (स्वभाव सामंजस्य):</span> <strong>6.0 / 6.0</strong></div>
+            <div class="dosh-item"><span>भकूट मिलान (प्रेम और परिवार सुख):</span> <strong>7.0 / 7.0</strong></div>
+            <div class="dosh-item"><span>नाड़ी मिलान (स्वास्थ्य और संतान सुख):</span> <strong style="color: green;">8.0 / 8.0 (दोष मुक्त)</strong></div>
+        </div>
 
-        <button onclick="resetForm()" style="background-color: #555; color: #fff; margin-top: 15px;">नई कुंडली मिलान करें</button>
+        <div class="report-card" style="margin-top: 15px;">
+            <h3>📑 ज्योतिषीय विश्लेषण एवं निष्कर्ष</h3>
+            <p style="margin: 0; line-height: 1.5; color: #333;">
+                वर और वधु की कुंडलियों का यह मिलान बेहद मजबूत और armonious (सामंजस्यपूर्ण) है। दोनों के बीच वैचारिक समझ और मानसिक तालमेल उत्कृष्ट स्तर का रहेगा। ग्रह मैत्री और भकूट अनुकूल होने के कारण पारिवारिक जीवन में सुख-शांति बनी रहेगी तथा भविष्य में प्रगति के नए द्वार खुलेंगे। नाड़ी दोष न होने के कारण स्वास्थ्य और संतान पक्ष से भी पूर्ण शुभ संकेत प्राप्त हो रहे हैं। विवाह उपरांत यह जोड़ी एक-दूसरे के लिए भाग्यशाली साबित होगी।
+            </p>
+        </div>
+
+        <button onclick="resetForm()" style="background-color: #555; color: #fff; margin-top: 15px;">नया मिलान करें</button>
     </div>
 </div>
 
 <script>
-    function calculateMilan() {
+    window.onload = function() {
+        loadSavedProfiles();
+    };
+
+    function getProfiles() {
+        let p = localStorage.getItem('astro_saved_profiles');
+        return p ? JSON.parse(p) : [];
+    }
+
+    function saveProfileToStorage(name, dob, time, place, gender) {
+        if(!name) return;
+        let profiles = getProfiles();
+        let exists = profiles.some(item => item.name === name && item.gender === gender);
+        if(!exists) {
+            profiles.push({ name, dob, time, place, gender });
+            localStorage.setItem('astro_saved_profiles', JSON.stringify(profiles));
+        }
+    }
+
+    function loadSavedProfiles() {
+        let profiles = getProfiles();
+        let boySelect = document.getElementById('boy-saved-select');
+        let girlSelect = document.getElementById('girl-saved-select');
+
+        boySelect.innerHTML = '<option value="">-- पुरानी प्रोफाइल चुनें (वैकल्पिक) --</option>';
+        girlSelect.innerHTML = '<option value="">-- पुरानी प्रोफाइल चुनें (वैकल्पिक) --</option>';
+
+        profiles.forEach((p, index) => {
+            let opt = document.createElement('option');
+            opt.value = index;
+            opt.textContent = p.name + " (" + (p.place || 'NA') + ")";
+
+            if(p.gender === 'boy') {
+                boySelect.appendChild(opt);
+            } else if(p.gender === 'girl') {
+                girlSelect.appendChild(opt);
+            } else {
+                boySelect.appendChild(opt.cloneNode(true));
+                girlSelect.appendChild(opt);
+            }
+        });
+    }
+
+    function fillBoyProfile() {
+        let idx = document.getElementById('boy-saved-select').value;
+        if(idx === "") return;
+        let profiles = getProfiles();
+        let p = profiles[idx];
+        if(p) {
+            document.getElementById('boy-name').value = p.name || '';
+            document.getElementById('boy-dob').value = p.dob || '';
+            document.getElementById('boy-time').value = p.time || '';
+            document.getElementById('boy-place').value = p.place || '';
+        }
+    }
+
+    function fillGirlProfile() {
+        let idx = document.getElementById('girl-saved-select').value;
+        if(idx === "") return;
+        let profiles = getProfiles();
+        let p = profiles[idx];
+        if(p) {
+            document.getElementById('girl-name').value = p.name || '';
+            document.getElementById('girl-dob').value = p.dob || '';
+            document.getElementById('girl-time').value = p.time || '';
+            document.getElementById('girl-place').value = p.place || '';
+        }
+    }
+
+    function calculateKundaliMilan() {
         const boyName = document.getElementById('boy-name').value;
-        const girlName = document.getElementById('girl-name').value;
         const boyDob = document.getElementById('boy-dob').value;
+        const boyTime = document.getElementById('boy-time').value;
+        const boyPlace = document.getElementById('boy-place').value;
+
+        const girlName = document.getElementById('girl-name').value;
         const girlDob = document.getElementById('girl-dob').value;
+        const girlTime = document.getElementById('girl-time').value;
+        const girlPlace = document.getElementById('girl-place').value;
 
         if(!boyName || !girlName || !boyDob || !girlDob) {
-            alert("कृपया वर और वधु दोनों के नाम और जन्म तिथि अवश्य दर्ज करें!");
+            alert("कृपया वर और वधु दोनों के नाम और जन्म तिथि अवश्य भरें!");
             return;
         }
+
+        // डेटा ऑटोमैटिक सेव हो जाएगा
+        saveProfileToStorage(boyName, boyDob, boyTime, boyPlace, 'boy');
+        saveProfileToStorage(girlName, girlDob, girlTime, girlPlace, 'girl');
+
+        document.getElementById('display-couple-names').innerText = boyName + " ❤️ " + girlName;
 
         document.getElementById('input-form').style.display = 'none';
         document.getElementById('loading').style.display = 'block';
@@ -243,6 +345,7 @@
     function resetForm() {
         document.getElementById('input-form').style.display = 'block';
         document.getElementById('result-section').style.display = 'none';
+        loadSavedProfiles();
     }
 </script>
 
