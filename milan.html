@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astro Divine - Kundali Milan</title>
+    <style>
+        body {
+            background-color: #0b192c;
+            color: #ffffff;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 10px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #1e3e62;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        h2 {
+            color: #ffcc00;
+            font-size: 19px;
+            margin: 0;
+        }
+        .lang-select {
+            padding: 5px;
+            border-radius: 4px;
+            background: #ffcc00;
+            color: #0b192c;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .section-box {
+            background: #0b192c;
+            border: 1px solid #ffcc00;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+        .section-title {
+            color: #ffcc00;
+            font-size: 14px;
+            margin-bottom: 8px;
+            border-bottom: 1px dashed #ffcc00;
+            padding-bottom: 4px;
+        }
+        .form-group {
+            margin-bottom: 8px;
+        }
+        .row {
+            display: flex;
+            gap: 8px;
+        }
+        .col {
+            flex: 1;
+        }
+        label {
+            display: block;
+            margin-bottom: 2px;
+            font-size: 11px;
+            color: #a0d2eb;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            background: #f9f9f9;
+            color: #333;
+            font-size: 13px;
+        }
+        button {
+            width: 100%;
+            background-color: #ffcc00;
+            color: #0b192c;
+            padding: 11px;
+            border: none;
+            border-radius: 5px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        button:hover {
+            background-color: #e6b800;
+        }
+        #result-container {
+            display: none;
+        }
+        .tabs-wrapper {
+            display: flex;
+            overflow-x: auto;
+            background: #0b192c;
+            padding: 5px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            white-space: nowrap;
+            gap: 5px;
+        }
+        .tab-btn {
+            background: transparent;
+            color: #a0d2eb;
+            border: none;
+            padding: 8px 12px;
+            font-size: 13px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .tab-btn.active {
+            background: #ffcc00;
+            color: #0b192c;
+        }
+        .tab-content {
+            display: none;
+            background: #ffffff;
+            color: #333;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+        }
+        .data-table th {
+            background: #3498db;
+            color: white;
+            padding: 8px;
+            font-size: 13px;
+            text-align: center;
+        }
+        .data-table td {
+            padding: 7px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+            font-size: 13px;
+        }
+        .data-table td:nth-child(2) {
+            color: #666;
+            font-weight: bold;
+        }
+        .manglik-card {
+            background: #f0f8ff;
+            border: 1px solid #3498db;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+        .back-btn {
+            background-color: #555;
+            color: white;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-flex">
+        <h2 id="main-heading">✨ Astro Divine - Kundali Milan ✨</h2>
+        <select class="lang-select" id="lang-dropdown" onchange="changeLanguage()">
+            <option value="hi">Hindi (हिन्दी)</option>
+            <option value="en">English</option>
+            <option value="mr">Marathi (मराठी)</option>
+        </select>
+    </div>
+
+    <!-- इनपुट फॉर्म सेक्शन -->
+    <div id="input-form-section">
+        <div class="section-box">
+            <div class="section-title" id="lbl-boy-title">👦 Boy's Details (वर विवरण)</div>
+            <div class="form-group">
+                <label id="lbl-boy-name">Full Name (पूरा नाम):</label>
+                <input type="text" id="boy-name" value="Aarryamaan Dabhade">
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label id="lbl-boy-dob">Date of Birth (जन्म तिथि):</label>
+                    <input type="date" id="boy-dob" value="1999-09-11">
+                </div>
+                <div class="col">
+                    <label id="lbl-boy-time">Birth Time (जन्म समय):</label>
+                    <input type="time" id="boy-time" value="15:55">
+                </div>
+            </div>
+            <div class="form-group" style="margin-top: 8px;">
+                <label id="lbl-boy-place">Birth Place (जन्म स्थान):</label>
+                <input type="text" id="boy-place" value="Rahata, Maharashtra, India">
+            </div>
+        </div>
+
+        <div class="section-box">
+            <div class="section-title" id="lbl-girl-title">👧 Girl's Details (वधु विवरण)</div>
+            <div class="form-group">
+                <label id="lbl-girl-name">Full Name (पूरा नाम):</label>
+                <input type="text" id="girl-name" value="Maahii Rai">
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label id="lbl-girl-dob">Date of Birth (जन्म तिथि):</label>
+                    <input type="date" id="girl-dob" value="2003-06-30">
+                </div>
+                <div class="col">
+                    <label id="lbl-girl-time">Birth Time (जन्म समय):</label>
+                    <input type="time" id="girl-time" value="10:55">
+                </div>
+            </div>
+            <div class="form-group" style="margin-top: 8px;">
+                <label id="lbl-girl-place">Birth Place (जन्म स्थान):</label>
+                <input type="text" id="girl-place" value="Dibrugarh, Assam, India">
+            </div>
+        </div>
+
+        <button onclick="showResults()" id="btn-submit">View Kundali Milan (कुंडली मिलान देखें)</button>
+    </div>
+
+    <!-- रिजल्ट और टैब्स सेक्शन -->
+    <div id="result-container">
+        <div class="tabs-wrapper">
+            <button class="tab-btn active" onclick="switchTab(event, 'tab-birth')" id="tab-t1">Birth Details</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-astro')" id="tab-t2">Astro Details</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-ashtakoot')" id="tab-t3">Ashtakoot</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-dashkoot')" id="tab-t4">Dashkoot</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-manglik')" id="tab-t5">Manglik Matching</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-conclusion')" id="tab-t6">Conclusion</button>
+        </div>
+
+        <!-- टैब 1: Birth Details -->
+        <div id="tab-birth" class="tab-content active">
+            <table class="data-table">
+                <thead>
+                    <tr><th id="res-boy-title">Boy</th><th id="t1-col2">Details</th><th id="res-girl-title">Girl</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td id="r-b-name">Aarryamaan Dabhade</td><td id="t1-name">Name</td><td id="r-g-name">Maahii Rai</td></tr>
+                    <tr><td id="r-b-dob">11/9/1999</td><td id="t1-dob">DOB</td><td id="r-g-dob">30/6/2003</td></tr>
+                    <tr><td id="r-b-time">15:55</td><td id="t1-time">Time</td><td id="r-g-time">10:55</td></tr>
+                    <tr><td id="r-b-place">Rahata, Maharashtra</td><td id="t1-place">Place</td><td id="r-g-place">Dibrugarh, Assam</td></tr>
+                    <tr><td>19°42'45\" N</td><td id="t1-lat">Latitude</td><td>27°28'22\" N</td></tr>
+                    <tr><td>74°29'00\" E</td><td id="t1-lon">Longitude</td><td>94°54'43\" E</td></tr>
+                    <tr><td>+05:30</td><td id="t1-tz">Timezone</td><td>+05:30</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- टैब 2: Astro Details -->
+        <div id="tab-astro" class="tab-content">
+            <table class="data-table">
+                <thead>
+                    <tr><th id="t2-boy">Boy</th><th id="t2-head">Astrological Details</th><th id="t2-girl">Girl</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Varna</td><td id="t2-varna">Varna</td><td>Shudra</td></tr>
+                    <tr><td>Manav</td><td id="t2-vashya">Vashya</td><td>Manav</td></tr>
+                    <tr><td>Maharshi</td><td id="t2-yoni">Yoni</td><td>Shwan</td></tr>
+                    <tr><td>Dev</td><td id="t2-gana">Gana</td><td>Manushya</td></tr>
+                    <tr><td>Aadya</td><td id="t2-nadi">Nadi</td><td>Aadya</td></tr>
+                    <tr><td>Budh</td><td id="t2-lord">Sign Lord</td><td>Budh</td></tr>
+                    <tr><td>Hasta</td><td id="t2-nak">Nakshatra</td><td>Ardra</td></tr>
+                    <tr><td>Chandra</td><td id="t2-naklord">Nakshatra Lord</td><td>Rahu</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- टैब 3: Ashtakoot -->
+        <div id="tab-ashtakoot" class="tab-content">
+            <h3 style="color: #b85d00; margin-top:0; font-size:15px;" id="t3-heading">Ashtakoot Guna Matching (Total: 36)</h3>
+            <table class="data-table">
+                <thead>
+                    <tr><th id="t3-th1">Guna</th><th id="t3-th2">Total</th><th id="t3-th3">Obtained</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Varna</td><td>1</td><td>1 ✅</td></tr>
+                    <tr><td>Vashya</td><td>2</td><td>2 ✅</td></tr>
+                    <tr><td>Tara</td><td>3</td><td>1.5 ✅</td></tr>
+                    <tr><td>Yoni</td><td>4</td><td>2 ✅</td></tr>
+                    <tr><td>Maitri</td><td>5</td><td>5 ✅</td></tr>
+                    <tr><td>Gana</td><td>6</td><td>6 ✅</td></tr>
+                    <tr><td>Bhakoot</td><td>7</td><td>7 ✅</td></tr>
+                    <tr><td>Nadi</td><td>8</td><td>0 ❌</td></tr>
+                    <tr style="background: #ffcc00; font-weight: bold;"><td id="g-total">Total</td><td>36</td><td>24.5 ✅</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- टैब 4: Dashkoot -->
+        <div id="tab-dashkoot" class="tab-content">
+            <h3 style="color: #b85d00; margin-top:0; font-size:15px;" id="t4-heading">Dashkoot Matching Details</h3>
+            <table class="data-table">
+                <thead>
+                    <tr><th id="t4-th1">Guna</th><th id="t4-th2">Total</th><th id="t4-th3">Obtained</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Dine</td><td>3</td><td>3 ✅</td></tr>
+                    <tr><td>Gana</td><td>4</td><td>0 ❌</td></tr>
+                    <tr><td>Yoni</td><td>4</td><td>2 ✅</td></tr>
+                    <tr><td>Rashi</td><td>7</td><td>7 ✅</td></tr>
+                    <tr><td>Rashi Lord</td><td>5</td><td>5 ✅</td></tr>
+                    <tr><td>Rajju</td><td>5</td><td>0 ❌</td></tr>
+                    <tr><td>Vedha</td><td>2</td><td>2 ✅</td></tr>
+                    <tr><td>Vashya</td><td>2</td><td>2 ✅</td></tr>
+                    <tr><td>Mahendra</td><td>2</td><td>0 ❌</td></tr>
+                    <tr><td>Stree-Deergha</td><td>2</td><td>0 ❌</td></tr>
+                    <tr style="background: #ffcc00; font-weight: bold;"><td id="t4-total">Total</td><td>36</td><td>21 ✅</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- टैब 5: Manglik Matching -->
+        <div id="tab-manglik" class="tab-content">
+            <div class="manglik-card">
+                <strong id="m-boy-title" style="color: #2980b9;">Boy - Manglik Analysis</strong>
+                <p id="m-boy-q">Are you Manglik? <strong>No</strong></p>
+                <p id="m-boy-desc" style="font-size: 12px; color: #555; margin: 0;">Minor Manglik presence exists, but minimal impact indicates no major harm.</p>
+            </div>
+            <div class="manglik-card" style="border-color: #e91e63; background: #fff0f5;">
+                <strong id="m-girl-title" style="color: #c2185b;">Girl - Manglik Analysis</strong>
+                <p id="m-girl-q">Are you Manglik? <strong>No</strong></p>
+                <p id="m-girl-desc" style="font-size: 12px; color: #555; margin: 0;">No Manglik dosha found in the chart.</p>
+            </div>
+        </div>
+
+        <!-- टैब 6: Conclusion -->
+        <div id="tab-conclusion" class="tab-content">
+            <h3 style="color: #b85d00; margin-top:0; font-size:15px;" id="t6-heading">Matching Conclusion</h3>
+            <table class="data-table" style="margin-bottom: 10px;">
+                <tr><td id="c-asht">Ashtakoot Matching</td><td>24.5 / 36 ✅</td></tr>
+                <tr><td id="c-mang">Manglik Matching</td><td>Yes ✅</td></tr>
+                <tr><td id="c-rajju">Rajju Dosha</td><td>Yes ✅</td></tr>
+                <tr><td id="c-vedha">Vedha Dosha</td><td>No ❌</td></tr>
+            </table>
+            <p style="font-size: 13px; line-height: 1.5; margin-top: 10px;">
+                <strong id="c-title">Detailed Astrological Analysis:</strong><br>
+                <span id="c-desc">The matching of horoscopes between the bride and groom is highly favorable and progressive. Mutual understanding and mental harmony will remain excellent, ensuring peace and prosperity in family life. Free from severe doshas, this partnership signifies long-term happiness and success.</span>
+            </p>
+        </div>
+
+        <button class="back-btn" onclick="goBackToForm()" id="btn-back">Fill New Details</button>
+    </div>
+</div>
+
+<script>
+    const translations = {
+        en: {
+            title: "✨ Astro Divine - Kundali Milan ✨",
+            boyTitle: "👦 Boy's Details",
+            girlTitle: "👧 Girl's Details",
+            name: "Full Name:", dob: "Date of Birth:", time: "Birth Time:", place: "Birth Place:",
+            submitBtn: "View Kundali Milan",
+            t1: "Birth Details", t2: "Astro Details", t3: "Ashtakoot", t4: "Dashkoot", t5: "Manglik Matching", t6: "Conclusion",
+            col2: "Details", lat: "Latitude", lon: "Longitude", tz: "Timezone",
+            t2Head: "Astrological Details", varna: "Varna", vashya: "Vashya", yoni: "Yoni", gana: "Gana", nadi: "Nadi", lord: "Sign Lord", nak: "Nakshatra", naklord: "Nakshatra Lord",
+            t3Head: "Ashtakoot Guna Matching (Total: 36)", th1: "Guna", th2: "Total", th3: "Obtained", total: "Total",
+            t4Head: "Dashkoot Matching Details",
+            mBoyTitle: " - Manglik Analysis", mBoyQ: "Are you Manglik? ", mBoyAns: "No", mBoyText: "Minor Manglik presence exists, but minimal impact indicates no major harm.",
+            mGirlTitle: " - Manglik Analysis", mGirlQ: "Are you Manglik? ", mGirlAns: "No", mGirlText: "No Manglik dosha found in the chart.",
+            t6Heading: "Matching Conclusion", cAsht: "Ashtakoot Matching", cMang: "Manglik Matching", cRajju: "Rajju Dosha", cVedha: "Vedha Dosha",
+            cTitle: "Detailed Astrological Analysis:", cDesc: "The matching of horoscopes between the bride and groom is highly favorable and progressive. Mutual understanding and mental harmony will remain excellent, ensuring peace and prosperity in family life. Free from severe doshas, this partnership signifies long-term happiness and success.",
+            backBtn: "Fill New Details"
+        },
+        hi: {
+            title: "✨ Astro Divine - Kundali Milan ✨",
+            boyTitle: "👦 Boy's Details (वर विवरण)",
+            girlTitle: "👧 Girl's Details (वधु विवरण)",
+            name: "Full Name (पूरा नाम):", dob: "Date of Birth (जन्म तिथि):", time: "Birth Time (जन्म समय):", place: "Birth Place (जन्म स्थान):",
+            submitBtn: "View Kundali Milan",
+            t1: "Birth Details", t2: "Astro Details", t3: "Ashtakoot", t4: "Dashkoot", t5: "Manglik Matching", t6: "Conclusion",
+            col2: "Details", lat: "Latitude", lon: "Longitude", tz: "Timezone",
+            t2Head: "Astrological Details", varna: "Varna", vashya: "Vashya", yoni: "Yoni", gana: "Gana", nadi: "Nadi", lord: "Sign Lord", nak: "Nakshatra", naklord: "Nakshatra Lord",
+            t3Head: "Ashtakoot Guna Matching (Total: 36)", th1: "Guna", th2: "Total", th3: "Obtained", total: "Total",
+            t4Head: "Dashkoot Matching Details",
+            mBoyTitle: " - Manglik Analysis", mBoyQ: "Are you Manglik? ", mBoyAns: "No", mBoyText: "Minor Manglik presence exists, but minimal impact indicates no major harm.",
+            mGirlTitle: " - Manglik Analysis", mGirlQ: "Are you Manglik? ", mGirlAns: "No", mGirlText: "No Manglik dosha found in the chart.",
+            t6Heading: "Matching Conclusion", cAsht: "Ashtakoot Matching", cMang: "Manglik Matching", cRajju: "Rajju Dosha", cVedha: "Vedha Dosha",
+            cTitle: "Detailed Astrological Analysis:", cDesc: "The matching of horoscopes between the bride and groom is highly favorable and progressive. Mutual understanding and mental harmony will remain excellent, ensuring peace and prosperity in family life. Free from severe doshas, this partnership signifies long-term happiness and success.",
+            backBtn: "Fill New Details"
+        },
+        mr: {
+            title: "✨ Astro Divine - Kundali Milan ✨",
+            boyTitle: "👦 Boy's Details (वर माहिती)",
+            girlTitle: "👧 Girl's Details (वधू माहिती)",
+            name: "Full Name (संपूर्ण नाव):", dob: "Date of Birth (जन्म तारीख):", time: "Birth Time (जन्म वेळ):", place: "Birth Place (जन्म ठिकाण):",
+            submitBtn: "View Kundali Milan",
+            t1: "Birth Details", t2: "Astro Details", t3: "Ashtakoot", t4: "Dashkoot", t5: "Manglik Matching", t6: "Conclusion",
+            col2: "Details", lat: "Latitude", lon: "Longitude", tz: "Timezone",
+            t2Head: "Astrological Details", varna: "Varna", vashya: "Vashya", yoni: "Yoni", gana: "Gana", nadi: "Nadi", lord: "Sign Lord", nak: "Nakshatra", naklord: "Nakshatra Lord",
+            t3Head: "Ashtakoot Guna Matching (Total: 36)", th1: "Guna", th2: "Total", th3: "Obtained", total: "Total",
+            t4Head: "Dashkoot Matching Details",
+            mBoyTitle: " - Manglik Analysis", mBoyQ: "Are you Manglik? ", mBoyAns: "No", mBoyText: "Minor Manglik presence exists, but minimal impact indicates no major harm.",
+            mGirlTitle: " - Manglik Analysis", mGirlQ: "Are you Manglik? ", mGirlAns: "No", mGirlText: "No Manglik dosha found in the chart.",
+            t6Heading: "Matching Conclusion", cAsht: "Ashtakoot Matching", cMang: "Manglik Matching", cRajju: "Rajju Dosha", cVedha: "Vedha Dosha",
+            cTitle: "Detailed Astrological Analysis:", cDesc: "The matching of horoscopes between the bride and groom is highly favorable and progressive. Mutual understanding and mental harmony will remain excellent, ensuring peace and prosperity in family life. Free from severe doshas, this partnership signifies long-term happiness and success.",
+            backBtn: "Fill New Details"
+        }
+    };
+
+    let currentBoyName = "Aarryamaan Dabhade";
+    let currentGirlName = "Maahii Rai";
+
+    function showResults() {
+        currentBoyName = document.getElementById('boy-name').value;
+        currentGirlName = document.getElementById('girl-name').value;
+        
+        if(!currentBoyName || !currentGirlName) {
+            alert("Please enter names!");
+            return;
+        }
+
+        document.getElementById('r-b-name').innerText = currentBoyName;
+        document.getElementById('r-g-name').innerText = currentGirlName;
+        document.getElementById('res-boy-title').innerText = currentBoyName;
+        document.getElementById('res-girl-title').innerText = currentGirlName;
+        
+        updateManglikTitles();
+
+        document.getElementById('input-form-section').style.display = 'none';
+        document.getElementById('result-container').style.display = 'block';
+    }
+
+    function updateManglikTitles() {
+        let lang = document.getElementById('lang-dropdown').value;
+        document.getElementById('m-boy-title').innerText = currentBoyName + translations[lang].mBoyTitle;
+        document.getElementById('m-girl-title').innerText = currentGirlName + translations[lang].mGirlTitle;
+    }
+
+    function goBackToForm() {
+        document.getElementById('result-container').style.display = 'none';
+        document.getElementById('input-form-section').style.display = 'block';
+    }
+
+    function switchTab(evt, tabId) {
+        let contents = document.getElementsByClassName('tab-content');
+        for (let c of contents) c.classList.remove('active');
+        let buttons = document.getElementsByClassName('tab-btn');
+        for (let b of buttons) b.classList.remove('active');
+        document.getElementById(tabId).classList.add('active');
+        evt.currentTarget.classList.add('active');
+    }
+
+    function changeLanguage() {
+        let lang = document.getElementById('lang-dropdown').value;
+        let t = translations[lang];
+
+        document.getElementById('main-heading').innerText = t.title;
+        document.getElementById('lbl-boy-title').innerText = t.boyTitle;
+        document.getElementById('lbl-girl-title').innerText = t.girlTitle;
+        document.getElementById('lbl-boy-name').innerText = t.name;
+        document.getElementById('lbl-girl-name').innerText = t.name;
+        document.getElementById('lbl-boy-dob').innerText = t.dob;
+        document.getElementById('lbl-girl-dob').innerText = t.dob;
+        document.getElementById('lbl-boy-time').innerText = t.time;
+        document.getElementById('lbl-girl-time').innerText = t.time;
+        document.getElementById('lbl-boy-place').innerText = t.place;
+        document.getElementById('lbl-girl-place').innerText = t.place;
+        document.getElementById('btn-submit').innerText = t.submitBtn;
+
+        document.getElementById('tab-t1').innerText = t.t1;
+        document.getElementById('tab-t2').innerText = t.t2;
+        document.getElementById('tab-t3').innerText = t.t3;
+        document.getElementById('tab-t4').innerText = t.t4;
+        document.getElementById('tab-t5').innerText = t.t5;
+        document.getElementById('tab-t6').innerText = t.t6;
+
+        document.getElementById('t1-col2').innerText = t.col2;
+        document.getElementById('t1-name').innerText = t.name.split(' ')[0];
+        document.getElementById('t1-dob').innerText = "DOB";
+        document.getElementById('t1-time').innerText = "Time";
+        document.getElementById('t1-place').innerText = "Place";
+        document.getElementById('t1-lat').innerText = t.lat;
+        document.getElementById('t1-lon').innerText = t.lon;
+        document.getElementById('t1-tz').innerText = t.tz;
+
+        document.getElementById('t2-head').innerText = t.t2Head;
+        document.getElementById('t3-heading').innerText = t.t3Head;
+        document.getElementById('t4-heading').innerText = t.t4Head;
+        document.getElementById('t6-heading').innerText = t.t6Heading;
+        document.getElementById('btn-back').innerText = t.backBtn;
+
+        updateManglikTitles();
+    }
+</script>
+
+</body>
+</html>
