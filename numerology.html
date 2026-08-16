@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astro Divine - अंक ज्योतिष विश्लेषण (Numerology)</title>
+    <style>
+        body {
+            background-color: #0b192c;
+            color: #ffffff;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 15px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #1e3e62;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        h2 {
+            text-align: center;
+            color: #ffcc00;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        .sub-title {
+            text-align: center;
+            color: #a0d2eb;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+        .section-box {
+            background: #0b192c;
+            border: 1px solid #ffcc00;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .section-title {
+            color: #ffcc00;
+            font-size: 15px;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed #ffcc00;
+            padding-bottom: 5px;
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        label {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 12px;
+            color: #a0d2eb;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            background: #f9f9f9;
+            color: #333;
+            font-size: 14px;
+        }
+        button {
+            width: 100%;
+            background-color: #ffcc00;
+            color: #0b192c;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #e6b800;
+        }
+        #result-section {
+            display: none;
+        }
+        .report-card {
+            background: #ffffff;
+            color: #333;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        .report-card h3 {
+            color: #b85d00;
+            margin-top: 0;
+            font-size: 16px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 6px;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+        .back-btn {
+            background-color: #555;
+            color: #fff;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>✨ Astro Divine ✨</h2>
+    <div class="sub-title">अंक ज्योतिष एवं भाग्य विश्लेषण (Numerology Portal)</div>
+
+    <!-- इनपुट फॉर्म -->
+    <div id="input-form">
+        <div class="section-box">
+            <div class="section-title">🔮 अपनी जानकारी दर्ज करें</div>
+            <div class="form-group">
+                <label>पूरा नाम (Full Name):</label>
+                <input type="text" id="user-name" placeholder="अपना पूरा नाम लिखें">
+            </div>
+            <div class="form-group">
+                <label>जन्म तिथि (Date of Birth):</label>
+                <input type="date" id="user-dob">
+            </div>
+            <div class="form-group">
+                <label>फोन नंबर (Phone Number):</label>
+                <input type="tel" id="user-phone" placeholder="10 अंकों का मोबाइल नंबर">
+            </div>
+        </div>
+        <button onclick="calculateNumerology()">संपूर्ण अंक ज्योतिष विश्लेषण देखें</button>
+    </div>
+
+    <!-- विश्लेषण रिजल्ट सेक्शन -->
+    <div id="result-section">
+        <div class="section-box" style="text-align: center; border-color: #3498db;">
+            <h3 id="res-name-title" style="margin: 0; color: #ffcc00; font-size: 18px;">नतीजे</h3>
+            <p id="res-core-numbers" style="font-size: 15px; color: #a0d2eb; margin: 8px 0 0 0;"></p>
+        </div>
+
+        <!-- 1. मुख्य अंक और कैल्डियन विश्लेषण -->
+        <div class="report-card">
+            <h3>📊 कैल्डियन नाम एवं मूलांक विश्लेषण</h3>
+            <div class="info-row"><span>कैल्डियन नामांक (Name Number):</span> <strong id="r-name-num">0</strong></div>
+            <div class="info-row"><span>मूलांक (Psychic Number):</span> <strong id="r-psychic">0</strong></div>
+            <div class="info-row"><span>भाग्यांक (Destiny Number):</span> <strong id="r-destiny">0</strong></div>
+            <div class="info-row"><span>मोबाइल अंक योग (Phone Total):</span> <strong id="r-phone-num">0</strong></div>
+        </div>
+
+        <!-- 2. शुभ और अशुभ अंक -->
+        <div class="report-card">
+            <h3>⭐ शुभ एवं अशुभ (शत्रु) अंक</h3>
+            <div class="info-row"><span>शुभ अंक (Lucky Numbers):</span> <strong id="r-lucky" style="color: green;">--</strong></div>
+            <div class="info-row"><span>अशुभ / शत्रु अंक (Enemy Numbers):</span> <strong id="r-enemy" style="color: red;">--</strong></div>
+            <div class="info-row"><span>शुभ रंग (Lucky Colors):</span> <strong id="r-color">--</strong></div>
+        </div>
+
+        <!-- 3. करियर और देवता -->
+        <div class="report-card">
+            <h3>🎯 करियर सुझाव एवंाराध्य देव</h3>
+            <div class="info-row"><span>उपयुक्त करियर क्षेत्र:</span> <strong id="r-career" style="color: #2980b9;">--</strong></div>
+            <div class="info-row"><span>इष्ट देव / आराध्य पूजा:</span> <strong id="r-god" style="color: #d35400;">--</strong></div>
+            <p id="r-detailed-advice" style="margin: 10px 0 0 0; line-height: 1.5; font-size: 13px; color: #555;"></p>
+        </div>
+
+        <button class="back-btn" onclick="resetForm()">नया विश्लेषण करें</button>
+    </div>
+</div>
+
+<script>
+    // कैल्डियन न्यूमेरोलॉजी लेटर वैल्यू चार्ट
+    const chaldeanTable = {
+        'a': 1, 'i': 1, 'j': 1, 'q': 1, 'y': 1,
+        'b': 2, 'k': 2, 'r': 2,
+        'c': 3, 'g': 3, 'l': 3, 's': 3,
+        'd': 4, 'm': 4, 't': 4,
+        'e': 5, 'h': 5, 'n': 5, 'x': 5,
+        'u': 6, 'v': 6, 'w': 6,
+        'o': 7, 'z': 7,
+        'f': 8, 'p': 8
+    };
+
+    function reduceToSingleDigit(num) {
+        while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
+            num = num.toString().split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
+        }
+        return num;
+    }
+
+    function calculateChaldeanName(name) {
+        name = name.toLowerCase().replace(/[^a-z]/g, '');
+        let sum = 0;
+        for (let char of name) {
+            if (chaldeanTable[char]) {
+                sum += chaldeanTable[char];
+            }
+        }
+        return reduceToSingleDigit(sum);
+    }
+
+    function calculateNumerology() {
+        const name = document.getElementById('user-name').value.trim();
+        const dob = document.getElementById('user-dob').value;
+        const phone = document.getElementById('user-phone').value.trim();
+
+        if (!name || !dob || !phone) {
+            alert("कृपया नाम, जन्म तिथि और फोन नंबर सभी विवरण भरें!");
+            return;
+        }
+
+        // 1. Name Number (Chaldean)
+        let nameNum = calculateChaldeanName(name);
+
+        // 2. Psychic Number (Day of DOB)
+        let dobDate = new Date(dob);
+        let day = dobDate.getDate();
+        let psychic = reduceToSingleDigit(day);
+
+        // 3. Destiny Number (Full DOB sum)
+        let dobClean = dob.replace(/-/g, '');
+        let destinySum = dobClean.split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
+        let destiny = reduceToSingleDigit(destinySum);
+
+        // 4. Phone Number sum
+        let phoneSum = phone.replace(/\D/g, '').split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
+        let phoneNum = reduceToSingleDigit(phoneSum);
+
+        // डेटा दिखाना
+        document.getElementById('res-name-title').innerText = name + " का अंक ज्योतिष विश्लेषण";
+        document.getElementById('res-core-numbers').innerText = `मूलांक: ${psychic} | भाग्यांक: ${destiny} | नामांक: ${nameNum}`;
+
+        document.getElementById('r-name-num').innerText = nameNum;
+        document.getElementById('r-psychic').innerText = psychic;
+        document.getElementById('r-destiny').innerText = destiny;
+        document.getElementById('r-phone-num').innerText = phoneNum;
+
+        // मूलांक के आधार पर ज्योतिषीय फलादेश, शुभ अंक, शत्रु अंक, करियर और देवता तय करना
+        setNumerologyDetails(psychic);
+
+        document.getElementById('input-form').style.display = 'none';
+        document.getElementById('result-section').style.display = 'block';
+    }
+
+    function setNumerologyDetails(num) {
+        let lucky = "", enemy = "", color = "", career = "", god = "", advice = "";
+
+        switch (num) {
+            case 1: // सूर्य
+                lucky = "1, 2, 4, 7"; enemy = "6, 8"; color = "सुनहरा, पीला, नारंगी";
+                career = "प्रशासन, सरकार, प्रबंधन, नेतृत्व, ज्योतिष, बिजनेस";
+                god = "भगवान सूर्य नारायण / शिव जी";
+                advice = "आप जन्मजात लीडर हैं। आपको उच्च पदों पर सफलता मिलती है। अहंकार से बचें और नियमित सूर्य अर्घ्य दें।";
+                break;
+            case 2: // चन्द्रमा
+                lucky = "1, 2, 7"; enemy = "8, 9"; color = "सफेद, हल्का हरा";
+                career = "कला, मीडिया, लिक्विड बिजनेस, कंसल्टेंसी, हॉस्पिटैलिटी";
+                god = "भगवान शिव / माता पार्वती";
+                advice = "आपकी कल्पना शक्ति और संवेदनशीलता बहुत अच्छी है। मानसिक तनाव से बचें और चांदी धारण करें।";
+                break;
+            case 3: // गुरु (Jupiter)
+                lucky = "3, 6, 9"; enemy = "4, 5, 8"; color = "पीला, सुनहरा";
+                career = "शिक्षा, कानून, कंसल्टेंसी, मोटिवेशनल स्पीकर, बैंकिंग";
+                god = "भगवान विष्णु / देवगुरु बृहस्पति";
+                advice = "ज्ञान और बुद्धिमत्ता आपका मुख्य बल है। जीवन में मान-सम्मान और उच्च शिक्षा के अवसर मिलते हैं।";
+                break;
+            case 4: // राहु
+                lucky = "1, 4, 7, 8"; enemy = "2, 9"; color = "नीला, भूरा, स्लेटी";
+                career = "टेक्नोलॉजी, इंजीनियरिंग, आर एंड डी, मीडिया, शेयर मार्केट";
+                god = "गणेश जी / भैरव जी";
+                advice = "आपकी सोच लीक से हटकर होती है। शॉर्टकट से बचें और अनुशासन में रहकर काम करें।";
+                break;
+            case 5: // बुध (Mercury)
+                lucky = "1, 5, 6"; enemy = "2"; color = "हरा, हल्का पीला";
+                career = "मार्केटिंग, कम्यूनिकेशन, चार्टर्ड अकाउंटेंट, मीडिया, व्यापार";
+                god = "भगवान गणेश / माता दुर्गा";
+                advice = "बुद्धि और वाणी आपकी सबसे बड़ी ताकत है। मल्टीटास्किंग में माहिर होते हैं, स्थिरता पर ध्यान दें।";
+                break;
+            case 6: // शुक्र (Venus)
+                lucky = "3, 5, 6, 9"; enemy = "3 (थोड़ा मतभेद), 1"; color = "सफेद, चमकीला गुलाबी";
+                career = "ग्लामर, फैशन, कला, होटल, आभूषण, मीडिया";
+                god = "माता लक्ष्मी / संतोष माता";
+                advice = "विलासिता, कला और सुंदरता के प्रति आकर्षण रहता है। रिश्तों में वफादारी और संतुलन बनाए रखें।";
+                break;
+            case 7: // केतु
+                lucky = "1, 2, 4, 7"; enemy = "8, 9"; color = "धुंधला, सफेद, हल्का पीला";
+                career = "रिसर्च, आध्यात्मिकता, हीलिंग, कोडिंग, ज्योतिष";
+                god = "गणेश जी / भगवान विष्णु";
+                advice = "आपकी अंतःप्रेरणा (Intuition) बहुत तेज होती है। एकांत और गहराई से जुड़े कार्यों में बड़ी सफलता मिलती है।";
+                break;
+            case 8: // शनि (Saturn)
+                lucky = "1, 4, 7, 8"; enemy = "2, 3, 9"; color = "काला, गहरा नीला, स्लेटी";
+                career = "न्यायपालिका, रियल एस्टेट, लोहा/ऑयल इंडस्ट्री, कंस्ट्रक्शन";
+                god = "भगवान शनिदेव / हनुमान जी";
+                advice = "कड़ी मेहनत और संघर्ष के बाद बड़ी सफलता मिलती है। न्यायप्रिय रहें और गरीबों की मदद करें।";
+                break;
+            case 9: // मंगल (Mars)
+                lucky = "3, 6, 9"; enemy = "2, 7"; color = "लाल, मैरून";
+                career = "सेना, पुलिस, खेलकूद, सर्जरी, रियल एस्टेट, नेतृत्व";
+                god = "हनुमान जी / कार्तिकेय जी";
+                advice = "ऊर्जा और साहस से भरपूर होते हैं। गुस्से पर नियंत्रण रखें और विवादों से दूर रहें।";
+                break;
+            default:
+                lucky = "1, 3, 5"; enemy = "8"; color = "सफेद, पीला";
+                career = "व्यापार, प्रबंधन, कला";
+                god = "इष्ट देव की आराधना";
+                advice = "संतुलित और सकारात्मक दृष्टिकोण रखें।";
+        }
+
+        document.getElementById('r-lucky').innerText = lucky;
+        document.getElementById('r-enemy').innerText = enemy;
+        document.getElementById('r-color').innerText = color;
+        document.getElementById('r-career').innerText = career;
+        document.getElementById('r-god').innerText = god;
+        document.getElementById('r-detailed-advice').innerText = advice;
+    }
+
+    function resetForm() {
+        document.getElementById('input-form').style.display = 'block';
+        document.getElementById('result-section').style.display = 'none';
+        document.getElementById('user-name').value = '';
+        document.getElementById('user-dob').value = '';
+        document.getElementById('user-phone').value = '';
+    }
+</script>
+
+</body>
+</html>
