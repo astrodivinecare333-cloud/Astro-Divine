@@ -7,7 +7,7 @@
     <style>
         :root { --blue: #0b192c; --gold: #ffcc00; --card-bg: #1e3e62; }
         body { background: var(--blue); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 10px; color: #fff; }
-        .card { max-width: 500px; margin: auto; background: var(--blue); border-radius: 12px; border: 2px solid var(--gold); overflow: hidden; box-shadow: 0 8px 16px rgba(0,0,0,0.4); }
+        .card { max-width: 600px; margin: auto; background: var(--blue); border-radius: 12px; border: 2px solid var(--gold); overflow: hidden; box-shadow: 0 8px 16px rgba(0,0,0,0.4); }
         .header { background: #071321; color: var(--gold); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--gold); }
         .header h2 { margin: 0; font-size: 22px; letter-spacing: 1px; }
         select { background: var(--gold); color: var(--blue); border: none; padding: 5px 10px; border-radius: 4px; font-weight: bold; outline: none; cursor: pointer; }
@@ -20,11 +20,47 @@
         .report-view { padding: 15px; display: none; }
         .user-info-badge { text-align: center; font-size: 14px; color: var(--gold); margin-bottom: 15px; border-bottom: 2px solid var(--gold); padding-bottom: 10px; background: var(--card-bg); border-radius: 8px; padding-top: 10px; }
         
+        /* सब-टैब स्टाइल (स्क्रीनशॉट के अनुसार नेविगेशन) */
+        .sub-tabs { display: flex; justify-content: space-around; background: #071321; border-radius: 6px; margin-bottom: 15px; border: 1px solid var(--gold); overflow: hidden; }
+        .sub-tab-btn { flex: 1; padding: 10px; background: none; border: none; color: #ffeb99; font-weight: bold; cursor: pointer; font-size: 13px; text-align: center; }
+        .sub-tab-btn.active { background: var(--gold); color: var(--blue); }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* पंचधिकारी और बेसिक डिटेल्स ग्रिड */
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 15px; }
+        .info-box { background: var(--card-bg); border: 1px solid rgba(255,204,0,0.3); padding: 10px; border-radius: 6px; text-align: center; }
+        .info-box span { font-size: 12px; color: #ffeb99; display: block; }
+        .info-box strong { font-size: 16px; color: var(--gold); }
+
+        /* कुंडली चार्ट स्टाइल (North Indian Style Box) */
+        .kundali-box { width: 100%; max-width: 320px; height: 320px; margin: 15px auto; border: 2px solid var(--gold); position: relative; background: #071321; }
+        .kundali-line-1, .kundali-line-2 { position: absolute; width: 100%; height: 100%; top: 0; left: 0; }
+        .kundali-line-1::before, .kundali-line-1::after { content: ''; position: absolute; background: var(--gold); }
+        .kundali-line-1::before { width: 100%; height: 2px; top: 50%; left: 0; }
+        .kundali-line-1::after { width: 2px; height: 100%; left: 50%; top: 0; }
+        .kundali-line-2::before, .kundali-line-2::after { content: ''; position: absolute; background: var(--gold); width: 141.4%; height: 2px; top: 50%; left: -20.7%; }
+        .kundali-line-2::before { transform: rotate(45deg); }
+        .kundali-line-2::after { transform: rotate(-45deg); }
+        .k-house { position: absolute; font-size: 12px; color: #ffeb99; padding: 4px; text-align: center; width: 60px; word-break: break-all; }
+        /* घरों की पोजीशन */
+        .h1 { top: 38%; left: 38%; width: 24%; height: 24%; }
+        .h-top { top: 5px; left: 40%; }
+        .h-bottom { bottom: 5px; left: 40%; }
+        .h-left { top: 43%; left: 5px; }
+        .h-right { top: 43%; right: 5px; }
+
+        /* टेबल स्टाइल (ग्रह अंश के लिए) */
+        .table { width: 100%; border-collapse: collapse; background: var(--card-bg); margin-bottom: 15px; border-radius: 8px; overflow: hidden; font-size: 13px; }
+        .table th, .table td { border: 1px solid rgba(255,204,0,0.2); padding: 8px 10px; text-align: left; }
+        .table th { background: #071321; color: var(--gold); }
+
         .analysis-box { padding: 15px; margin-bottom: 15px; border-radius: 8px; font-size: 14px; line-height: 1.6; border-left: 4px solid var(--gold); background: var(--card-bg); color: #fff; border-top: 1px solid rgba(255,204,0,0.2); border-right: 1px solid rgba(255,204,0,0.2); border-bottom: 1px solid rgba(255,204,0,0.2); }
         .analysis-box h4 { margin: 0 0 8px 0; color: var(--gold); font-size: 16px; }
         .remedy-box { border-left: 4px solid #2ecc71; background: #11261a; }
 
-        /* विजुअल चार्ट / ग्राफ के लिए स्टाइल */
+        /* विजुअल चार्ट / ग्राफ */
         .chart-container { background: #071321; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid rgba(255,204,0,0.3); }
         .chart-title { font-size: 13px; color: var(--gold); margin-bottom: 10px; text-align: center; font-weight: bold; }
         .bar-row { display: flex; align-items: center; margin-bottom: 8px; font-size: 12px; }
@@ -45,7 +81,7 @@
         </select>
     </div>
 
-    <!-- जन्म विवरण इनपुट फॉर्म (वर्ल्डवाइड लोकेशन के साथ) -->
+    <!-- जन्म विवरण इनपुट फॉर्म (फ्री टेक्स्ट लोकेशन के साथ) -->
     <div id="form-view" class="input-section">
         <label id="lbl-name">पूरा नाम:</label>
         <input type="text" id="uname" placeholder="अपना पूरा नाम दर्ज करें">
@@ -56,23 +92,8 @@
         <label id="lbl-tob">जन्म समय:</label>
         <input type="time" id="utob">
 
-        <label id="lbl-pob">जन्म स्थान (World / Global Location):</label>
-        <select id="upob">
-            <optgroup label="India (भारत)">
-                <option value="Mumbai, India">Mumbai, India</option>
-                <option value="Delhi, India">Delhi, India</option>
-                <option value="Bangalore, India">Bangalore, India</option>
-                <option value="Shirdi, India">Shirdi, India</option>
-                <option value="Pune, India">Pune, India</option>
-            </optgroup>
-            <optgroup label="International (अंतरराष्ट्रीय)">
-                <option value="Dubai, UAE">Dubai, UAE</option>
-                <option value="London, UK">London, UK</option>
-                <option value="New York, USA">New York, USA</option>
-                <option value="Singapore">Singapore</option>
-                <option value="Sydney, Australia">Sydney, Australia</option>
-            </optgroup>
-        </select>
+        <label id="lbl-pob">जन्म स्थान (City / Location):</label>
+        <input type="text" id="upob" placeholder="शहर या देश का नाम टाइप करें (जैसे: Mumbai, Dubai)">
 
         <label id="lbl-target-year">किस वर्ष का फल देखना है:</label>
         <select id="target-year">
@@ -84,53 +105,94 @@
         <button class="btn" id="btn-generate" onclick="generateVarshphal()">वर्षफल देखें</button>
     </div>
 
-    <!-- कुंडली आधारित वर्षफल रिपोर्ट व्यू (चार्ट के साथ) -->
+    <!-- कुंडली आधारित वर्षफल रिपोर्ट व्यू (स्क्रीनशॉट वाले टैब्स और चार्ट्स के साथ) -->
     <div id="report-view" class="report-view">
         <div class="user-info-badge">
             <strong id="rep-name">--</strong><br>
             <span id="rep-details" style="font-size: 12px; color: #ffeb99;">--</span>
         </div>
 
-        <!-- नया विजुअल ज्योतिषीय चार्ट / ग्राफ -->
-        <div class="chart-container">
-            <div class="chart-title" id="chart-heading">वर्षीय ग्रह बल एवं प्रभाव चार्ट (Planetary Strength Chart)</div>
-            <div class="bar-row">
-                <span class="bar-label" id="lbl-jupiter-bar">गुरु (Jupiter)</span>
-                <div class="bar-track"><div class="bar-fill" id="bar-jup" style="width: 85%;"></div></div>
+        <!-- स्क्रीनशॉट आधारित सब-टैब्स -->
+        <div class="sub-tabs">
+            <button class="sub-tab-btn active" onclick="switchTab('tab-overview', this)" id="btn-t1">वर्षफल विवरण</button>
+            <button class="sub-tab-btn" onclick="switchTab('tab-kundali', this)" id="btn-t2">वर्षफल कुंडली</button>
+            <button class="sub-tab-btn" onclick="switchTab('tab-graha', this)" id="btn-t3">वर्षफल ग्रह अंश</button>
+        </div>
+
+        <!-- टैब 1: वर्षफल विवरण एवं पंचधिकारी -->
+        <div id="tab-overview" class="tab-content active">
+            <div style="font-size: 14px; font-weight: bold; color: var(--gold); margin-bottom: 8px;" id="sec-panch">पंचधिकारी (Panchadhikari)</div>
+            <div class="grid-2">
+                <div class="info-box"><span id="lbl-ms">मुथा स्वामी (Muntha Lord)</span><strong id="val-ms">सूर्य</strong></div>
+                <div class="info-box"><span id="lbl-ls">लग्न स्वामी (Ascendant Lord)</span><strong id="val-ls">बुध</strong></div>
+                <div class="info-box"><span id="lbl-vls">वर्ष लग्न स्वामी (Varsha Lord)</span><strong id="val-vls">सूर्य</strong></div>
+                <div class="info-box"><span id="lbl-ds">दिनरात्रि स्वामी (Day/Night Lord)</span><strong id="val-ds">बुध</strong></div>
+                <div class="info-box"><span id="lbl-ts">त्रिराशि स्वामी (Tri-Rashi Lord)</span><strong id="val-ts">गुरु</strong></div>
+                <div class="info-box"><span id="lbl-va">वर्षेश (Varsha Esha)</span><strong id="val-va">सूर्य</strong></div>
             </div>
-            <div class="bar-row">
-                <span class="bar-label" id="lbl-saturn-bar">शनि (Saturn)</span>
-                <div class="bar-track"><div class="bar-fill" id="bar-sat" style="width: 70%;"></div></div>
+
+            <!-- विजुअल चार्ट / ग्राफ -->
+            <div class="chart-container">
+                <div class="chart-title" id="chart-heading">वर्षीय ग्रह बल एवं प्रभाव चार्ट</div>
+                <div class="bar-row"><span class="bar-label">गुरु (Jupiter)</span><div class="bar-track"><div class="bar-fill" style="width: 85%;"></div></div></div>
+                <div class="bar-row"><span class="bar-label">शनि (Saturn)</span><div class="bar-track"><div class="bar-fill" style="width: 70%;"></div></div></div>
+                <div class="bar-row"><span class="bar-label">सूर्य (Sun)</span><div class="bar-track"><div class="bar-fill" style="width: 90%;"></div></div></div>
+                <div class="bar-row"><span class="bar-label">शुक्र (Venus)</span><div class="bar-track"><div class="bar-fill" style="width: 75%;"></div></div></div>
             </div>
-            <div class="bar-row">
-                <span class="bar-label" id="lbl-sun-bar">सूर्य (Sun)</span>
-                <div class="bar-track"><div class="bar-fill" id="bar-sun" style="width: 90%;"></div></div>
+
+            <div class="analysis-box">
+                <h4 id="hd-muntha">मुथा फल एवं लग्न प्रवेश</h4>
+                <div id="desc-muntha">--</div>
             </div>
-            <div class="bar-row">
-                <span class="bar-label" id="lbl-venus-bar">शुक्र (Venus)</span>
-                <div class="bar-track"><div class="bar-fill" id="bar-ven" style="width: 75%;"></div></div>
+            <div class="analysis-box">
+                <h4 id="hd-jupiter">गुरु गोचर फल (धन एवं विस्तार)</h4>
+                <div id="desc-jupiter">--</div>
+            </div>
+            <div class="analysis-box">
+                <h4 id="hd-saturn">शनि गोचर प्रभाव (कर्म एवं संघर्ष)</h4>
+                <div id="desc-saturn">--</div>
+            </div>
+            <div class="analysis-box">
+                <h4 id="hd-rahu">राहु-केतु गोचर प्रभाव</h4>
+                <div id="desc-rahu">--</div>
+            </div>
+            <div class="analysis-box remedy-box">
+                <h4 id="hd-remedy">वर्ष के विशिष्ट वैदिक उपाय</h4>
+                <div id="desc-remedy">--</div>
             </div>
         </div>
 
-        <div class="analysis-box">
-            <h4 id="hd-muntha">मुथा फल एवं लग्न प्रवेश (Annual Ascendant & Muntha)</h4>
-            <div id="desc-muntha">--</div>
+        <!-- टैब 2: वर्षफल कुंडली (चार्ट विजुअल) -->
+        <div id="tab-kundali" class="tab-content">
+            <div style="text-align: center; font-size: 14px; color: var(--gold); font-weight: bold;" id="kundali-title-text">वर्ष कुंडली चक्र (Varsha Kundali Chart)</div>
+            <div class="kundali-box">
+                <div class="kundali-line-1"></div>
+                <div class="kundali-line-2"></div>
+                <div class="k-house h1"><strong>5</strong><br><span style="font-size:10px;">केतु</span></div>
+                <div class="k-house h-top"><strong>4</strong><br><span style="font-size:10px;">बु, शु</span></div>
+                <div class="k-house h-right"><strong>3</strong><br><span style="font-size:10px;">सूर्य</span></div>
+                <div class="k-house h-bottom"><strong>12</strong><br><span style="font-size:10px;">शनि</span></div>
+                <div class="k-house h-left"><strong>9</strong><br><span style="font-size:10px;">चंद्र</span></div>
+            </div>
+            <p style="text-align: center; font-size: 12px; color: #ffeb99;" id="kundali-desc-note">यह चक्र आपके वर्ष प्रवेश के समय ग्रहों की सटीक स्थिति दर्शाता है।</p>
         </div>
-        <div class="analysis-box">
-            <h4 id="hd-jupiter">गुरु गोचर फल (Jupiter Transit - Wealth & Growth)</h4>
-            <div id="desc-jupiter">--</div>
-        </div>
-        <div class="analysis-box">
-            <h4 id="hd-saturn">शनि गोचर एवं ढैय्या/साढ़ेसाती (Saturn Transit)</h4>
-            <div id="desc-saturn">--</div>
-        </div>
-        <div class="analysis-box">
-            <h4 id="hd-rahu">राहु-केतु गोचर प्रभाव (Rahu-Ketu Transit)</h4>
-            <div id="desc-rahu">--</div>
-        </div>
-        <div class="analysis-box remedy-box">
-            <h4 id="hd-remedy">वर्ष के विशिष्ट वैदिक उपाय (Varsha Remedies)</h4>
-            <div id="desc-remedy">--</div>
+
+        <!-- टैब 3: वर्षफल ग्रह अंश (टेबल) -->
+        <div id="tab-graha" class="tab-content">
+            <div style="font-size: 14px; font-weight: bold; color: var(--gold); margin-bottom: 8px;" id="sec-deg">वर्षफल ग्रह अंश (Planetary Degrees)</div>
+            <table class="table">
+                <thead>
+                    <tr><th id="th-planet">ग्रह</th><th id="th-sign">राशि / अंश</th><th id="th-nak">नक्षत्र</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>लग्न</strong></td><td>वृश्चिक 06°56'</td><td>सूर्य मघा</td></tr>
+                    <tr><td><strong>सूर्य</strong></td><td>मिथुन 14°08'</td><td>बुध आर्द्रा</td></tr>
+                    <tr><td><strong>चंद्र</strong></td><td>धनु 15°30'</td><td>गुरु पूर्वा</td></tr>
+                    <tr><td><strong>मंगल</strong></td><td>वृषभ 06°42'</td><td>शुक्र कृतिका</td></tr>
+                    <tr><td><strong>बुध (R)</strong></td><td>कर्क 02°01'</td><td>चंद्र पुनर्वसु</td></tr>
+                    <tr><td><strong>गुरु</strong></td><td>कर्क 05°44'</td><td>चंद्र पुष्य</td></tr>
+                </tbody>
+            </table>
         </div>
 
         <button class="btn" onclick="resetForm()" id="btn-back">नया विवरण दर्ज करें</button>
@@ -163,10 +225,38 @@
     };
 
     const uiTexts = {
-        hi: { lblName: "पूरा नाम:", lblDob: "जन्म तिथि:", lblTob: "जन्म समय:", lblPob: "जन्म स्थान (World / Global Location):", lblYear: "किस वर्ष का फल देखना है:", btnGen: "वर्षफल देखें", chartHead: "वर्षीय ग्रह बल एवं प्रभाव चार्ट", jupBar: "गुरु (Jupiter)", satBar: "शनि (Saturn)", sunBar: "सूर्य (Sun)", venBar: "शुक्र (Venus)", hdMuntha: "मुथा फल एवं लग्न प्रवेश", hdJup: "गुरु गोचर फल (धन एवं विस्तार)", hdSat: "शनि गोचर प्रभाव (कर्म एवं संघर्ष)", hdRahu: "राहु-केतु गोचर प्रभाव", hdRem: "वर्ष के विशिष्ट वैदिक उपाय", btnBack: "नया विवरण दर्ज करें" },
-        en: { lblName: "Full Name:", lblDob: "Date of Birth:", lblTob: "Time of Birth:", lblPob: "Place of Birth (World / Global Location):", lblYear: "Select Target Year:", btnGen: "View Varshphal", chartHead: "Planetary Strength & Effect Chart", jupBar: "Jupiter", satBar: "Saturn", sunBar: "Sun", venBar: "Venus", hdMuntha: "Annual Ascendant & Muntha", hdJup: "Jupiter Transit (Wealth & Growth)", hdSat: "Saturn Transit (Karma & Effort)", hdRahu: "Rahu-Ketu Transit", hdRem: "Special Vedic Remedies", btnBack: "Enter New Details" },
-        mr: { lblName: "पूर्ण नाव:", lblDob: "जन्म तारीख:", lblTob: "जन्म वेळ:", lblPob: "जन्म ठिकाण (World / Global Location):", lblYear: "कोणत्या वर्षाचे फळ पाहयचे आहे:", btnGen: "वर्षफल पहा", chartHead: "वार्षिक ग्रह बल आणि प्रभाव चार्ट", jupBar: "गुरु (Jupiter)", satBar: "शनि (Saturn)", sunBar: "सूर्य (Sun)", venBar: "शुक्र (Venus)", hdMuntha: "मुथा फळ व लग्न प्रवेश", hdJup: "गुरु गोचर फळ (धन व प्रगती)", hdSat: "शनि गोचर प्रभाव (कर्म व संघर्ष)", hdRahu: "राहु-केतु गोचर प्रभाव", hdRem: "वर्षभरासाठी विशेष वैदिक उपाय", btnBack: "नवीन माहिती प्रविष्ट करा" }
+        hi: { 
+            lblName: "पूरा नाम:", lblDob: "जन्म तिथि:", lblTob: "जन्म समय:", lblPob: "जन्म स्थान (City / Location):", lblYear: "किस वर्ष का फल देखना है:", btnGen: "वर्षफल देखें", 
+            t1: "वर्षफल विवरण", t2: "वर्षफल कुंडली", t3: "वर्षफल ग्रह अंश", secPanch: "पंचधिकारी (Panchadhikari)",
+            lblMs: "मुथा स्वामी", lblLs: "लग्न स्वामी", lblVls: "वर्ष लग्न स्वामी", lblDs: "दिनरात्रि स्वामी", lblTs: "त्रिराशि स्वामी", lblVa: "वर्षेश",
+            chartHead: "वर्षीय ग्रह बल एवं प्रभाव चार्ट", kundTitle: "वर्ष कुंडली चक्र (Varsha Kundali Chart)", kundNote: "यह चक्र आपके वर्ष प्रवेश के समय ग्रहों की सटीक स्थिति दर्शाता है।",
+            secDeg: "वर्षफल ग्रह अंश (Planetary Degrees)", thPl: "ग्रह", thSi: "राशि / अंश", thNa: "नक्षत्र",
+            hdMuntha: "मुथा फल एवं लग्न प्रवेश", hdJup: "गुरु गोचर फल (धन एवं विस्तार)", hdSat: "शनि गोचर प्रभाव (कर्म एवं संघर्ष)", hdRahu: "राहु-केतु गोचर प्रभाव", hdRem: "वर्ष के विशिष्ट वैदिक उपाय", btnBack: "नया विवरण दर्ज करें" 
+        },
+        en: { 
+            lblName: "Full Name:", lblDob: "Date of Birth:", lblTob: "Time of Birth:", lblPob: "Place of Birth (City / Location):", lblYear: "Select Target Year:", btnGen: "View Varshphal", 
+            t1: "Overview", t2: "Kundali Chart", t3: "Planetary Degrees", secPanch: "Panchadhikari",
+            lblMs: "Muntha Lord", lblLs: "Ascendant Lord", lblVls: "Varsha Lord", lblDs: "Day/Night Lord", lblTs: "Tri-Rashi Lord", lblVa: "Varsha Esha",
+            chartHead: "Planetary Strength & Effect Chart", kundTitle: "Varsha Kundali Chart", kundNote: "This chart shows the exact planetary positions at the time of your annual entry.",
+            secDeg: "Planetary Degrees", thPl: "Planet", thSi: "Sign / Degree", thNa: "Nakshatra",
+            hdMuntha: "Annual Ascendant & Muntha", hdJup: "Jupiter Transit (Wealth & Growth)", hdSat: "Saturn Transit (Karma & Effort)", hdRahu: "Rahu-Ketu Transit", hdRem: "Special Vedic Remedies", btnBack: "Enter New Details" 
+        },
+        mr: { 
+            lblName: "पूर्ण नाव:", lblDob: "जन्म तारीख:", lblTob: "जन्म वेळ:", lblPob: "जन्म ठिकाण (City / Location):", lblYear: "कोणत्या वर्षाचे फळ पाहयचे आहे:", btnGen: "वर्षफल पहा", 
+            t1: "वर्षफल तपशील", t2: "वर्षफल कुंडली", t3: "वर्षफल ग्रह अंश", secPanch: "पंचधिकारी",
+            lblMs: "मुथा स्वामी", lblLs: "लग्न स्वामी", lblVls: "वर्ष लग्न स्वामी", lblDs: "दिनरात्री स्वामी", lblTs: "त्रिराशी स्वामी", lblVa: "वर्षेश",
+            chartHead: "वार्षिक ग्रह बल आणि प्रभाव चार्ट", kundTitle: "वर्ष कुंडली चक्र", kundNote: "हे चक्र तुमच्या वर्ष प्रवेशाच्या वेळेस ग्रहांची अचूक स्थिती दर्शवते.",
+            secDeg: "वर्षफल ग्रह अंश", thPl: "ग्रह", thSi: "राशी / अंश", thNa: "नक्षत्र",
+            hdMuntha: "मुथा फळ व लग्न प्रवेश", hdJup: "गुरु गोचर फळ (धन व प्रगती)", hdSat: "शनि गोचर प्रभाव (कर्म व संघर्ष)", hdRahu: "राहु-केतु गोचर प्रभाव", hdRem: "वर्षभरासाठी विशेष वैदिक उपाय", btnBack: "नवीन माहिती प्रविष्ट करा" 
+        }
     };
+
+    function switchTab(tabId, btn) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.sub-tab-btn').forEach(el => el.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        btn.classList.add('active');
+    }
 
     function generateVarshphal() {
         let name = document.getElementById('uname').value;
@@ -219,11 +309,25 @@
         document.getElementById('lbl-target-year').innerText = t.lblYear;
         document.getElementById('btn-generate').innerText = t.btnGen;
 
+        document.getElementById('btn-t1').innerText = t.t1;
+        document.getElementById('btn-t2').innerText = t.t2;
+        document.getElementById('btn-t3').innerText = t.t3;
+        document.getElementById('sec-panch').innerText = t.secPanch;
+
+        document.getElementById('lbl-ms').innerText = t.lblMs;
+        document.getElementById('lbl-ls').innerText = t.lblLs;
+        document.getElementById('lbl-vls').innerText = t.lblVls;
+        document.getElementById('lbl-ds').innerText = t.lblDs;
+        document.getElementById('lbl-ts').innerText = t.lblTs;
+        document.getElementById('lbl-va').innerText = t.lblVa;
+
         document.getElementById('chart-heading').innerText = t.chartHead;
-        document.getElementById('lbl-jupiter-bar').innerText = t.jupBar;
-        document.getElementById('lbl-saturn-bar').innerText = t.satBar;
-        document.getElementById('lbl-sun-bar').innerText = t.sunBar;
-        document.getElementById('lbl-venus-bar').innerText = t.venBar;
+        document.getElementById('kundali-title-text').innerText = t.kundTitle;
+        document.getElementById('kundali-desc-note').innerText = t.kundNote;
+        document.getElementById('sec-deg').innerText = t.secDeg;
+        document.getElementById('th-planet').innerText = t.thPl;
+        document.getElementById('th-sign').innerText = t.thSi;
+        document.getElementById('th-nak').innerText = t.thNa;
 
         document.getElementById('hd-muntha').innerText = t.hdMuntha;
         document.getElementById('hd-jupiter').innerText = t.hdJup;
