@@ -3,111 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Astro Divine - Numerology</title>
+    <title>Astro Divine - Premium Numerology Analysis</title>
     <style>
-        :root { --royal-blue: #0b192c; --golden: #ffcc00; }
-        body { background-color: #f4f7f6; font-family: sans-serif; margin: 0; padding: 20px; }
-        .container { max-width: 500px; margin: auto; background: var(--royal-blue); padding: 20px; border-radius: 15px; border: 2px solid var(--golden); color: #fff; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        h2 { color: var(--golden); margin: 0; }
-        select { padding: 5px; background: var(--golden); border: none; border-radius: 4px; font-weight: bold; }
-        input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 5px; border: none; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background: var(--golden); border: none; border-radius: 5px; font-weight: bold; cursor: pointer; color: var(--royal-blue); margin-top: 10px; }
-        .info-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #ffcc0055; font-size: 15px; }
+        :root { --blue: #0b192c; --gold: #ffcc00; --light-gold: #fff9e6; --bg: #f4f7f6; }
+        body { background: var(--bg); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 10px; color: #333; }
+        .card { max-width: 500px; margin: auto; background: #fff; border-radius: 12px; border: 2px solid var(--blue); overflow: hidden; box-shadow: 0 8px 16px rgba(0,0,0,0.2); }
+        .header { background: var(--blue); color: var(--gold); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .header h2 { margin: 0; font-size: 22px; letter-spacing: 1px; }
+        select { background: var(--gold); color: var(--blue); border: none; padding: 5px 10px; border-radius: 4px; font-weight: bold; outline: none; }
+        
+        .input-section { padding: 20px; }
+        .input-section label { display: block; font-size: 14px; font-weight: bold; margin-top: 10px; color: var(--blue); }
+        .input-section input { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 15px; }
+        .btn { width: 100%; padding: 14px; background: var(--gold); border: none; border-radius: 5px; font-weight: bold; color: var(--blue); margin-top: 20px; cursor: pointer; font-size: 16px; }
+        
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #ddd; }
+        .grid-item { background: #fff; padding: 15px 5px; text-align: center; }
+        .grid-item div { font-size: 12px; color: #666; margin-bottom: 5px; font-weight: bold; }
+        .grid-item b { display: block; font-size: 24px; color: var(--blue); }
+        .bg-light-gold { background: var(--light-gold); }
+        .bg-light-blue { background: #e6f0ff; }
+        .bg-light-pink { background: #ffe6e6; }
+
+        .table { width: 100%; border-collapse: collapse; margin-top: 0; }
+        .table td { border: 1px solid #eee; padding: 10px 15px; font-size: 14px; }
+        .table td:first-child { color: #555; width: 40%; }
+        .table td:last-child { font-weight: bold; color: var(--blue); }
+
+        .analysis-container { padding: 15px; background: #fff; }
+        .analysis-box { padding: 15px; margin-bottom: 15px; border-radius: 8px; font-size: 14px; line-height: 1.6; border-left: 4px solid var(--gold); background: var(--light-gold); }
+        .analysis-box h4 { margin: 0 0 8px 0; color: var(--blue); font-size: 16px; }
+        .combo-box { border-left: 4px solid #e74c3c; background: #fdedec; }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="card">
     <div class="header">
-        <h2 id="title">Astro Divine</h2>
-        <select id="lang-dropdown" onchange="updateUI()">
+        <h2 id="brand">Astro Divine</h2>
+        <select id="lang" onchange="switchLang()">
             <option value="hi">हिंदी</option>
             <option value="en">English</option>
             <option value="mr">मराठी</option>
         </select>
     </div>
 
-    <!-- इनपुट पेज -->
-    <div id="form-view">
+    <!-- Input Form -->
+    <div id="form-view" class="input-section">
         <label id="lbl-name">पूरा नाम:</label>
-        <input type="text" id="name">
+        <input type="text" id="name" placeholder="E.g. Maahii Rai">
         <label id="lbl-dob">जन्म तिथि:</label>
         <input type="date" id="dob">
         <label id="lbl-phone">फोन नंबर:</label>
-        <input type="tel" id="phone">
-        <button id="btn-submit" onclick="showReport()">विश्लेषण करें</button>
+        <input type="tel" id="phone" placeholder="10 Digit Number">
+        <button class="btn" id="btn-submit" onclick="generateReport()">विश्लेषण देखें</button>
     </div>
 
-    <!-- रिपोर्ट पेज -->
+    <!-- Report View -->
     <div id="report-view" style="display:none;">
-        <h3 id="res-title" style="text-align:center; color: var(--golden);">आपका विश्लेषण</h3>
-        <div class="info-row"><span id="txt-mool">मूलांक:</span> <strong id="r-mool"></strong></div>
-        <div class="info-row"><span id="txt-bhag">भाग्यांक:</span> <strong id="r-bhag"></strong></div>
-        <div class="info-row"><span id="txt-lucky">शुभ अंक:</span> <strong id="r-lucky"></strong></div>
-        <div class="info-row"><span id="txt-god">आराध्य देव:</span> <strong id="r-god"></strong></div>
-        <button onclick="reset()">नया विश्लेषण</button>
+        <div style="padding: 15px; text-align: center; border-bottom: 1px solid #eee;">
+            <strong id="disp-name" style="font-size: 18px; color: var(--blue);"></strong><br>
+            <span id="disp-dob" style="font-size: 14px; color: #666;"></span>
+        </div>
+
+        <div class="grid">
+            <div class="grid-item bg-light-gold"><div id="txt-bhag">भाग्यांक</div><b id="r-bhag">--</b></div>
+            <div class="grid-item bg-light-blue"><div id="txt-mool">मूलांक</div><b id="r-mool">--</b></div>
+            <div class="grid-item bg-light-pink"><div id="txt-naam">नाम अंक</div><b id="r-naam">--</b></div>
+        </div>
+
+        <table class="table" id="data-table">
+            <tr><td id="txt-phone-tot">फोन टोटल</td><td id="t-phone">--</td></tr>
+            <tr><td id="txt-phone-mat">फोन मैचिंग</td><td id="t-match">--</td></tr>
+            <tr><td id="txt-enemy">शत्रु अंक</td><td id="t-enemy" style="color: red;">--</td></tr>
+            <tr><td id="txt-friend">अनुकूल अंक</td><td id="t-friendly" style="color: green;">--</td></tr>
+            <tr><td id="txt-god">अनुकूल देवता</td><td id="t-god">--</td></tr>
+            <tr><td id="txt-metal">अनुकूल धातु</td><td id="t-metal">--</td></tr>
+            <tr><td id="txt-gem">अनुकूल रत्न</td><td id="t-gem">--</td></tr>
+            <tr><td id="txt-color">अनुकूल रंग</td><td id="t-color">--</td></tr>
+            <tr><td id="txt-mantra">अनुकूल मंत्र</td><td id="t-mantra" style="font-size: 12px;">--</td></tr>
+        </table>
+
+        <div class="analysis-container">
+            <div class="analysis-box">
+                <h4 id="hd-mool">मूलांक विश्लेषण (व्यक्तित्व)</h4>
+                <div id="desc-mool">--</div>
+            </div>
+            <div class="analysis-box">
+                <h4 id="hd-bhag">भाग्यांक विश्लेषण (नियति)</h4>
+                <div id="desc-bhag">--</div>
+            </div>
+            <div class="analysis-box combo-box">
+                <h4 id="hd-combo">मूलांक + भाग्यांक कॉम्बिनेशन</h4>
+                <div id="desc-combo">--</div>
+            </div>
+            <button class="btn" onclick="location.reload()" id="btn-back">नया विश्लेषण</button>
+        </div>
     </div>
 </div>
 
 <script>
-    const langData = {
-        hi: { title: "Astro Divine", name: "पूरा नाम:", dob: "जन्म तिथि:", phone: "फोन नंबर:", submit: "विश्लेषण करें", mool: "मूलांक:", bhag: "भाग्यांक:", lucky: "शुभ अंक:", god: "आराध्य देव:", res: "आपका विश्लेषण" },
-        en: { title: "Astro Divine", name: "Full Name:", dob: "DOB:", phone: "Phone:", submit: "Analyze", mool: "Psychic:", bhag: "Destiny:", lucky: "Lucky No:", god: "Deity:", res: "Your Analysis" },
-        mr: { title: "Astro Divine", name: "पूर्ण नाव:", dob: "जन्म तारीख:", phone: "फोन नंबर:", submit: "विश्लेषण पहा", mool: "मूलांक:", bhag: "भाग्यांक:", lucky: "शुभ अंक:", god: "आराध्य देव:", res: "तुमचे विश्लेषण" }
+    // Chaldean Numerology Logic
+    const chaldeanMap = { 'A':1, 'B':2, 'C':3, 'D':4, 'E':5, 'F':8, 'G':3, 'H':5, 'I':1, 'J':1, 'K':2, 'L':3, 'M':4, 'N':5, 'O':7, 'P':8, 'Q':1, 'R':2, 'S':3, 'T':4, 'U':6, 'V':6, 'W':6, 'X':5, 'Y':1, 'Z':7 };
+    
+    function calculateName(name) {
+        let sum = 0;
+        name.toUpperCase().replace(/[^A-Z]/g, '').split('').forEach(char => { sum += chaldeanMap[char] || 0; });
+        return reduce(sum);
+    }
+
+    function reduce(n) { 
+        if(!n || isNaN(n)) return 0;
+        while(n > 9) { n = n.toString().split('').reduce((a,b)=>+a + +b, 0); }
+        return n; 
+    }
+
+    // Complete Astro Database for 1-9
+    const numData = {
+        1: { e: [6,8], f: [1,2,3,5,9], god: "सूर्य देव", metal: "सोना / तांबा", gem: "माणिक (Ruby)", color: "पीला, नारंगी", mantra: "|| ॐ सूर्याय नम: ||", moolDesc: "आप जन्मजात लीडर हैं। आपमें आत्मविश्वास और महत्वाकांक्षा कूट-कूट कर भरी है। आप स्वतंत्र विचारों वाले हैं और किसी के अधीन काम करना पसंद नहीं करते।", bhagDesc: "आपकी नियति आपको प्रशासन, सरकार या उच्च पदों तक ले जाएगी। जीवन में मान-सम्मान आपकी सबसे बड़ी पूँजी होगी।" },
+        2: { e: [8,9,4], f: [1,3,5], god: "भगवान शिव", metal: "चांदी", gem: "मोती", color: "सफेद, हल्का नीला", mantra: "|| ॐ नम: शिवाय ||", moolDesc: "आप कल्पनाशील, भावुक और शांतिप्रिय इंसान हैं। कला और रचनात्मकता आपकी सबसे बड़ी ताकत है।", bhagDesc: "आपका जीवन दूसरों की मदद करने, कलात्मक क्षेत्रों या साझेदारी (Partnership) के कामों में बीतेगा।" },
+        3: { e: [6], f: [1,2,3,5,7,9], god: "भगवान विष्णु", metal: "सोना", gem: "पीला पुखराज", color: "पीला", mantra: "|| ॐ गुरवे नम: ||", moolDesc: "आप ज्ञानी, अनुशासनप्रिय और आध्यात्मिक हैं। आपमें दूसरों को राह दिखाने की अद्भुत क्षमता है।", bhagDesc: "शिक्षा, परामर्श (Consultancy) और ज्ञान के क्षेत्र में आपकी नियति आपको महान और प्रसिद्ध बनाएगी।" },
+        4: { e: [2,8,9], f: [1,5,6,7], god: "गणेश जी", metal: "अष्टधातु", gem: "गोमेद", color: "स्लेटी, भूरा", mantra: "|| ॐ राहवे नम: ||", moolDesc: "आप व्यावहारिक हैं और लीक से हटकर (Out of the box) सोचते हैं। आप पुरानी परंपराओं को बदलना चाहते हैं।", bhagDesc: "जीवन में अचानक बदलाव आएंगे। शुरुआत में संघर्ष हो सकता है, लेकिन आपकी मेहनत अंततः आपको बड़ी सफलता देगी।" },
+        5: { e: [], f: [1,2,3,5,6], god: "माता दुर्गा", metal: "कांस्य / सोना", gem: "पन्ना (Emerald)", color: "हरा", mantra: "|| ॐ बुं बुधाय नम: ||", moolDesc: "बुद्धि और तर्क आपकी ताकत है। आप एक अच्छे कम्युनिकेटर हैं और बदलाव आपको पसंद है।", bhagDesc: "व्यापार, मार्केटिंग और संचार (Media) के माध्यम से आप जीवन में अपार धन और सफलता प्राप्त करेंगे।" },
+        6: { e: [3], f: [1,5,6,7], god: "माता लक्ष्मी", metal: "चांदी / प्लेटिनम", gem: "हीरा / ओपल", color: "सफेद, गुलाबी", mantra: "|| ॐ शुं शुक्राय नम: ||", moolDesc: "सौंदर्य, विलासिता और कला के प्रति आपका विशेष आकर्षण है। आप परिवार को बहुत महत्व देते हैं।", bhagDesc: "फैशन, कला, मनोरंजन या लग्जरी व्यापार आपकी नियति है। जीवन में सुख-सुविधाओं की कभी कमी नहीं होगी।" },
+        7: { e: [2], f: [1,3,4,5,7], god: "भगवान नृसिंह / केतु", metal: "सोना", gem: "लहसुनिया", color: "हल्का हरा, सफेद", mantra: "|| ॐ कें केतवे नम: ||", moolDesc: "आप एक अच्छे विश्लेषक (Analyst) और दार्शनिक हैं। आप हर चीज़ की गहराई में जाना पसंद करते हैं।", bhagDesc: "रिसर्च, आध्यात्मिकता और तकनीक (IT) के क्षेत्र में आपको बड़ी सफलता मिलेगी।" },
+        8: { e: [1,2,9], f: [3,4,5,6,8], god: "शनिदेव", metal: "लोहा", gem: "नीलम (Blue Sapphire)", color: "काला, गहरा नीला", mantra: "|| ॐ शं शनैश्चराय नम: ||", moolDesc: "आप कर्मठ, न्यायप्रिय और बेहद गंभीर स्वभाव के हैं। आप शॉर्टकट में विश्वास नहीं करते।", bhagDesc: "आपका जीवन 'कर्म ही पूजा है' पर आधारित है। संघर्ष के बाद जीवन के उत्तरार्ध में आपको असीम शक्ति और संपदा मिलेगी।" },
+        9: { e: [4,8], f: [1,2,3,5], god: "हनुमान जी", metal: "तांबा", gem: "मूंगा (Red Coral)", color: "लाल", mantra: "|| ॐ भौमाय नम: ||", moolDesc: "आप साहसी, ऊर्जावान और निडर हैं। आपमें योद्धाओं जैसे गुण हैं। गुस्से पर नियंत्रण रखना आवश्यक है।", bhagDesc: "सेना, पुलिस, खेल या किसी भी साहसिक कार्य में आप अपना परचम लहराएंगे।" }
     };
 
-    function reduce(n) { while(n > 9) n = n.toString().split('').reduce((a,b)=>+a + +b, 0); return n; }
+    function getComboAnalysis(m, b) {
+        if(m === b) return "आपका मूलांक और भाग्यांक दोनों समान हैं। आपकी सोच (मूलांक) और नियति (भाग्यांक) एक ही दिशा में कार्य कर रहे हैं। आपके अंक के गुण आपके जीवन में अत्यंत प्रबल हो जाते हैं।";
+        
+        let mData = numData[m];
+        if(mData.f.includes(b)) {
+            return "यह एक अत्यंत शुभ और मित्र (Friendly) संयोजन है। आप जो सोचते हैं (मूलांक), परिस्थितियां (भाग्यांक) भी उसमें आपका पूरा साथ देती हैं। जीवन में सफलता तुलनात्मक रूप से आसानी से मिलेगी।";
+        } else if(mData.e.includes(b)) {
+            return "मूलांक और भाग्यांक एक-दूसरे के शत्रु (Enemy) अंक हैं। आपकी सोच और परिस्थितियों में तालमेल की कमी हो सकती है। सफलता पाने के लिए आपको दूसरों से अधिक संघर्ष करना पड़ेगा। नाम अंक को अनुकूल अंक पर लाना अत्यंत लाभकारी रहेगा।";
+        } else {
+            return "यह एक सम (Neutral) संयोजन है। जीवन में संतुलन बना रहेगा। आप अपनी मेहनत और बुद्धि के बल पर अपना भाग्य खुद लिखेंगे।";
+        }
+    }
 
-    function showReport() {
+    function generateReport() {
         const name = document.getElementById('name').value;
         const dob = document.getElementById('dob').value;
         const phone = document.getElementById('phone').value;
-        localStorage.setItem('uName', name); localStorage.setItem('uDob', dob); localStorage.setItem('uPhone', phone);
+
+        if(!name || !dob || !phone) return alert("कृपया सभी जानकारी भरें!");
+
+        localStorage.setItem('uName', name);
+        localStorage.setItem('uDob', dob);
+        localStorage.setItem('uPhone', phone);
 
         let mool = reduce(new Date(dob).getDate());
         let bhag = reduce(dob.replace(/-/g, '').split('').reduce((a,b)=>+a+ +b, 0));
+        let naam = calculateName(name);
+        let pTotal = reduce(phone.split('').reduce((a,b)=>+a+ +b, 0));
         
-        const data = {
-            1: { lucky: "1, 2, 4, 7", god: "सूर्य देव" }, 2: { lucky: "1, 2, 7", god: "भगवान शिव" },
-            3: { lucky: "3, 6, 9", god: "भगवान विष्णु" }, 4: { lucky: "1, 4, 7, 8", god: "गणेश जी" },
-            5: { lucky: "1, 5, 6", god: "माता दुर्गा" }, 6: { lucky: "3, 6, 9", god: "माता लक्ष्मी" },
-            7: { lucky: "1, 2, 4, 7", god: "भगवान विष्णु" }, 8: { lucky: "1, 4, 7, 8", god: "शनिदेव" },
-            9: { lucky: "3, 6, 9", god: "हनुमान जी" }
-        };
+        let d = numData[mool];
+        let phoneMatch = (d.f.includes(pTotal) || pTotal === mool) ? "अति उत्तम (Highly Compatible)" : (d.e.includes(pTotal) ? "प्रतिकूल (Incompatible) - बदलने का विचार करें" : "सामान्य (Average)");
 
-        document.getElementById('r-mool').innerText = mool;
+        // Update UI
+        document.getElementById('disp-name').innerText = name;
+        document.getElementById('disp-dob').innerText = new Date(dob).toLocaleDateString('en-GB'); // DD/MM/YYYY
+
         document.getElementById('r-bhag').innerText = bhag;
-        document.getElementById('r-lucky').innerText = data[mool].lucky;
-        document.getElementById('r-god').innerText = data[mool].god;
-        
+        document.getElementById('r-mool').innerText = mool;
+        document.getElementById('r-naam').innerText = naam;
+
+        document.getElementById('t-phone').innerText = pTotal;
+        document.getElementById('t-match').innerText = phoneMatch;
+        document.getElementById('t-enemy').innerText = d.e.join(', ') || "कोई नहीं";
+        document.getElementById('t-friendly').innerText = d.f.join(', ');
+        document.getElementById('t-god').innerText = d.god;
+        document.getElementById('t-metal').innerText = d.metal;
+        document.getElementById('t-gem').innerText = d.gem;
+        document.getElementById('t-color').innerText = d.color;
+        document.getElementById('t-mantra').innerText = d.mantra;
+
+        document.getElementById('desc-mool').innerText = d.moolDesc;
+        document.getElementById('desc-bhag').innerText = numData[bhag].bhagDesc;
+        document.getElementById('desc-combo').innerText = getComboAnalysis(mool, bhag);
+
         document.getElementById('form-view').style.display = 'none';
         document.getElementById('report-view').style.display = 'block';
-        updateUI();
     }
 
-    function updateUI() {
-        let lang = document.getElementById('lang-dropdown').value;
-        let d = langData[lang];
-        document.getElementById('title').innerText = d.title;
-        document.getElementById('lbl-name').innerText = d.name;
-        document.getElementById('lbl-dob').innerText = d.dob;
-        document.getElementById('lbl-phone').innerText = d.phone;
-        document.getElementById('btn-submit').innerText = d.submit;
-        document.getElementById('res-title').innerText = d.res;
-        document.getElementById('txt-mool').innerText = d.mool;
-        document.getElementById('txt-bhag').innerText = d.bhag;
-        document.getElementById('txt-lucky').innerText = d.lucky;
-        document.getElementById('txt-god').innerText = d.god;
-    }
+    // UI Translation Logic
+    const uiLang = {
+        hi: { name: "पूरा नाम:", dob: "जन्म तिथि:", phone: "फोन नंबर:", btnSubmit: "विश्लेषण देखें", b: "भाग्यांक", m: "मूलांक", n: "नाम अंक", pTot: "फोन टोटल", pMat: "फोन मैचिंग", enm: "शत्रु अंक", frn: "अनुकूल अंक", god: "अनुकूल देवता", met: "अनुकूल धातु", gem: "अनुकूल रत्न", col: "अनुकूल रंग", man: "अनुकूल मंत्र", hdMool: "मूलांक विश्लेषण (व्यक्तित्व)", hdBhag: "भाग्यांक विश्लेषण (नियति)", hdCombo: "मूलांक + भाग्यांक कॉम्बिनेशन", btnBack: "नया विश्लेषण" },
+        en: { name: "Full Name:", dob: "DOB:", phone: "Phone:", btnSubmit: "View Analysis", b: "Destiny", m: "Psychic", n: "Name No.", pTot: "Phone Total", pMat: "Phone Match", enm: "Enemy No.", frn: "Friendly No.", god: "Deity", met: "Lucky Metal", gem: "Lucky Gem", col: "Lucky Color", man: "Mantra", hdMool: "Psychic Analysis (Personality)", hdBhag: "Destiny Analysis (Life Path)", hdCombo: "Psychic + Destiny Combination", btnBack: "New Analysis" },
+        mr: { name: "पूर्ण नाव:", dob: "जन्म तारीख:", phone: "फोन नंबर:", btnSubmit: "विश्लेषण पहा", b: "भाग्यांक", m: "मूलांक", n: "नाव अंक", pTot: "फोन टोटल", pMat: "फोन जुळणी", enm: "शत्रू अंक", frn: "अनुकूल अंक", god: "अनुकूल देवता", met: "अनुकूल धातू", gem: "अनुकूल रत्न", col: "अनुकूल रंग", man: "अनुकूल मंत्र", hdMool: "मूलांक विश्लेषण (व्यक्तिमत्व)", hdBhag: "भाग्यांक विश्लेषण (नियती)", hdCombo: "मूलांक + भाग्यांक कॉम्बिनेशन", btnBack: "नवीन विश्लेषण" }
+    };
 
-    function reset() { location.reload(); }
+    function switchLang() {
+        let l = document.getElementById('lang').value;
+        let d = uiLang[l];
+        document.getElementById('lbl-name').innerText = d.name; document.getElementById('lbl-dob').innerText = d.dob; document.getElementById('lbl-phone').innerText = d.phone;
+        document.getElementById('btn-submit').innerText = d.btnSubmit; document.getElementById('txt-bhag').innerText = d.b; document.getElementById('txt-mool').innerText = d.m;
+        document.getElementById('txt-naam').innerText = d.n; document.getElementById('txt-phone-tot').innerText = d.pTot; document.getElementById('txt-phone-mat').innerText = d.pMat;
+        document.getElementById('txt-enemy').innerText = d.enm; document.getElementById('txt-friend').innerText = d.frn; document.getElementById('txt-god').innerText = d.god;
+        document.getElementById('txt-metal').innerText = d.met; document.getElementById('txt-gem').innerText = d.gem; document.getElementById('txt-color').innerText = d.col;
+        document.getElementById('txt-mantra').innerText = d.man; document.getElementById('hd-mool').innerText = d.hdMool; document.getElementById('hd-bhag').innerText = d.hdBhag;
+        document.getElementById('hd-combo').innerText = d.hdCombo; document.getElementById('btn-back').innerText = d.btnBack;
+    }
 
     window.onload = () => {
-        document.getElementById('name').value = localStorage.getItem('uName') || '';
-        document.getElementById('dob').value = localStorage.getItem('uDob') || '';
-        document.getElementById('phone').value = localStorage.getItem('uPhone') || '';
-        updateUI();
+        if(localStorage.getItem('uName')) document.getElementById('name').value = localStorage.getItem('uName');
+        if(localStorage.getItem('uDob')) document.getElementById('dob').value = localStorage.getItem('uDob');
+        if(localStorage.getItem('uPhone')) document.getElementById('phone').value = localStorage.getItem('uPhone');
+        switchLang();
     };
 </script>
 </body>
