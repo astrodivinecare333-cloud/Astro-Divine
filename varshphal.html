@@ -3,195 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>वार्षिक राशिफल (वर्षफल) - Astro Divine</title>
+    <title>Astro Divine - Yearly Kundali Varshphal</title>
     <style>
-        * { box-sizing: border-box; }
-        body { 
-            background: linear-gradient(135deg, #001f3f 0%, #000b1a 100%); 
-            color: #d4af37; 
-            font-family: 'Georgia', serif; 
-            margin: 0; 
-            padding: 15px; 
-            min-height: 100vh; 
-        }
-        .container { 
-            max-width: 900px; 
-            margin: 0 auto; 
-            background: rgba(0, 31, 63, 0.95); 
-            border: 2px solid #d4af37; 
-            border-radius: 15px; 
-            padding: 25px; 
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4); 
-        }
-        .header { 
-            background: #d4af37; 
-            color: #000b1a; 
-            padding: 15px; 
-            text-align: center; 
-            font-weight: bold; 
-            font-size: 1.4rem; 
-            border-radius: 10px; 
-            margin-bottom: 20px; 
-        }
-        .user-info { 
-            background: rgba(0, 11, 26, 0.8); 
-            border: 1px solid #d4af37; 
-            border-radius: 10px; 
-            padding: 15px; 
-            margin-bottom: 25px; 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-            gap: 10px; 
-            font-size: 1rem; 
-        }
-        .user-info div { color: #f3c653; }
-        .user-info strong { color: #fff; }
-
-        .section-title { 
-            color: #f3c653; 
-            border-bottom: 2px solid #d4af37; 
-            padding-bottom: 6px; 
-            margin-top: 30px; 
-            margin-bottom: 20px; 
-            font-size: 1.25rem; 
-        }
-
-        /* वर्षफल टेबल */
-        .astro-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: rgba(0, 11, 26, 0.9);
-            border: 1px solid #d4af37;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-        .astro-table th, .astro-table td {
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            padding: 12px;
-            text-align: center;
-            font-size: 0.95rem;
-        }
-        .astro-table th {
-            background: rgba(212, 175, 55, 0.15);
-            color: #f3c653;
-        }
-        .astro-table th span {
-            display: block;
-            color: #fff;
-            font-weight: bold;
-            margin-top: 4px;
-        }
-
-        /* कार्ड्स ग्रिड */
-        .card { 
-            background: rgba(0, 11, 26, 0.9); 
-            border: 1px solid #d4af37; 
-            border-radius: 10px; 
-            padding: 18px; 
-            margin-bottom: 15px; 
-            line-height: 1.6; 
-        }
-        .card h4 { margin: 0 0 8px 0; color: #f3c653; font-size: 1.1rem; }
-        .badge { display: inline-block; padding: 4px 10px; border-radius: 5px; font-weight: bold; font-size: 0.9rem; margin-bottom: 8px; }
-        .badge-positive { background: #1b5e20; color: #a5d6a7; border: 1px solid #81c784; }
-        .badge-neutral { background: #e65100; color: #ffe0b2; border: 1px solid #fb8c00; }
-
-        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px; }
-
-        .nav-links {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 25px;
-        }
-        .btn-action { 
-            background: #d4af37; 
-            color: #000b1a; 
-            padding: 12px 20px; 
-            border-radius: 8px; 
-            text-decoration: none; 
-            font-weight: bold; 
-            transition: 0.3s; 
-            text-align: center; 
-        }
-        .btn-action:hover { background: #f3c653; }
+        :root { --blue: #0b192c; --gold: #ffcc00; --card-bg: #1e3e62; }
+        body { background: var(--blue); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 10px; color: #fff; }
+        .card { max-width: 500px; margin: auto; background: var(--blue); border-radius: 12px; border: 2px solid var(--gold); overflow: hidden; box-shadow: 0 8px 16px rgba(0,0,0,0.4); }
+        .header { background: #071321; color: var(--gold); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--gold); }
+        .header h2 { margin: 0; font-size: 22px; letter-spacing: 1px; }
+        select { background: var(--gold); color: var(--blue); border: none; padding: 5px 10px; border-radius: 4px; font-weight: bold; outline: none; cursor: pointer; }
+        
+        .input-section { padding: 20px; }
+        .input-section label { display: block; font-size: 14px; font-weight: bold; margin-top: 12px; color: var(--gold); }
+        .input-section input, .input-section select { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid var(--gold); background: #071321; color: #fff; border-radius: 5px; box-sizing: border-box; font-size: 15px; outline: none; }
+        .btn { width: 100%; padding: 14px; background: var(--gold); border: none; border-radius: 5px; font-weight: bold; color: var(--blue); margin-top: 20px; cursor: pointer; font-size: 16px; }
+        
+        .report-view { padding: 15px; display: none; }
+        .user-info-badge { text-align: center; font-size: 14px; color: var(--gold); margin-bottom: 15px; border-bottom: 2px solid var(--gold); padding-bottom: 10px; background: var(--card-bg); border-radius: 8px; padding-top: 10px; }
+        
+        .analysis-box { padding: 15px; margin-bottom: 15px; border-radius: 8px; font-size: 14px; line-height: 1.6; border-left: 4px solid var(--gold); background: var(--card-bg); color: #fff; border-top: 1px solid rgba(255,204,0,0.2); border-right: 1px solid rgba(255,204,0,0.2); border-bottom: 1px solid rgba(255,204,0,0.2); }
+        .analysis-box h4 { margin: 0 0 8px 0; color: var(--gold); font-size: 16px; }
+        .remedy-box { border-left: 4px solid #2ecc71; background: #11261a; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">✨ Astro Divine - वार्षिक राशिफल (वर्षफल) ✨</div>
-
-    <!-- यूज़र विवरण -->
-    <div class="user-info">
-        <div><strong>नाम:</strong> <span id="resName">-</span></div>
-        <div><strong>वर्तमान वर्ष:</strong> <span id="resYear">2026-2027</span></div>
-        <div><strong>वर्षेश (Year Lord):</strong> <span id="resLord">सूर्य</span></div>
-        <div><strong>मुथा स्थिति:</strong> <span id="resMuntha">लाभ भाव (11वां)</span></div>
+<div class="card">
+    <div class="header">
+        <h2 id="brand">Astro Divine</h2>
+        <select id="main-lang" onchange="updateUIText()">
+            <option value="hi">हिंदी</option>
+            <option value="en">English</option>
+            <option value="mr">मराठी</option>
+        </select>
     </div>
 
-    <!-- 1. मुख्य वर्षफल सारणी -->
-    <div class="section-title">📜 वार्षिक मुख्य ग्रह बल एवं स्थिति</div>
-    <table class="astro-table">
-        <tr>
-            <th>वर्ष लग्न <span id="vLagna">धनु</span></th>
-            <th>वर्षेश (Year Lord) <span id="vLord">सूर्य</span></th>
-            <th>मुथा राशि <span id="vMunthaSign">तुला</span></th>
-        </tr>
-        <tr>
-            <th>पंच-वर्गीय बल <span id="vBal">उत्तम (14.5 रुपा)</span></th>
-            <th>त्रिثकीय बल <span id="vTri">शुभ</span></th>
-            <th>वर्ष का मुख्य फोकस <span id="vFocus">धन एवं करियर</span></th>
-        </tr>
-    </table>
+    <!-- जन्म विवरण इनपुट फॉर्म -->
+    <div id="form-view" class="input-section">
+        <label id="lbl-name">पूरा नाम:</label>
+        <input type="text" id="uname" placeholder="अपना पूरा नाम दर्ज करें">
 
-    <!-- 2. क्षेत्रवार वार्षिक फलादेश -->
-    <div class="section-title">📊 वर्षभर का क्षेत्रवार फलादेश</div>
-    <div class="grid-2">
-        <div class="card">
-            <span class="badge badge-positive">करियर एवं व्यापार</span>
-            <h4>आर्थिक उन्नति और सफलता</h4>
-            <p>इस वर्ष कार्यक्षेत्र में आपके पराक्रम की सराहना होगी। नई जिम्मेदारियां मिल सकती हैं और व्यापार में बड़ा मुनाफा होने के योग हैं।</p>
-        </div>
-        <div class="card">
-            <span class="badge badge-positive">पारिवारिक एवं दांपत्य जीवन</span>
-            <h4>सुख और सामंजस्य</h4>
-            <p>परिवार में मांगलिक कार्यों का आयोजन होगा। जीवनसाथी के साथ संबंध मधुर रहेंगे और घर में सुख-शांति का वातावरण बना रहेगा.</p>
-        </div>
-        <div class="card">
-            <span class="badge badge-neutral">स्वास्थ्य एवं शिक्षा</span>
-            <h4>सतर्कता आवश्यक</h4>
-            <p>छात्रों के लिए समय अनुकूल है, प्रतियोगी परीक्षाओं में सफलता मिलेगी। खान-पान पर ध्यान दें, मौसमी स्वास्थ्य संबंधी छोटी-मोटी दिक्कतें आ सकती हैं।</p>
-        </div>
-        <div class="card">
-            <span class="badge badge-positive">धन एवं संपत्ति</span>
-            <h4>आर्थिक लाभ</h4>
-            <p>अचानक धन लाभ के योग बन रहे हैं। नया वाहन या संपत्ति खरीदने की योजना सफल हो सकती है, निवेश के लिए वर्ष उत्तम है।</p>
-        </div>
+        <label id="lbl-dob">जन्म तिथि:</label>
+        <input type="date" id="udob">
+
+        <label id="lbl-tob">जन्म समय:</label>
+        <input type="time" id="utob">
+
+        <label id="lbl-pob">जन्म स्थान:</label>
+        <input type="text" id="upob" placeholder="शहर का नाम (जैसे: Mumbai)">
+
+        <label id="lbl-target-year">किस वर्ष का फल देखना है:</label>
+        <select id="target-year">
+            <option value="2026">2026</option>
+            <option value="2027">2027</option>
+            <option value="2028">2028</option>
+        </select>
+
+        <button class="btn" id="btn-generate" onclick="generateVarshphal()">वर्षफल देखें</button>
     </div>
 
-    <!-- 3. वार्षिक उपाय -->
-    <div class="section-title">💎 वर्ष को और अधिक सफल बनाने के उपाय</div>
-    <div class="card">
-        <span class="badge badge-positive">विशेष अचूक उपाय</span>
-        <h4>वर्षेश सूर्य और मुथा बल हेतु</h4>
-        <p>1. प्रतिदिन सुबह तांबे के लोटे से सूर्य भगवान को जल अर्पित करें。<br>
-           2. गरीबों और जरूरतमंदों को पीले वस्त्र या अनाज का दान करें。<br>
-           3. गणेश स्तोत्र का पाठ करें, इससे वर्षभर आने वाली बाधाएं दूर होंगी।</p>
-    </div>
+    <!-- कुंडली आधारित वर्षफल रिपोर्ट व्यू -->
+    <div id="report-view" class="report-view">
+        <div class="user-info-badge">
+            <strong id="rep-name">--</strong><br>
+            <span id="rep-details" style="font-size: 12px; color: #ffeb99;">--</span>
+        </div>
 
-    <div class="nav-links">
-        <a href="result.html" class="btn-action">← जन्म कुंडली पर लौटें</a>
-        <a href="kundali.html" class="btn-action">नया विवरण दर्ज करें →</a>
+        <div class="analysis-box">
+            <h4 id="hd-muntha">मुथा फल एवं लग्न प्रवेश (Annual Ascendant & Muntha)</h4>
+            <div id="desc-muntha">--</div>
+        </div>
+        <div class="analysis-box">
+            <h4 id="hd-jupiter">गुरु गोचर फल (Jupiter Transit - Wealth & Growth)</h4>
+            <div id="desc-jupiter">--</div>
+        </div>
+        <div class="analysis-box">
+            <h4 id="hd-saturn">शनि गोचर एवं ढैय्या/साढ़ेसाती (Saturn Transit)</h4>
+            <div id="desc-saturn">--</div>
+        </div>
+        <div class="analysis-box">
+            <h4 id="hd-rahu">राहु-केतु गोचर प्रभाव (Rahu-Ketu Transit)</h4>
+            <div id="desc-rahu">--</div>
+        </div>
+        <div class="analysis-box remedy-box">
+            <h4 id="hd-remedy">वर्ष के विशिष्ट वैदिक उपाय (Varsha Remedies)</h4>
+            <div id="desc-remedy">--</div>
+        </div>
+
+        <button class="btn" onclick="resetForm()" id="btn-back">नया विवरण दर्ज करें</button>
     </div>
 </div>
 
 <script>
-    window.onload = function() {
-        const name = localStorage.getItem('userName') || "जातक";
-        document.getElementById('resName').innerText = name;
-    }
-</script>
+    const varshphalDatabase = {
+        hi: {
+            muntha: "इस वर्ष आपकी कुंडली में मुथा शुभ भाव में स्थित है, जो वर्ष भर आपको मानसिक संतोष, कार्यक्षेत्र में स्थिरता और मान-सम्मान दिलाएगी। वर्ष के शुरुआती महीनों में नए कार्यों की रूपरेखा बनेगी।",
+            jupiter: "देव गुरु बृहस्पति का गोचर आपके अनुकूल रहेगा, जिससे आर्थिक स्थिति सुधरेगी, रुके हुए धन की प्राप्ति होगी और परिवार में मांगलिक कार्य संपन्न होने के योग बनेंगे।",
+            saturn: "शनि महाराज की स्थिति आपको कर्मठ बनाएगी। थोड़ी बहुत बाधाओं के बाद मेहनत का पूरा फल प्राप्त होगा। आलस्य से बचें और निरंतर प्रयास जारी रखें।",
+            rahu: "राहु-केतु का गोचर आपको अचानक से बड़े बदलाव या अप्रत्याशित यात्राएं दे सकता है। तकनीकी या गुप्त शत्रुओं से थोड़ा संभलकर रहने की सलाह है।",
+            remedy: "प्रत्येक गुरुवार को चने की दाल और पीले वस्त्र का दान करें। शनिवार के दिन पीपल के पेड़ के नीचे सरसों के तेल का दीपक जलाएं।"
+        },
+        en: {
+            muntha: "This year, Muntha is placed in an auspicious house in your chart, bringing mental satisfaction, stability at work, and prestige throughout the year.",
+            jupiter: "Jupiter's transit is favorable, which will improve your financial condition, recover stuck funds, and indicate auspicious family events.",
+            saturn: "Saturn's position will make you hardworking. After minor hurdles, full rewards of your efforts will be reaped. Avoid laziness.",
+            rahu: "Rahu-Ketu transit may bring sudden major changes or unexpected travels. Be cautious of hidden rivals.",
+            remedy: "Donate split chickpea and yellow clothes on Thursdays. Light a mustard oil lamp under a Peepal tree on Saturdays."
+        },
+        mr: {
+            muntha: "या वर्षी तुमच्या कुंडलीत मुथा शुभ स्थानी आहे, ज्यामुळे वर्षभर मानसिक समाधान, कामात स्थैर्य आणि मान-सन्मान लाभेल. वर्षाच्या सुरुवातीला नवीन कामांची सुरुवात होईल.",
+            jupiter: "गुरुचे गोचर अनुकूल राहील, ज्यामुळे आर्थिक स्थिती सुधारेल, अडकलेला पैसा मिळेल आणि कुटुंबात मांगलिक कार्ये घडतील.",
+            saturn: "शनिची स्थिती तुम्हाला कष्टाळू बनवेल. काही अडथळ्यांनंतर कष्टाचे पूर्ण फळ मिळेल. आळस टाळा.",
+            rahu: "राहु-केतूचे गोचर अचानक मोठे बदल किंवा अनपेक्षित प्रवास घडवू शकते. गुप्त शत्रूंपासून सावध राहा.",
+            remedy: "प्रत्येक गुरुवारी चण्याची डाळ आणि पिवळ्या कपड्यांचे दान करा. शनिवारी पिंपळाच्या झाडाखाली मोहरीच्या तेलाचा दिवा लावा."
+        }
+    };
 
+    const uiTexts = {
+        hi: { lblName: "पूरा नाम:", lblDob: "जन्म तिथि:", lblTob: "जन्म समय:", lblPob: "जन्म स्थान:", lblYear: "किस वर्ष का फल देखना है:", btnGen: "वर्षफल देखें", hdMuntha: "मुथा फल एवं लग्न प्रवेश", hdJup: "गुरु गोचर फल (धन एवं विस्तार)", hdSat: "शनि गोचर प्रभाव (कर्म एवं संघर्ष)", hdRahu: "राहु-केतु गोचर प्रभाव", hdRem: "वर्ष के विशिष्ट वैदिक उपाय", btnBack: "नया विवरण दर्ज करें" },
+        en: { lblName: "Full Name:", lblDob: "Date of Birth:", lblTob: "Time of Birth:", lblPob: "Place of Birth:", lblYear: "Select Target Year:", btnGen: "View Varshphal", hdMuntha: "Annual Ascendant & Muntha", hdJup: "Jupiter Transit (Wealth & Growth)", hdSat: "Saturn Transit (Karma & Effort)", hdRahu: "Rahu-Ketu Transit", hdRem: "Special Vedic Remedies", btnBack: "Enter New Details" },
+        mr: { lblName: "पूर्ण नाव:", lblDob: "जन्म तारीख:", lblTob: "जन्म वेळ:", lblPob: "जन्म ठिकाण:", lblYear: "कोणत्या वर्षाचे फळ पाहयचे आहे:", btnGen: "वर्षफल पहा", hdMuntha: "मुथा फळ व लग्न प्रवेश", hdJup: "गुरु गोचर फळ (धन व प्रगती)", hdSat: "शनि गोचर प्रभाव (कर्म व संघर्ष)", hdRahu: "राहु-केतु गोचर प्रभाव", hdRem: "वर्षभरासाठी विशेष वैदिक उपाय", btnBack: "नवीन माहिती प्रविष्ट करा" }
+    };
+
+    function generateVarshphal() {
+        let name = document.getElementById('uname').value;
+        let dob = document.getElementById('udob').value;
+        let tob = document.getElementById('utob').value;
+        let pob = document.getElementById('upob').value;
+        let targetYear = document.getElementById('target-year').value;
+        let lang = document.getElementById('main-lang').value;
+
+        if(!name || !dob || !tob || !pob) {
+            alert(lang === 'hi' ? "कृपया सभी जन्म विवरण भरें!" : (lang === 'mr' ? "कृपया सर्व जन्म माहिती भरा!" : "Please fill all birth details!"));
+            return;
+        }
+
+        // डेटा लोकल स्टोरेज में सेव करें
+        localStorage.setItem('vName', name);
+        localStorage.setItem('vDob', dob);
+        localStorage.setItem('vTob', tob);
+        localStorage.setItem('vPob', pob);
+        localStorage.setItem('vYear', targetYear);
+
+        let data = varshphalDatabase[lang];
+
+        document.getElementById('rep-name').innerText = name;
+        document.getElementById('rep-details').innerText = `DOB: ${dob.split('-').reverse().join('-')} | Time: ${tob} | Place: ${pob} | Year: ${targetYear}`;
+
+        document.getElementById('desc-muntha').innerText = data.muntha;
+        document.getElementById('desc-jupiter').innerText = data.jupiter;
+        document.getElementById('desc-saturn').innerText = data.saturn;
+        document.getElementById('desc-rahu').innerText = data.rahu;
+        document.getElementById('desc-remedy').innerText = data.remedy;
+
+        document.getElementById('form-view').style.display = 'none';
+        document.getElementById('report-view').style.display = 'block';
+    }
+
+    function resetForm() {
+        document.getElementById('report-view').style.display = 'none';
+        document.getElementById('form-view').style.display = 'block';
+    }
+
+    function updateUIText() {
+        let lang = document.getElementById('main-lang').value;
+        let t = uiTexts[lang];
+
+        document.getElementById('lbl-name').innerText = t.lblName;
+        document.getElementById('lbl-dob').innerText = t.lblDob;
+        document.getElementById('lbl-tob').innerText = t.lblTob;
+        document.getElementById('lbl-pob').innerText = t.lblPob;
+        document.getElementById('lbl-target-year').innerText = t.lblYear;
+        document.getElementById('btn-generate').innerText = t.btnGen;
+
+        document.getElementById('hd-muntha').innerText = t.hdMuntha;
+        document.getElementById('hd-jupiter').innerText = t.hdJup;
+        document.getElementById('hd-saturn').innerText = t.hdSat;
+        document.getElementById('hd-rahu').innerText = t.hdRahu;
+        document.getElementById('hd-remedy').innerText = t.hdRem;
+        document.getElementById('btn-back').innerText = t.btnBack;
+    }
+
+    window.onload = () => {
+        // पेज लोड होने पर पुराना सेव किया हुआ डेटा वापस फॉर्म में भरें
+        if(localStorage.getItem('vName')) document.getElementById('uname').value = localStorage.getItem('vName');
+        if(localStorage.getItem('vDob')) document.getElementById('udob').value = localStorage.getItem('vDob');
+        if(localStorage.getItem('vTob')) document.getElementById('utob').value = localStorage.getItem('vTob');
+        if(localStorage.getItem('vPob')) document.getElementById('upob').value = localStorage.getItem('vPob');
+        if(localStorage.getItem('vYear')) document.getElementById('target-year').value = localStorage.getItem('vYear');
+        
+        updateUIText();
+    };
+</script>
 </body>
 </html>
