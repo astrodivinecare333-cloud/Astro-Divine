@@ -2,123 +2,91 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Astro Divine - Numerology</title>
+    <title>Astro Divine - Premium Numerology Analysis</title>
     <style>
-        body { background-color: #0b192c; color: #ffffff; font-family: sans-serif; margin: 0; padding: 15px; }
-        .container { max-width: 600px; margin: 0 auto; background: #1e3e62; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        h2 { color: #ffcc00; font-size: 20px; margin: 0; }
-        .lang-select { padding: 5px; border-radius: 4px; background: #ffcc00; color: #0b192c; font-weight: bold; border: none; cursor: pointer; }
-        .section-box { background: #0b192c; border: 1px solid #ffcc00; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
-        label { display: block; margin-bottom: 4px; font-size: 13px; color: #a0d2eb; }
-        input { width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box; }
-        button { width: 100%; background-color: #ffcc00; color: #0b192c; padding: 12px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
-        .report-card { background: #ffffff; color: #333; padding: 15px; border-radius: 8px; margin-bottom: 15px; font-size: 14px; }
-        .info-row { display: flex; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        body { background-color: #f4f7f6; font-family: sans-serif; margin: 0; padding: 10px; }
+        .container { max-width: 500px; margin: auto; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .top-bar { background: #ffbc00; padding: 15px; color: #fff; display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
+        .calc-grid { display: flex; gap: 5px; padding: 10px; }
+        .calc-box { flex: 1; text-align: center; padding: 10px; border-radius: 5px; font-size: 12px; }
+        .info-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .info-table td { border: 1px solid #ddd; padding: 10px; font-size: 13px; }
+        .input-form { padding: 20px; }
+        input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #ffbc00; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header-flex">
-        <h2 id="title">Astro Divine</h2>
-        <select class="lang-select" id="lang-dropdown" onchange="changeLanguage()">
-            <option value="hi">हिंदी</option>
-            <option value="en">English</option>
-            <option value="mr">मराठी</option>
-        </select>
+<div class="container" id="app">
+    <div id="form-view" class="input-form">
+        <h2>Astro Divine</h2>
+        <input type="text" id="name" placeholder="पूरा नाम">
+        <input type="date" id="dob">
+        <input type="tel" id="phone" placeholder="फोन नंबर">
+        <button onclick="analyze()">विश्लेषण करें</button>
     </div>
 
-    <div id="input-section" class="section-box">
-        <label id="lbl-name">पूरा नाम:</label>
-        <input type="text" id="user-name">
-        <label id="lbl-dob">जन्म तिथि:</label>
-        <input type="date" id="user-dob">
-        <label id="lbl-phone">फोन नंबर:</label>
-        <input type="tel" id="user-phone">
-        <button id="btn-submit" onclick="calculate()">विश्लेषण देखें</button>
-    </div>
-
-    <div id="result-section" style="display:none;">
-        <div class="report-card">
-            <h3 id="res-title" style="color: #b85d00;">आपका विश्लेषण</h3>
-            <div class="info-row"><span id="txt-mool">मूलांक:</span> <strong id="r-mool"></strong></div>
-            <div class="info-row"><span id="txt-bhag">भाग्यांक:</span> <strong id="r-bhag"></strong></div>
-            <div class="info-row"><span id="txt-lucky">शुभ अंक:</span> <strong id="r-lucky"></strong></div>
-            <div class="info-row"><span id="txt-god">आराध्य देव:</span> <strong id="r-god"></strong></div>
-            <p id="r-advice" style="font-size: 13px; color: #555;"></p>
+    <div id="report-view" style="display:none;">
+        <div class="top-bar"><span id="res-name">नाम</span></div>
+        <div class="calc-grid">
+            <div class="calc-box" style="background:#fff3cd;"><div>भाग्यांक</div><h2 id="r-bhag"></h2></div>
+            <div class="calc-box" style="background:#d1e7dd;"><div>मूलांक</div><h2 id="r-mool"></h2></div>
+            <div class="calc-box" style="background:#f8d7da;"><div>नाम अंक</div><h2 id="r-naam"></h2></div>
         </div>
-        <button class="lang-select" onclick="reset()">नया विश्लेषण</button>
+        <table class="info-table">
+            <tr><td>फोन टोटल</td><td id="t-phone"></td></tr>
+            <tr><td>फोन मैचिंग</td><td id="t-match"></td></tr>
+            <tr><td>शत्रु अंक</td><td id="t-enemy" style="color:red;"></td></tr>
+            <tr><td>अनुकूल अंक</td><td id="t-friendly" style="color:green;"></td></tr>
+            <tr><td>अनुकूल देवता</td><td id="t-god"></td></tr>
+            <tr><td>अनुकूल रत्न</td><td id="t-gem"></td></tr>
+            <tr><td>अनुकूल मंत्र</td><td id="t-mantra" style="font-size:11px;"></td></tr>
+        </table>
+        <div style="padding:15px;"><button onclick="location.reload()">नया विश्लेषण</button></div>
     </div>
 </div>
 
 <script>
-    const langData = {
-        hi: { title: "अंक ज्योतिष", name: "पूरा नाम:", dob: "जन्म तिथि:", phone: "फोन नंबर:", submit: "विश्लेषण देखें", mool: "मूलांक:", bhag: "भाग्यांक:", lucky: "शुभ अंक:", god: "आराध्य देव:", res: "आपका विश्लेषण" },
-        en: { title: "Numerology", name: "Full Name:", dob: "DOB:", phone: "Phone:", submit: "Analyze", mool: "Psychic:", bhag: "Destiny:", lucky: "Lucky No:", god: "Diety:", res: "Your Analysis" },
-        mr: { title: "अंक ज्योतिष", name: "पूर्ण नाव:", dob: "जन्म तारीख:", phone: "फोन नंबर:", submit: "विश्लेषण पहा", mool: "मूलांक:", bhag: "भाग्यांक:", lucky: "शुभ अंक:", god: "आराध्य देव:", res: "तुमचे विश्लेषण" }
-    };
+    function reduce(n) { while(n > 9) n = n.toString().split('').reduce((a,b)=>+a + +b, 0); return n; }
 
-    window.onload = () => {
-        document.getElementById('user-name').value = localStorage.getItem('uName') || '';
-        document.getElementById('user-dob').value = localStorage.getItem('uDob') || '';
-        document.getElementById('user-phone').value = localStorage.getItem('uPhone') || '';
-    };
+    function analyze() {
+        const name = document.getElementById('name').value;
+        const dob = document.getElementById('dob').value;
+        const phone = document.getElementById('phone').value;
 
-    function reduce(n) {
-        while (n > 9) n = n.toString().split('').reduce((a,b) => +a + +b, 0);
-        return n;
-    }
-
-    function calculate() {
-        const name = document.getElementById('user-name').value;
-        const dob = document.getElementById('user-dob').value;
-        const phone = document.getElementById('user-phone').value;
-        localStorage.setItem('uName', name); localStorage.setItem('uDob', dob); localStorage.setItem('uPhone', phone);
-
+        // कैलकुलेशन
         let mool = reduce(new Date(dob).getDate());
-        let bhag = reduce(dob.replace(/-/g, '').split('').reduce((a,b)=>+a+ +b, 0));
+        let bhag = reduce(dob.replace(/-/g, '').split('').reduce((a,b)=>+a + +b, 0));
+        let pTotal = reduce(phone.split('').reduce((a,b)=>+a + +b, 0));
         
-        // फलादेश डेटा
-        const analysis = {
-            1: { lucky: "1, 4, 7", god: "भगवान सूर्य", advice: "आप जन्मजात लीडर हैं। नियमित सूर्य अर्घ्य दें।" },
-            2: { lucky: "2, 7", god: "भगवान शिव", advice: "आप संवेदनशील हैं, मानसिक शांति के लिए ध्यान करें।" },
-            3: { lucky: "3, 6, 9", god: "भगवान विष्णु", advice: "ज्ञान आपकी शक्ति है। समाज सेवा में रुचि लें।" },
-            4: { lucky: "1, 4, 8", god: "गणेश जी", advice: "अनुशासन बनाए रखें, शॉर्टकट से बचें।" },
-            5: { lucky: "5, 6, 8", god: "माता दुर्गा", advice: "वाणी का सही उपयोग करें, व्यापार में लाभ होगा।" },
-            6: { lucky: "3, 6, 9", god: "माता लक्ष्मी", advice: "कला और सुंदरता पर ध्यान दें, सुखद जीवन रहेगा।" },
-            7: { lucky: "2, 7, 1", god: "भगवान विष्णु", advice: "इन्टुइशन पर भरोसा रखें, आध्यात्मिक मार्ग अपनाएं।" },
-            8: { lucky: "4, 8, 5", god: "शनिदेव", advice: "कड़ी मेहनत का फल मिलेगा, धैर्य रखें।" },
-            9: { lucky: "3, 6, 9", god: "हनुमान जी", advice: "ऊर्जा को सही दिशा दें, गुस्से पर काबू रखें।" }
+        // फोन मैचिंग लॉजिक
+        let match = (pTotal === mool || pTotal === bhag) ? "अति उत्तम (Highly Compatible)" : "सामान्य (Average)";
+
+        // फलादेश डेटाबेस (उदाहरण)
+        const data = {
+            1: {enemy: "6, 8", friendly: "1, 2, 4, 7", god: "सूर्य", gem: "रूबी", mantra: "|| ॐ सूर्याय नम: ||"},
+            2: {enemy: "8, 9", friendly: "1, 2, 7", god: "शिव", gem: "मोती", mantra: "|| ॐ नम: शिवाय ||"},
+            3: {enemy: "4, 5, 8", friendly: "3, 6, 9", god: "विष्णु", gem: "पुखराज", mantra: "|| ॐ गुरवे नम: ||"}
+            // ... बाकी अंक 4-9 के लिए भी ऐसे ही डेटा जोड़ सकते हैं
         };
 
+        const d = data[mool] || {enemy: "नियत नहीं", friendly: "नियत नहीं", god: "ध्यान करें", gem: "परामर्श लें", mantra: "ॐ नम: शिवाय"};
+
+        // डेटा अपडेट
         document.getElementById('r-mool').innerText = mool;
         document.getElementById('r-bhag').innerText = bhag;
-        document.getElementById('r-lucky').innerText = analysis[mool].lucky;
-        document.getElementById('r-god').innerText = analysis[mool].god;
-        document.getElementById('r-advice').innerText = analysis[mool].advice;
+        document.getElementById('t-phone').innerText = pTotal;
+        document.getElementById('t-match').innerText = match;
+        document.getElementById('t-enemy').innerText = d.enemy;
+        document.getElementById('t-friendly').innerText = d.friendly;
+        document.getElementById('t-god').innerText = d.god;
+        document.getElementById('t-gem').innerText = d.gem;
+        document.getElementById('t-mantra').innerText = d.mantra;
 
-        document.getElementById('input-section').style.display = 'none';
-        document.getElementById('result-section').style.display = 'block';
+        document.getElementById('form-view').style.display = 'none';
+        document.getElementById('report-view').style.display = 'block';
     }
-
-    function changeLanguage() {
-        let lang = document.getElementById('lang-dropdown').value;
-        let d = langData[lang];
-        document.getElementById('title').innerText = d.title;
-        document.getElementById('lbl-name').innerText = d.name;
-        document.getElementById('lbl-dob').innerText = d.dob;
-        document.getElementById('lbl-phone').innerText = d.phone;
-        document.getElementById('btn-submit').innerText = d.submit;
-        document.getElementById('res-title').innerText = d.res;
-        document.getElementById('txt-mool').innerText = d.mool;
-        document.getElementById('txt-bhag').innerText = d.bhag;
-        document.getElementById('txt-lucky').innerText = d.lucky;
-        document.getElementById('txt-god').innerText = d.god;
-    }
-    
-    function reset() { location.reload(); }
 </script>
 </body>
 </html>
