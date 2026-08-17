@@ -23,6 +23,14 @@
         .analysis-box { padding: 15px; margin-bottom: 15px; border-radius: 8px; font-size: 14px; line-height: 1.6; border-left: 4px solid var(--gold); background: var(--card-bg); color: #fff; border-top: 1px solid rgba(255,204,0,0.2); border-right: 1px solid rgba(255,204,0,0.2); border-bottom: 1px solid rgba(255,204,0,0.2); }
         .analysis-box h4 { margin: 0 0 8px 0; color: var(--gold); font-size: 16px; }
         .remedy-box { border-left: 4px solid #2ecc71; background: #11261a; }
+
+        /* विजुअल चार्ट / ग्राफ के लिए स्टाइल */
+        .chart-container { background: #071321; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid rgba(255,204,0,0.3); }
+        .chart-title { font-size: 13px; color: var(--gold); margin-bottom: 10px; text-align: center; font-weight: bold; }
+        .bar-row { display: flex; align-items: center; margin-bottom: 8px; font-size: 12px; }
+        .bar-label { width: 35%; color: #ffeb99; }
+        .bar-track { flex: 1; background: #1e3e62; height: 10px; border-radius: 5px; overflow: hidden; margin-left: 10px; }
+        .bar-fill { background: var(--gold); height: 100%; border-radius: 5px; }
     </style>
 </head>
 <body>
@@ -37,7 +45,7 @@
         </select>
     </div>
 
-    <!-- जन्म विवरण इनपुट फॉर्म -->
+    <!-- जन्म विवरण इनपुट फॉर्म (वर्ल्डवाइड लोकेशन के साथ) -->
     <div id="form-view" class="input-section">
         <label id="lbl-name">पूरा नाम:</label>
         <input type="text" id="uname" placeholder="अपना पूरा नाम दर्ज करें">
@@ -48,8 +56,23 @@
         <label id="lbl-tob">जन्म समय:</label>
         <input type="time" id="utob">
 
-        <label id="lbl-pob">जन्म स्थान:</label>
-        <input type="text" id="upob" placeholder="शहर का नाम (जैसे: Mumbai)">
+        <label id="lbl-pob">जन्म स्थान (World / Global Location):</label>
+        <select id="upob">
+            <optgroup label="India (भारत)">
+                <option value="Mumbai, India">Mumbai, India</option>
+                <option value="Delhi, India">Delhi, India</option>
+                <option value="Bangalore, India">Bangalore, India</option>
+                <option value="Shirdi, India">Shirdi, India</option>
+                <option value="Pune, India">Pune, India</option>
+            </optgroup>
+            <optgroup label="International (अंतरराष्ट्रीय)">
+                <option value="Dubai, UAE">Dubai, UAE</option>
+                <option value="London, UK">London, UK</option>
+                <option value="New York, USA">New York, USA</option>
+                <option value="Singapore">Singapore</option>
+                <option value="Sydney, Australia">Sydney, Australia</option>
+            </optgroup>
+        </select>
 
         <label id="lbl-target-year">किस वर्ष का फल देखना है:</label>
         <select id="target-year">
@@ -61,11 +84,32 @@
         <button class="btn" id="btn-generate" onclick="generateVarshphal()">वर्षफल देखें</button>
     </div>
 
-    <!-- कुंडली आधारित वर्षफल रिपोर्ट व्यू -->
+    <!-- कुंडली आधारित वर्षफल रिपोर्ट व्यू (चार्ट के साथ) -->
     <div id="report-view" class="report-view">
         <div class="user-info-badge">
             <strong id="rep-name">--</strong><br>
             <span id="rep-details" style="font-size: 12px; color: #ffeb99;">--</span>
+        </div>
+
+        <!-- नया विजुअल ज्योतिषीय चार्ट / ग्राफ -->
+        <div class="chart-container">
+            <div class="chart-title" id="chart-heading">वर्षीय ग्रह बल एवं प्रभाव चार्ट (Planetary Strength Chart)</div>
+            <div class="bar-row">
+                <span class="bar-label" id="lbl-jupiter-bar">गुरु (Jupiter)</span>
+                <div class="bar-track"><div class="bar-fill" id="bar-jup" style="width: 85%;"></div></div>
+            </div>
+            <div class="bar-row">
+                <span class="bar-label" id="lbl-saturn-bar">शनि (Saturn)</span>
+                <div class="bar-track"><div class="bar-fill" id="bar-sat" style="width: 70%;"></div></div>
+            </div>
+            <div class="bar-row">
+                <span class="bar-label" id="lbl-sun-bar">सूर्य (Sun)</span>
+                <div class="bar-track"><div class="bar-fill" id="bar-sun" style="width: 90%;"></div></div>
+            </div>
+            <div class="bar-row">
+                <span class="bar-label" id="lbl-venus-bar">शुक्र (Venus)</span>
+                <div class="bar-track"><div class="bar-fill" id="bar-ven" style="width: 75%;"></div></div>
+            </div>
         </div>
 
         <div class="analysis-box">
@@ -119,9 +163,9 @@
     };
 
     const uiTexts = {
-        hi: { lblName: "पूरा नाम:", lblDob: "जन्म तिथि:", lblTob: "जन्म समय:", lblPob: "जन्म स्थान:", lblYear: "किस वर्ष का फल देखना है:", btnGen: "वर्षफल देखें", hdMuntha: "मुथा फल एवं लग्न प्रवेश", hdJup: "गुरु गोचर फल (धन एवं विस्तार)", hdSat: "शनि गोचर प्रभाव (कर्म एवं संघर्ष)", hdRahu: "राहु-केतु गोचर प्रभाव", hdRem: "वर्ष के विशिष्ट वैदिक उपाय", btnBack: "नया विवरण दर्ज करें" },
-        en: { lblName: "Full Name:", lblDob: "Date of Birth:", lblTob: "Time of Birth:", lblPob: "Place of Birth:", lblYear: "Select Target Year:", btnGen: "View Varshphal", hdMuntha: "Annual Ascendant & Muntha", hdJup: "Jupiter Transit (Wealth & Growth)", hdSat: "Saturn Transit (Karma & Effort)", hdRahu: "Rahu-Ketu Transit", hdRem: "Special Vedic Remedies", btnBack: "Enter New Details" },
-        mr: { lblName: "पूर्ण नाव:", lblDob: "जन्म तारीख:", lblTob: "जन्म वेळ:", lblPob: "जन्म ठिकाण:", lblYear: "कोणत्या वर्षाचे फळ पाहयचे आहे:", btnGen: "वर्षफल पहा", hdMuntha: "मुथा फळ व लग्न प्रवेश", hdJup: "गुरु गोचर फळ (धन व प्रगती)", hdSat: "शनि गोचर प्रभाव (कर्म व संघर्ष)", hdRahu: "राहु-केतु गोचर प्रभाव", hdRem: "वर्षभरासाठी विशेष वैदिक उपाय", btnBack: "नवीन माहिती प्रविष्ट करा" }
+        hi: { lblName: "पूरा नाम:", lblDob: "जन्म तिथि:", lblTob: "जन्म समय:", lblPob: "जन्म स्थान (World / Global Location):", lblYear: "किस वर्ष का फल देखना है:", btnGen: "वर्षफल देखें", chartHead: "वर्षीय ग्रह बल एवं प्रभाव चार्ट", jupBar: "गुरु (Jupiter)", satBar: "शनि (Saturn)", sunBar: "सूर्य (Sun)", venBar: "शुक्र (Venus)", hdMuntha: "मुथा फल एवं लग्न प्रवेश", hdJup: "गुरु गोचर फल (धन एवं विस्तार)", hdSat: "शनि गोचर प्रभाव (कर्म एवं संघर्ष)", hdRahu: "राहु-केतु गोचर प्रभाव", hdRem: "वर्ष के विशिष्ट वैदिक उपाय", btnBack: "नया विवरण दर्ज करें" },
+        en: { lblName: "Full Name:", lblDob: "Date of Birth:", lblTob: "Time of Birth:", lblPob: "Place of Birth (World / Global Location):", lblYear: "Select Target Year:", btnGen: "View Varshphal", chartHead: "Planetary Strength & Effect Chart", jupBar: "Jupiter", satBar: "Saturn", sunBar: "Sun", venBar: "Venus", hdMuntha: "Annual Ascendant & Muntha", hdJup: "Jupiter Transit (Wealth & Growth)", hdSat: "Saturn Transit (Karma & Effort)", hdRahu: "Rahu-Ketu Transit", hdRem: "Special Vedic Remedies", btnBack: "Enter New Details" },
+        mr: { lblName: "पूर्ण नाव:", lblDob: "जन्म तारीख:", lblTob: "जन्म वेळ:", lblPob: "जन्म ठिकाण (World / Global Location):", lblYear: "कोणत्या वर्षाचे फळ पाहयचे आहे:", btnGen: "वर्षफल पहा", chartHead: "वार्षिक ग्रह बल आणि प्रभाव चार्ट", jupBar: "गुरु (Jupiter)", satBar: "शनि (Saturn)", sunBar: "सूर्य (Sun)", venBar: "शुक्र (Venus)", hdMuntha: "मुथा फळ व लग्न प्रवेश", hdJup: "गुरु गोचर फळ (धन व प्रगती)", hdSat: "शनि गोचर प्रभाव (कर्म व संघर्ष)", hdRahu: "राहु-केतु गोचर प्रभाव", hdRem: "वर्षभरासाठी विशेष वैदिक उपाय", btnBack: "नवीन माहिती प्रविष्ट करा" }
     };
 
     function generateVarshphal() {
@@ -137,7 +181,7 @@
             return;
         }
 
-        // डेटा लोकल स्टोरेज में सेव करें
+        // डेटा लोकल स्टोरेज में सेव रखें
         localStorage.setItem('vName', name);
         localStorage.setItem('vDob', dob);
         localStorage.setItem('vTob', tob);
@@ -175,6 +219,12 @@
         document.getElementById('lbl-target-year').innerText = t.lblYear;
         document.getElementById('btn-generate').innerText = t.btnGen;
 
+        document.getElementById('chart-heading').innerText = t.chartHead;
+        document.getElementById('lbl-jupiter-bar').innerText = t.jupBar;
+        document.getElementById('lbl-saturn-bar').innerText = t.satBar;
+        document.getElementById('lbl-sun-bar').innerText = t.sunBar;
+        document.getElementById('lbl-venus-bar').innerText = t.venBar;
+
         document.getElementById('hd-muntha').innerText = t.hdMuntha;
         document.getElementById('hd-jupiter').innerText = t.hdJup;
         document.getElementById('hd-saturn').innerText = t.hdSat;
@@ -184,7 +234,6 @@
     }
 
     window.onload = () => {
-        // पेज लोड होने पर पुराना सेव किया हुआ डेटा वापस फॉर्म में भरें
         if(localStorage.getItem('vName')) document.getElementById('uname').value = localStorage.getItem('vName');
         if(localStorage.getItem('vDob')) document.getElementById('udob').value = localStorage.getItem('vDob');
         if(localStorage.getItem('vTob')) document.getElementById('utob').value = localStorage.getItem('vTob');
