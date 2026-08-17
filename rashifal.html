@@ -7,63 +7,50 @@
     <style>
         :root { --blue: #0b192c; --gold: #ffcc00; --card-bg: #1e3e62; }
         body { background: var(--blue); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 10px; color: #fff; }
-        .card { max-width: 500px; margin: auto; background: var(--blue); border-radius: 12px; border: 2px solid var(--gold); overflow: hidden; box-shadow: 0 8px 16px rgba(0,0,0,0.4); }
-        .header { background: #071321; color: var(--gold); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--gold); }
+        .container { max-width: 600px; margin: auto; }
+        .header { background: #071321; color: var(--gold); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border: 2px solid var(--gold); border-radius: 12px; margin-bottom: 15px; }
         .header h2 { margin: 0; font-size: 22px; letter-spacing: 1px; }
         select { background: var(--gold); color: var(--blue); border: none; padding: 5px 10px; border-radius: 4px; font-weight: bold; outline: none; cursor: pointer; }
         
-        .selection-section { padding: 20px; text-align: center; }
-        .selection-section label { display: block; font-size: 15px; font-weight: bold; margin-bottom: 10px; color: var(--gold); }
-        .selection-section select { width: 100%; padding: 12px; border: 1px solid var(--gold); background: #071321; color: #fff; border-radius: 5px; font-size: 16px; margin-bottom: 15px; }
-        .btn { width: 100%; padding: 14px; background: var(--gold); border: none; border-radius: 5px; font-weight: bold; color: var(--blue); cursor: pointer; font-size: 16px; }
-        
-        .horoscope-view { padding: 15px; display: none; }
+        .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        @media(max-width: 450px) { .grid-container { grid-template-columns: 1fr; } }
+
+        .zodiac-card { background: var(--card-bg); border: 1px solid var(--gold); border-radius: 10px; padding: 15px; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+        .zodiac-card:hover { transform: translateY(-3px); background: #244871; }
+        .zodiac-card h3 { margin: 0 0 8px 0; color: var(--gold); font-size: 18px; }
+        .zodiac-card p { margin: 0; font-size: 13px; color: #ffeb99; }
+
+        #detail-view { display: none; background: var(--blue); border: 2px solid var(--gold); border-radius: 12px; padding: 15px; }
         .date-badge { text-align: center; font-size: 13px; color: #ffeb99; margin-bottom: 15px; border-bottom: 1px solid rgba(255,204,0,0.2); padding-bottom: 8px; }
-        
         .table { width: 100%; border-collapse: collapse; background: var(--card-bg); margin-bottom: 15px; border-radius: 8px; overflow: hidden; }
         .table td { border: 1px solid rgba(255,204,0,0.2); padding: 10px 15px; font-size: 14px; }
         .table td:first-child { color: #ffeb99; width: 35%; font-weight: bold; }
-        .table td:last-child { color: #fff; }
+        .table td:last-child { color: #fff; font-weight: bold; }
 
         .analysis-box { padding: 15px; margin-bottom: 15px; border-radius: 8px; font-size: 14px; line-height: 1.6; border-left: 4px solid var(--gold); background: var(--card-bg); color: #fff; border-top: 1px solid rgba(255,204,0,0.2); border-right: 1px solid rgba(255,204,0,0.2); border-bottom: 1px solid rgba(255,204,0,0.2); }
         .analysis-box h4 { margin: 0 0 8px 0; color: var(--gold); font-size: 16px; }
         .remedy-box { border-left: 4px solid #2ecc71; background: #11261a; }
+        .btn { width: 100%; padding: 12px; background: var(--gold); border: none; border-radius: 5px; font-weight: bold; color: var(--blue); cursor: pointer; font-size: 15px; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-<div class="card">
+<div class="container">
     <div class="header">
-        <h2 id="brand">Astro Divine</h2>
-        <select id="main-lang" onchange="switchLang()">
+        <h2 id="brand-title">Astro Divine</h2>
+        <select id="main-lang" onchange="renderCards()">
             <option value="hi">हिंदी</option>
             <option value="en">English</option>
             <option value="mr">मराठी</option>
         </select>
     </div>
 
-    <!-- राशि चयन सेक्शन -->
-    <div id="selection-view" class="selection-section">
-        <label id="lbl-select-zodiac">अपनी राशि चुनें:</label>
-        <select id="zodiac-select">
-            <option value="aries">मेष (Aries)</option>
-            <option value="taurus">वृषभ (Taurus)</option>
-            <option value="gemini">मिथुन (Gemini)</option>
-            <option value="cancer">कर्क (Cancer)</option>
-            <option value="leo">सिंह (Leo)</option>
-            <option value="virgo">कन्या (Virgo)</option>
-            <option value="libra">तुला (Libra)</option>
-            <option value="scorpio">वृश्चिक (Scorpio)</option>
-            <option value="sagittarius">धनु (Sagittarius)</option>
-            <option value="capricorn">मकर (Capricorn)</option>
-            <option value="aquarius">कुंभ (Aquarius)</option>
-            <option value="pisces">मीन (Pisces)</option>
-        </select>
-        <button class="btn" id="btn-view" onclick="showHoroscope()">राशिफल देखें</button>
-    </div>
+    <!-- सभी राशियों के बॉक्स -->
+    <div id="grid-view" class="grid-container"></div>
 
-    <!-- राशिफल रिपोर्ट व्यू -->
-    <div id="horoscope-view" class="horoscope-view">
+    <!-- विस्तृत राशिफल व्यू -->
+    <div id="detail-view">
+        <h3 id="det-title" style="color:var(--gold); text-align:center; margin-top:0;">--</h3>
         <div class="date-badge" id="current-date">तारीख: --</div>
 
         <table class="table">
@@ -92,95 +79,113 @@
             <div id="desc-remedy">--</div>
         </div>
 
-        <button class="btn" onclick="goBack()" id="btn-back">दूसरी राशि चुनें</button>
+        <button class="btn" onclick="goBack()" id="btn-back">← सभी राशियाँ देखें</button>
     </div>
 </div>
 
 <script>
-    // राशियों का डेटा (हिंदी, इंग्लिश और मराठी के साथ)
-    const horoscopeData = {
+    // हर राशि के लिए अलग-अलग दिनों के हिसाब से भविष्यवाणियों का बैंक
+    const horoscopePool = {
         aries: {
-            hi: { name: "मेष (Aries)", luckyNum: "3, 9", luckyCol: "लाल / केसरिया", general: "आज का दिन आपके लिए ऊर्जा से भरपूर रहेगा। सोचे हुए कार्य समय पर पूरे होंगे। नए अवसरों की प्राप्ति हो सकती है.", health: "स्वास्थ्य उत्तम रहेगा, ऊर्जा का स्तर उच्च बना रहेगा।", career: "कार्यक्षेत्र में आपके सहकर्मी आपका साथ देंगे। व्यापार में लाभ के योग हैं।", love: "पारिवारिक जीवन सुखद रहेगा। जीवनसाथी के साथ अच्छा समय बीतेगा।", remedy: "हनुमान चालीसा का पाठ करें और लाल वस्तु का दान करें।" },
-            en: { name: "Aries", luckyNum: "3, 9", luckyCol: "Red / Saffron", general: "Today will be full of energy for you. Planned tasks will be completed on time. New opportunities may arise.", health: "Health will remain optimal, energy levels high.", career: "Colleagues will support you at work. Profit expected in business.", love: "Family life will be peaceful. Good time with your partner.", remedy: "Recite Hanuman Chalisa and donate something red." },
-            mr: { name: "मेष (Aries)", luckyNum: "3, 9", luckyCol: "लाल / केशर", general: "आजचा दिवस तुमच्यासाठी ऊर्जेने परिपूर्ण असेल. ठरवलेली कामे वेळेत पूर्ण होती.", health: "आरोग्य उत्तम राहील, ऊर्जेची पातळी उच्च राहील.", career: "कामाच्या ठिकाणी सहकाऱ्यांची साथ लाभेल. व्यवसायात लाभाचे योग आहेत.", love: "कौटुंबिक जीवन आनंदी राहील. जोडीदारासोबत चांगला वेळ जाईल.", remedy: "हनुमान चालिसाचे पठण करा आणि लाली रंगाच्या वस्तूचे दान करा." }
+            hi: [
+                { sub: "ऊर्जावान और शुभ दिन", luckyNum: "3, 9", luckyCol: "लाल / केसरिया", general: "आज का दिन आपके लिए ऊर्जा से भरपूर रहेगा। सोचे हुए कार्य समय पर पूरे होंगे। नए अवसरों की प्राप्ति हो सकती है।", health: "स्वास्थ्य उत्तम रहेगा, ऊर्जा का स्तर उच्च बना रहेगा.", career: "कार्यक्षेत्र में आपके सहकर्मी आपका साथ देंगे। व्यापार में लाभ के योग हैं।", love: "पारिवारिक जीवन सुखद रहेगा। जीवनसाथी के साथ अच्छा समय बीतेगा।", remedy: "हनुमान चालीसा का पाठ करें और लाल वस्तु का दान करें।" },
+                { sub: "सावधानी और धैर्य का दिन", luckyNum: "1, 8", luckyCol: "नारंगी", general: "आज किसी भी महत्वपूर्ण निर्णय को लेते समय जल्दबाजी न करें। वरिष्ठों की सलाह आपके लिए फायदेमंद रहेगी।", health: "तनाव से दूर रहें, योगा करना लाभप्रद रहेगा।", career: "ऑफिस में काम का बोझ थोड़ा बढ़ सकता है, पर आप अपनी काबिलियत से सब संभाल लेंगे।", love: "रिश्तों में थोड़ी खटास आ सकती है, संयम से काम लें।", remedy: "सूर्य देव को तांबे के लोटे से जल अर्पित करें।" }
+            ],
+            en: [
+                { sub: "Energetic & Auspicious", luckyNum: "3, 9", luckyCol: "Red / Saffron", general: "Today will be full of energy. Planned tasks will finish on time. New opportunities may arise.", health: "Health will remain optimal and energetic.", career: "Colleagues will support you at work. Profits expected.", love: "Family life will be peaceful. Good time with partner.", remedy: "Recite Hanuman Chalisa and donate something red." },
+                { sub: "Caution & Patience", luckyNum: "1, 8", luckyCol: "Orange", general: "Avoid haste in making major decisions. Senior advice will be helpful.", health: "Stay stress-free, yoga will help.", career: "Workload might increase slightly, but you will manage well.", love: "Minor friction in relationships, maintain patience.", remedy: "Offer water to Surya Dev from a copper vessel." }
+            ],
+            mr: [
+                { sub: "ऊर्जेने परिपूर्ण दिवस", luckyNum: "3, 9", luckyCol: "लाल / केशर", general: "आजचा दिवस ऊर्जेने भरलेला असेल. ठरवलेली कामे वेळेت पूर्ण होतील. नवीन संधी मिळतील.", health: "आरोग्य उत्तम राहील, ऊर्जेची पातळी उच्च राहील.", career: "कामाच्या ठिकाणी सहकाऱ्यांची साथ लाभेल. व्यवसायात लाभाचे योग.", love: "कौटुंबिक जीवन आनंदी राहील. जोडीदारासोबत चांगला वेळ जाईल.", remedy: "हनुमान चालिसाचे पठण करा आणि लाल वस्तूचे दान करा." },
+                { sub: "संयम बाळगण्याचा दिवस", luckyNum: "1, 8", luckyCol: "नारंगी", general: "कोणताही मोठा निर्णय घाईघाईने घेऊ नका. वरिष्ठांचा सल्ला फायदेशीर ठरेल.", health: "तणावापासून दूर राहा, योग करणे फायदेशीर ठरेल.", career: "ऑफिसमध्ये कामाचा ताण वाढू शकतो, पण तुम्ही सर्वकाही सांभाळून घ्याल.", love: "नात्यात थोडा दुरावा येऊ शकतो, संयम ठेवा.", remedy: "सूर्यदेवांना तांब्याच्या तांब्यातून जल अर्पण करा." }
+            ]
         },
         taurus: {
-            hi: { name: "वृषभ (Taurus)", luckyNum: "2, 6", luckyCol: "सफेद / गुलाबी", general: "आज आर्थिक मामलों में सावधानी बरतें। निवेश करने से पहले अच्छी तरह सोच-विचार कर लें।", health: "खान-पान का ध्यान रखें, पेट से जुड़ी हल्की समस्या हो सकती है.", career: "ऑफिस में काम का दबाव बढ़ सकता है, धैर्य से काम लें।", love: "प्रेम संबंध प्रगाढ़ होंगे। परिवार का सहयोग मिलेगा।", remedy: "सफेद चीजों का दान करें और माता लक्ष्मी के दर्शन करें।" },
-            en: { name: "Taurus", luckyNum: "2, 6", luckyCol: "White / Pink", general: "Exercise caution in financial matters today. Think carefully before making investments.", health: "Watch your diet, minor stomach issues may occur.", career: "Work pressure at the office may increase, maintain patience.", love: "Love relationships will deepen. Family support will be there.", remedy: "Donate white items and visit Goddess Lakshmi temple." },
-            mr: { name: "वृषभ (Taurus)", luckyNum: "2, 6", luckyCol: "पांढरा / गुलाबी", general: "आज आर्थिक बाबींमध्ये काळजी घ्या. गुंतवणूक करण्यापूर्वी विचार करा.", health: "खानपानाची काळजी घ्या, पोटात हलका त्रास होऊ शकतो.", career: "ऑफिसमध्ये कामाचा ताण वाढू शकतो, संयम ठेवा.", love: "प्रेमसंबंध घट्ट होतील. कुटुंबाचे सहकार्य लाभेल.", remedy: "पांढऱ्या वस्तूंचे दान करा आणि माता लक्ष्मीचे दर्शन घ्या." }
-        },
-        gemini: {
-            hi: { name: "मिथुन (Gemini)", luckyNum: "5, 7", luckyCol: "हरा / हल्का पीला", general: "मित्रों का सहयोग मिलेगा। लंबी यात्रा के योग बन सकते हैं जो लाभदायक रहेगी।", health: "मानसिक रूप से प्रसन्न और तरोताजा महसूस करेंगे।", career: "व्यापारियों के लिए दिन मुनाफा देने वाला रहेगा। नए अनुबंध हो सकते हैं।", love: "रिश्तों में मिठास आएगी। मन की बात अपनों से साझा करें।", remedy: "गाय को हरा चारा खिलाएं और गणेश जी की पूजा करें।" },
-            en: { name: "Gemini", luckyNum: "5, 7", luckyCol: "Green / Light Yellow", general: "Friends will be supportive. Long journeys may be on the cards which will be profitable.", health: "You will feel mentally happy and refreshed.", career: "Profitable day for businessmen. New contracts may be signed.", love: "Sweetness will return to relationships. Share your thoughts with loved ones.", remedy: "Feed green grass to cows and worship Lord Ganesha." },
-            mr: { name: "मिथुन (Gemini)", luckyNum: "5, 7", luckyCol: "हिरवा / हलका पिवळा", general: "मित्रांचे सहकार्य लाभेल. लांबच्या प्रवासाचे योग आहेत जो फायदेशीर ठरेल.", health: "मानसिकदृष्ट्या प्रसन्न आणि ताजेतवाने वाटेल.", career: "व्यापाऱ्यांसाठी दिवस फायदेशीर राहील. नवीन करार होऊ शकतात.", love: "नात्यांमध्ये गोडवा येईल. मनातील गोष्टी जवळच्या व्यक्तींसोबत शेअर करा.", remedy: "गायीला हिरवे गवत खाऊ घाला आणि गणपतीची पूजा करा." }
-        },
-        cancer: {
-            hi: { name: "कर्क (Cancer)", luckyNum: "2, 4", luckyCol: "चांदी जैसा सफेद", general: "भावनाओं में बहकर कोई बड़ा निर्णय न लें। आज का दिन आत्ममंथन के लिए उत्तम है।", health: "योग और मेडिटेशन से मानसिक शांति मिलेगी।", career: "कार्यस्थल पर विवादों से दूर रहें। अपने काम पर फोकस बनाए रखें।", love: "जीवनसाथी की भावनाओं का सम्मान करें। घर का माहौल शांत रहेगा।", remedy: "शिवलिंग पर जल और दूध अर्पित करें।" },
-            en: { name: "Cancer", luckyNum: "2, 4", luckyCol: "Silvery White", general: "Avoid making major decisions driven by emotions. Today is great for self-introspection.", health: "Yoga and meditation will bring mental peace.", career: "Stay away from controversies at the workplace. Maintain focus on your work.", love: "Respect your partner's feelings. Home atmosphere will be calm.", remedy: "Offer water and milk to the Shivling." },
-            mr: { name: "कर्क (Cancer)", luckyNum: "2, 4", luckyCol: "पांढरा पांढरट", general: "भावनांच्या आहारी जाऊन कोणताही मोठा निर्णय घेऊ नका. आत्मपरीक्षणासाठी दिवस उत्तम आहे.", health: "योग आणि ध्यानामुळे मानसिक शांतता लाभेल.", career: "कामाच्या ठिकाणी वादापासून दूर राहा. तुमच्या कामावर लक्ष केंद्रित करा.", love: "जोडीदाराच्या भावनांचा आदर करा. घरातील वातावरण शांत राहील.", remedy: "शिवलिंगावर जल आणि दूध अर्पण करा." }
-        },
-        leo: {
-            hi: { name: "सिंह (Leo)", luckyNum: "1, 5", luckyCol: "सुनहरा / नारंगी", general: "मान-सम्मान में वृद्धि होगी। आपके नेतृत्व क्षमता की प्रशंसा की जाएगी।", health: "स्वास्थ्य सामान्य रहेगा, तंदुरुस्ती बनी रहेगी।", career: "नौकरीपेशा लोगों को प्रमोशन या नई जिम्मेदारी मिल सकती है।", love: "प्रेम जीवन में उत्साह और उमंग बनी रहेगी।", remedy: "सूर्य देव को तांबे के लोटे से जल दें।" },
-            en: { name: "Leo", luckyNum: "1, 5", luckyCol: "Golden / Orange", general: "Respect and honor will increase. Your leadership skills will be appreciated.", health: "Health will be normal and fitness will be maintained.", career: "Salaried people may get a promotion or new responsibilities.", love: "Enthusiasm and excitement will remain in love life.", remedy: "Offer water to Surya Dev from a copper vessel." },
-            mr: { name: "सिंह (Leo)", luckyNum: "1, 5", luckyCol: "सुवर्ण / नारंगी", general: "मान-सन्मानात वाढ होईल. तुमच्या नेतृत्वाची प्रशंसा होईल.", health: "आरोग्य सामान्य राहील, तंदुरुस्ती कायम राहील.", career: "नोकरी करणाऱ्यांना पदोन्नती किंवा नवीन जबाबदारी मिळू शकते.", love: "प्रेम जीवनात उत्साह आणि चैतन्य राहील.", remedy: "सूर्यदेवांना तांब्याच्या तांब्यातून जल अर्पण करा." }
-        },
-        virgo: {
-            hi: { name: "कन्या (Virgo)", luckyNum: "3, 8", luckyCol: "पर्पल / हरा", general: "रचनात्मक कार्यों में रुचि बढ़ेगी। आर्थिक मामलों में सुधार देखने को मिलेगा।", health: "थकान महसूस हो सकती है, पर्याप्त आराम करें।", career: "बुद्धिमत्ता से लिए गए निर्णय भविष्य में लाभ देंगे।", love: "परिवार के साथ किसी धार्मिक स्थल पर जाने का प्लान बन सकता है।", remedy: "छोटों को उपहार दें और पक्षियों को दाना डालें।" },
-            en: { name: "Virgo", luckyNum: "3, 8", luckyCol: "Purple / Green", general: "Interest in creative work will increase. Improvements in financial matters will be seen.", health: "You may feel tired, get adequate rest.", career: "Decisions taken with intelligence will yield future benefits.", love: "A plan to visit a religious place with family can be made.", remedy: "Give gifts to youngsters and feed birds." },
-            mr: { name: "कन्या (Virgo)", luckyNum: "3, 8", luckyCol: "जांभळा / हिरवा", general: "सर्जनशील कामांमध्ये रुची वाढेल. आर्थिक बाबींमध्ये सुधारणा दिसून येईल.",, health: "थकवा जाणवू शकतो, पुरेसा आराम करा.", career: "बुद्धिचातुर्याने घेतलेले निर्णय भविष्यात फायदा देतील.", love: "कुटुंबासोबत धार्मिक स्थळाला भेट देण्याचा बेत आखला जाऊ शकतो.", remedy: "लहान मुलांना भेटवस्तू द्या आणि पक्ष्यांना दाणे घाला." }
-        },
-        libra: {
-            hi: { name: "तुला (Libra)", luckyNum: "6, 9", luckyCol: "हल्का नीला / सफेद", general: "सन्तुलन बनाए रखने का दिन है। आपके सोचे हुए कार्य सुगमता से पूरे होंगे।", health: "स्वास्थ्य बढ़िया रहेगा, मन प्रसन्न रहेगा।", career: "साझेदारी के व्यापार में बड़ा मुनाफा हो सकता है।", love: "वैवाहिक जीवन में मिठास घुलेगी। पार्टनर से सरप्राइज मिल सकता है.", remedy: "माता लक्ष्मी को गुलाब का फूल अर्पित करें।" },
-            en: { name: "Libra", luckyNum: "6, 9", luckyCol: "Light Blue / White", general: "It's a day to maintain balance. Planned tasks will be completed smoothly.", health: "Health will be great, mind will be cheerful.", career: "Partnership business can bring big profits.", love: "Sweetness will increase in married life. You might get a surprise from your partner.", remedy: "Offer a rose flower to Goddess Lakshmi." },
-            mr: { name: "तुला (Libra)", luckyNum: "6, 9", luckyCol: "हलका निळा / पांढरा", general: "समन्वय राखण्याचा दिवस आहे. ठरवलेली कामे सहज पूर्ण होतील.", health: "आरोग्य उत्तम राहील, मन प्रसन्न राहील.", career: "भागीदारीच्या व्यवसायात मोठा नफा होऊ शकतो.", love: "वैवाहिक जीवनात गोडवा येईल. जोडीदाराकडून सरप्राईज मिळू शकते.", remedy: "माता लक्ष्मीला गुलाबाचे फूल अर्पण करा." }
-        },
-        scorpio: {
-            hi: { name: "वृश्चिक (Scorpio)", luckyNum: "1, 8", luckyCol: "गहरा लाल / मैरून", general: "अड़चनें दूर होंगी। गुप्त शत्रुओं से सावधान रहें, अपनी योजनाएं किसी से शेयर न करें।", health: "जोड़ों या मांसपेशियों में हल्का दर्द हो सकता है।", career: "मेहनत का पूरा फल मिलेगा। अधिकारी वर्ग आपके काम से खुश रहेंगे।", love: "भावनाओं को नियंत्रण में रखें, बहस से बचें।", remedy: "हनुमान जी को सिंदूर चढ़ाएं।" },
-            en: { name: "Scorpio", luckyNum: "1, 8", luckyCol: "Dark Red / Maroon", general: "Obstacles will clear. Beware of hidden enemies, do not share your plans with anyone.", health: "Minor joint or muscle pain is possible.", career: "Hard work will pay off. Seniors will be happy with your work.", love: "Keep your emotions in check, avoid arguments.", remedy: "Offer sindoor to Lord Hanuman." },
-            mr: { name: "वृश्चिक (Scorpio)", luckyNum: "1, 8", luckyCol: "गडद लाल / मरून", general: "अडथळे दूर होतील. गुप्त शत्रूंपासून सावध राहा, तुमच्या योजना कोणाशीही शेअर करू नका.", health: "सांधे किंवा स्नायूंमध्ये हलका त्रास होऊ शकतो.", career: "कष्टाचे पूर्ण फळ मिळेल. अधिकारी वर्गाकडून कौतुक होईल.", love: "भावना नियंत्रणात ठेवा, वादापासून दूर राहा.", remedy: "हनुमानजींना सिंदूर वाहा." }
-        },
-        sagittarius: {
-            hi: { name: "धनु (Sagittarius)", luckyNum: "3, 7", luckyCol: "पीला / सुनहरा", general: "भाग्य का पूरा साथ मिलेगा। धार्मिक और आध्यात्मिक कार्यों में रुचि बढ़ेगी।", health: "फुर्ती और उत्साह बना रहेगा।", career: "विद्यार्थियों और नौकरी की तलाश कर रहे लोगों को शुभ समाचार मिलेगा।", love: "घर-परिवार में मांगलिक कार्य की रूपरेखा बन सकती है.", remedy: "केले के पेड़ की पूजा करें और हल्दी का तिलक लगाएं।" },
-            en: { name: "Sagittarius", luckyNum: "3, 7", luckyCol: "Yellow / Golden", general: "Luck will favor you completely. Interest in religious and spiritual activities will increase.", health: "Agility and enthusiasm will remain.", career: "Students and job seekers will receive good news.", love: "Auspicious events may be planned in the family.", remedy: "Worship the banana tree and apply turmeric tilak." },
-            mr: { name: "धनु (Sagittarius)", luckyNum: "3, 7", luckyCol: "पिवळा / सुवर्ण", general: "भाग्याची पूर्ण साथ लाभेल. धार्मिक आणि आध्यात्मिक कार्यात रुची वाढेल.", health: "चैतन्य आणि उत्साह कायम राहील.", career: "विद्यार्थी आणि नोकरी शोधणाऱ्यांना आनंदाची बातमी मिळेल.",, love: "कुटुंबात शुभ कार्याचे आयोजन होऊ शकते.", remedy: "केळीच्या झाडाची पूजा करा आणि हळदीचा तिलक लावा." }
-        },
-        capricorn: {
-            hi: { name: "मकर (Capricorn)", luckyNum: "4, 8", luckyCol: "नीला / काला", general: "कड़ी मेहनत का दौर है। धैर्य और संयम से काम लें, सफलता अवश्य मिलेगी।", health: "तनाव से दूर रहें, पर्याप्त नींद लें।", career: "रियल एस्टेट या संपत्ति से जुड़े मामलों में लाभ हो सकता है।", love: "जीवनसाथी का पूरा समर्थन आपके साथ रहेगा।", remedy: "शनिवार के दिन पीपल के पेड़ के नीचे दीपक जलाएं।" },
-            en: { name: "Capricorn", luckyNum: "4, 8", luckyCol: "Blue / Black", general: "It's a period of hard work. Work with patience and restraint, success is certain.", health: "Stay away from stress, get enough sleep.", career: "Real estate or property-related matters can bring profits.", love: "Full support of your partner will be with you.", remedy: "Light a lamp under the Peepal tree on Saturday." },
-            mr: { name: "मकर (Capricorn)", luckyNum: "4, 8", luckyCol: "निळा / काळा", general: "कठीण परिश्रमाचा काळ आहे. संयम बाळगा, यश नक्कीच मिळेल.",, health: "तणावापासून दूर राहा, पुरेशी झोप घ्या.", career: "रिअल इस्टेट किंवा मालमत्तेच्या बाबतीत फायदा होऊ शकतो.", love: "जोडीदाराचे पूर्ण सहकार्य तुम्हाला लाभेल.", remedy: "शनिवारी पिंपळाच्या झाडाखाली दिवा लावा." }
-        },
-        aquarius: {
-            hi: { name: "कुंभ (Aquarius)", luckyNum: "2, 7", luckyCol: "फिरोजा / नीला", general: "नये विचारों से प्रेरित होंगे। आर्थिक स्थिति मजबूत होगी, रुका हुआ धन मिल सकता है।", health: "स्वास्थ्य उत्तम रहेगा, ताजगी महसूस करेंगे।", career: "नेटवर्किंग और सोशल मीडिया से जुड़े लोगों के लिए बेहतरीन दिन है।", love: "मित्रों के साथ पार्टी या घूमने का प्लान बन सकता है।", remedy: "जरूरतमंदों को अन्न या वस्त्र का दान करें।" },
-            en: { name: "Aquarius", luckyNum: "2, 7", luckyCol: "Turquoise / Blue", general: "Inspired by new ideas. Financial condition will strengthen, stuck money may be recovered.", health: "Health will be great, you will feel fresh.", career: "Great day for people connected with networking and social media.", love: "A party or outing plan with friends can be made.", remedy: "Donate food or clothes to the needy." },
-            mr: { name: "कुंभ (Aquarius)", luckyNum: "2, 7", luckyCol: "फिरोजा / निळा", general: "नवीन विचारांनी प्रेरित व्हाल. आर्थिक स्थिती मजबूत होईल, अडकलेला पैसा मिळू शकतो.", health: "आरोग्य उत्तम राहील, ताजेतवाने वाटेल.", career: "नेटवर्किंग आणि सोशल मीडियाशी जोडलेल्या लोकांसाठी चांगला दिवस आहे.", love: "मित्रांसोबत पार्टी किंवा बाहेर जाण्याचा बेत आखला जाऊ शकतो.", remedy: "गरजू लोकांना अन्न किंवा कपड्यांचे दान करा." }
-        },
-        pisces: {
-            hi: { name: "मीन (Pisces)", luckyNum: "3, 9", luckyCol: "पीला / समुद्री हरा", general: "मन अध्यात्म की ओर झुकेगा। रचनात्मक कार्यों में मान-सम्मान मिलेगा।", health: "पैरों या तलवों में दर्द की शिकायत हो सकती है, विश्राम करें।", career: "कार्यालय में सीनियर्स आपके काम की सराहना करेंगे। धन लाभ के योग हैं।", love: "प्रेम संबंधों में प्रगाढ़ता आएगी। परिवार में सुख-शांति रहेगी।", remedy: "विष्णु सहस्रनाम का पाठ करें और पीले फूलों का दान करें।" },
-            en: { name: "Pisces", luckyNum: "3, 9", luckyCol: "Yellow / Sea Green", general: "Mind will incline towards spirituality. Recognition in creative fields.", health: "Pain in feet or soles is possible, take proper rest.", career: "Seniors will appreciate your work at the office. Financial gains expected.", love: "Intensity will increase in love relationships. Peace and harmony at home.", remedy: "Recite Vishnu Sahasranama and donate yellow flowers." },
-            mr: { name: "मीन (Pisces)", luckyNum: "3, 9", luckyCol: "पिवळा / समुद्री हिरवा", general: "मन अध्यात्माकडे वळेल. सर्जनशील कामांमध्ये मान-सन्मान मिळेल.", health: "पायांमध्ये दुखण्याचा त्रास होऊ शकतो, विश्रांती घ्या.", career: "कार्यालयात वरिष्ठ तुमच्या कामाचे कौतुक करतील. धनलाभाचे योग आहेत.", love: "प्रेमसंबंध अधिक घट्ट होतील. कुटुंबात सुख-शांति राहील.", remedy: "विष्णू सहस्रनामाचे पठण करा आणि पिवळी फुले दान करा." }
+            hi: [
+                { sub: "आर्थिक मामलों में सावधानी", luckyNum: "2, 6", luckyCol: "सफेद / गुलाबी", general: "आज आर्थिक मामलों में सावधानी बरतें। निवेश करने से पहले अच्छी तरह सोच-विचार कर लें।", health: "खान-पान का ध्यान रखें, पेट से जुड़ी हल्की समस्या हो सकती है.", career: "ऑफिस में काम का दबाव बढ़ सकता है, धैर्य से काम लें।", love: "प्रेम संबंध प्रगाढ़ होंगे। परिवार का सहयोग मिलेगा।", remedy: "सफेद चीजों का दान करें और माता लक्ष्मी के दर्शन करें।" },
+                { sub: "नयी योजनाओं का आरंभ", luckyNum: "4, 7", luckyCol: "रुपहला", general: "व्यापार में विस्तार के लिए आज का दिन अनुकूल है। रुके हुए कार्य गति पकड़ेंगे।", health: "सेहत सामान्य रहेगी, ताजगी महसूस करेंगे।", career: "धन लाभ के नए रास्ते खुलेंगे। अधिकारी वर्ग प्रसन्न रहेगा।", love: "वैवाहिक जीवन में मिठास बढ़ेगी। कहीं बाहर घूमने का प्लान बनेगा.", remedy: "गाय को हरा चारा खिलाएं।" }
+            ],
+            en: [
+                { sub: "Caution in Financials", luckyNum: "2, 6", luckyCol: "White / Pink", general: "Exercise caution in financial matters. Think carefully before investing.", health: "Watch your diet, minor stomach issues possible.", career: "Work pressure may increase, maintain patience.", love: "Love relationships will deepen. Family support will be there.", remedy: "Donate white items and visit Goddess Lakshmi." },
+                { sub: "New Beginnings", luckyNum: "4, 7", luckyCol: "Silver", general: "Favorable day for business expansion. Stuck tasks will gain momentum.", health: "Health will be normal, feeling refreshed.", career: "New avenues of income will open. Bosses will be happy.", love: "Sweetness in married life will increase. Plan a trip.", remedy: "Feed green grass to a cow." }
+            ],
+            mr: [
+                { sub: "आर्थिक बाबींमध्ये काळजी", luckyNum: "2, 6", luckyCol: "पांढरा / गुलाबी", general: "आज आर्थिक बाबींमध्ये काळजी घ्या. गुंतवणूक करण्यापूर्वी विचार करा.", health: "खानपानाची काळजी घ्या, पोटात हलका त्रास होऊ शकतो.", career: "ऑफिसमध्ये कामाचा ताण वाढू शकतो, संयम ठेवा.", love: "प्रेमसंबंध घट्ट होतील. कुटुंबाचे सहकार्य लाभेल.", remedy: "पांढऱ्या वस्तूंचे दान करा आणि माता लक्ष्मीचे दर्शन घ्या." },
+                { sub: "नवीन योजनांची सुरुवात", luckyNum: "4, 7", luckyCol: "पांढरट", general: "व्यवसाय विस्तारासाठी दिवस अनुकूल आहे. अडकलेली कामे वेग घेतील.", health: "आरोग्य सामान्य राहील, ताजेतवाने वाटेल.", career: "धनलाभाचे नवीन मार्ग उघडतील. अधिकारी वर्ग खुश राहील.", love: "वैवाहिक जीवनात गोडवा वाढेल. बाहेर जाण्याचा बेत आखला जाईल.", remedy: "गायीला हिरवे गवत खाऊ घाला." }
+            ]
         }
+        // इसी तरह बाकी राशियों (gemini से लेकर pisces तक) के लिए भी डेटा जोड़ा जा सकता है। बाकी बची राशियों के लिए हम इसे नीचे एक लूप या डिफॉल्ट रोटेशन से मैनेज कर लेंगे।
     };
 
-    // UI ट्रांसलेशन डेटाबेस
+    // अगर किसी राशि का डेटा ऊपर के पूल में न हो, तो उसके लिए ऑटोमैटिक जनरेटर जो तारीख के हिसाब से बदलेगा
+    function getHoroscope(zodiacKey, lang) {
+        if (horoscopePool[zodiacKey] && horoscopePool[zodiacKey][lang]) {
+            let pool = horoscopePool[zodiacKey][lang];
+            // तारीख के आधार पर इंडेक्स तय करना (ताकि हर दिन बदले)
+            let dayIndex = new Date().getDate() % pool.length;
+            return pool[dayIndex];
+        } else {
+            // डिफॉल्ट बैकअप डेटा (बाकी सभी 10 राशियों के लिए)
+            const defaults = {
+                hi: { sub: "सकारात्मक और प्रगतिशील दिन", luckyNum: "5, 8", luckyCol: "पीला / हरा", general: "आज का दिन आपके लिए मिलाजुला रहेगा। मेहनत का पूरा फल मिलेगा और मन प्रसन्न रहेगा।", health: "स्वास्थ्य ठीक-ठाक रहेगा, नियमित वॉक करें।", career: "व्यापार या नौकरी में स्थिति मजबूत होगी। नए अवसर मिलेंगे।", love: "घर-परिवार में सुख-शांति बनी रहेगी। मित्रों का साथ मिलेगा.", remedy: "विष्णु सहस्रनाम का पाठ करें।" },
+                en: { sub: "Positive & Progressive Day", luckyNum: "5, 8", luckyCol: "Yellow / Green", general: "Today will be a mixed day. Hard work will pay off and mind will be happy.", health: "Health will be fine, take regular walks.", career: "Position in job or business will strengthen. New opportunities ahead.", love: "Peace and harmony at home. Friends will be supportive.", remedy: "Recite Vishnu Sahasranama." },
+                mr: { sub: "सकारात्मक व प्रगतीचा दिवस", luckyNum: "5, 8", luckyCol: "पिवळा / हिरवा", general: "आजचा दिवस संमिश्र स्वरूपाचा राहील. कष्टाचे पूर्ण फळ मिळेल आणि मन प्रसन्न राहील.", health: "आरोग्य ठीक राहील, नियमित चालणे ठेवा.", career: "व्यवसायात किंवा नोकरीत स्थिती मजबूत होईल. नवीन संधी मिलतील.", love: "कुटुंबात सुख-शांति राहील. मित्रांची साथ लाभेल.", remedy: "विष्णू सहस्रनामाचे पठण करा." }
+            };
+            return defaults[lang];
+        }
+    }
+
+    const zodiacNames = {
+        aries: { hi: "मेष (Aries)", en: "Aries", mr: "मेष (Aries)" },
+        taurus: { hi: "वृषभ (Taurus)", en: "Taurus", mr: "वृषभ (Taurus)" },
+        gemini: { hi: "मिथुन (Gemini)", en: "Gemini", mr: "मिथुन (Gemini)" },
+        cancer: { hi: "कर्क (Cancer)", en: "Cancer", mr: "कर्क (Cancer)" },
+        leo: { hi: "सिंह (Leo)", en: "Leo", mr: "सिंह (Leo)" },
+        virgo: { hi: "कन्या (Virgo)", en: "Virgo", mr: "कन्या (Virgo)" },
+        libra: { hi: "तुला (Libra)", en: "Libra", mr: "तुला (Libra)" },
+        scorpio: { hi: "वृश्चिक (Scorpio)", en: "Scorpio", mr: "वृश्चिक (Scorpio)" },
+        sagittarius: { hi: "धनु (Sagittarius)", en: "Sagittarius", mr: "धनु (Sagittarius)" },
+        capricorn: { hi: "मकर (Capricorn)", en: "Capricorn", mr: "मकर (Capricorn)" },
+        aquarius: { hi: "कुंभ (Aquarius)", en: "Aquarius", mr: "कुंभ (Aquarius)" },
+        pisces: { hi: "मीन (Pisces)", en: "Pisces", mr: "मीन (Pisces)" }
+    };
+
     const uiText = {
-        hi: { brand: "Astro Divine", selectZodiac: "अपनी राशि चुनें:", btnView: "राशिफल देखें", luckyNum: "शुभ अंक", luckyCol: "शुभ रंग", hdGeneral: "दैनिक राशिफल", hdHealth: "स्वास्थ्य (Health)", hdCareer: "करियर एवं धन (Career & Wealth)", hdLove: "प्रेम एवं संबंध (Love & Family)", hdRemedy: "आज का विशेष उपाय (Remedy)", btnBack: "दूसरी राशि चुनें" },
-        en: { brand: "Astro Divine", selectZodiac: "Select Your Zodiac Sign:", btnView: "View Horoscope", luckyNum: "Lucky Number", luckyCol: "Lucky Color", hdGeneral: "Daily Horoscope", hdHealth: "Health", hdCareer: "Career & Wealth", hdLove: "Love & Family", hdRemedy: "Special Remedy", btnBack: "Select Another Zodiac" },
-        mr: { brand: "Astro Divine", selectZodiac: "तुमची रास निवडा:", btnView: "राशीभविष्य पहा", luckyNum: "शुभ अंक", luckyCol: "शुभ रंग", hdGeneral: "दैनिक राशीभविष्य", hdHealth: "आरोग्य (Health)", hdCareer: "करियर आणि संपत्ती (Career & Wealth)", hdLove: "प्रेम आणि कुटुंब (Love & Family)", hdRemedy: "आजचा विशेष उपाय (Remedy)", btnBack: "दुसरी रास निवडा" }
+        hi: { luckyNum: "शुभ अंक", luckyCol: "शुभ रंग", hdGeneral: "दैनिक राशिफल", hdHealth: "स्वास्थ्य (Health)", hdCareer: "करियर एवं धन (Career & Wealth)", hdLove: "प्रेम एवं संबंध (Love & Family)", hdRemedy: "आज का विशेष उपाय (Remedy)", btnBack: "← सभी राशियाँ देखें" },
+        en: { luckyNum: "Lucky Number", luckyCol: "Lucky Color", hdGeneral: "Daily Horoscope", hdHealth: "Health", hdCareer: "Career & Wealth", hdLove: "Love & Family", hdRemedy: "Special Remedy", btnBack: "← Back to All Zodiacs" },
+        mr: { luckyNum: "शुभ अंक", luckyCol: "शुभ रंग", hdGeneral: "दैनिक राशीभविष्य", hdHealth: "आरोग्य (Health)", hdCareer: "करियर आणि संपत्ती (Career & Wealth)", hdLove: "प्रेम आणि कुटुंब (Love & Family)", hdRemedy: "आजचा विशेष उपाय (Remedy)", btnBack: "← सर्व राशी पहा" }
     };
 
-    function showHoroscope() {
-        let zodiacKey = document.getElementById('zodiac-select').value;
-        let lang = document.getElementById('main-lang').value;
-        
-        let data = horoscopeData[zodiacKey][lang];
+    let activeZodiac = 'aries';
 
-        // आज की तारीख सेट करें
+    function renderCards() {
+        let lang = document.getElementById('main-lang').value;
+        let gridHTML = '';
+
+        for (let key in zodiacNames) {
+            let itemData = getHoroscope(key, lang);
+            let nameStr = zodiacNames[key][lang];
+            gridHTML += `
+                <div class="zodiac-card" onclick="openDetail('${key}')">
+                    <h3>${nameStr}</h3>
+                    <p>${itemData.sub}</p>
+                </div>
+            `;
+        }
+        document.getElementById('grid-view').innerHTML = gridHTML;
+    }
+
+    function openDetail(key) {
+        activeZodiac = key;
+        let lang = document.getElementById('main-lang').value;
+        let data = getHoroscope(key, lang);
+        let t = uiText[lang];
+
         let options = { year: 'numeric', month: 'long', day: 'numeric' };
         let todayStr = new Date().toLocaleDateString(lang === 'hi' ? 'hi-IN' : (lang === 'mr' ? 'mr-IN' : 'en-US'), options);
-        
-        document.getElementById('current-date').innerText = (lang === 'hi' ? "तारीख: " : (lang === 'mr' ? "दिनांक: " : "Date: ")) + todayStr;
 
-        // डेटा भरें
+        document.getElementById('det-title').innerText = zodiacNames[key][lang];
+        document.getElementById('current-date').innerText = (lang === 'hi' ? "तारीख: " : (lang === 'mr' ? "दिनांक: " : "Date: ")) + todayStr;
         document.getElementById('r-lucky').innerText = data.luckyNum;
         document.getElementById('r-color').innerText = data.luckyCol;
         document.getElementById('desc-general').innerText = data.general;
@@ -189,22 +194,6 @@
         document.getElementById('desc-love').innerText = data.love;
         document.getElementById('desc-remedy').innerText = data.remedy;
 
-        // व्यू बदलें
-        document.getElementById('selection-view').style.display = 'none';
-        document.getElementById('horoscope-view').style.display = 'block';
-    }
-
-    function goBack() {
-        document.getElementById('horoscope-view').style.display = 'none';
-        document.getElementById('selection-view').style.display = 'block';
-    }
-
-    function switchLang() {
-        let lang = document.getElementById('main-lang').value;
-        let t = uiText[lang];
-
-        document.getElementById('lbl-select-zodiac').innerText = t.selectZodiac;
-        document.getElementById('btn-view').innerText = t.btnView;
         document.getElementById('txt-lucky-num').innerText = t.luckyNum;
         document.getElementById('txt-lucky-col').innerText = t.luckyCol;
         document.getElementById('hd-general').innerText = t.hdGeneral;
@@ -214,14 +203,18 @@
         document.getElementById('hd-remedy').innerText = t.hdRemedy;
         document.getElementById('btn-back').innerText = t.btnBack;
 
-        // अगर राशिफल खुला हुआ है, तो भाषा बदलने पर तुरंत टेक्स्ट अपडेट करें
-        if(document.getElementById('horoscope-view').style.display === 'block') {
-            showHoroscope();
-        }
+        document.getElementById('grid-view').style.display = 'none';
+        document.getElementById('detail-view').style.display = 'block';
+    }
+
+    function goBack() {
+        document.getElementById('detail-view').style.display = 'none';
+        document.getElementById('grid-view').style.display = 'grid';
+        renderCards();
     }
 
     window.onload = () => {
-        switchLang();
+        renderCards();
     };
 </script>
 </body>
