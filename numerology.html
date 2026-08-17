@@ -3,78 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Astro Divine - Numerology Analysis</title>
+    <title>Astro Divine - Numerology</title>
     <style>
-        :root {
-            --royal-blue: #0b192c;
-            --golden: #ffcc00;
-        }
+        :root { --royal-blue: #0b192c; --golden: #ffcc00; }
         body { background-color: #f4f7f6; font-family: sans-serif; margin: 0; padding: 20px; }
-        .container { max-width: 500px; margin: auto; background: var(--royal-blue); padding: 20px; border-radius: 15px; box-shadow: 0 8px 16px rgba(0,0,0,0.3); border: 2px solid var(--golden); }
-        .branding { text-align: center; color: var(--golden); margin-bottom: 20px; }
-        .branding h1 { margin: 0; font-size: 28px; }
-        .branding p { margin: 5px 0 0 0; color: #fff; font-size: 14px; }
-        
-        label { display: block; margin-top: 15px; color: var(--golden); font-size: 14px; }
-        input { width: 100%; padding: 12px; margin-top: 5px; border: none; border-radius: 5px; box-sizing: border-box; }
-        
-        button { width: 100%; padding: 14px; margin-top: 25px; background: var(--golden); border: none; border-radius: 5px; font-weight: bold; color: var(--royal-blue); cursor: pointer; font-size: 16px; }
-        
-        .result-box { color: #fff; margin-top: 20px; display: none; }
-        .data-card { background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 10px; margin-top: 10px; }
-        .info-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255, 204, 0, 0.2); }
+        .container { max-width: 500px; margin: auto; background: var(--royal-blue); padding: 20px; border-radius: 15px; border: 2px solid var(--golden); color: #fff; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        h2 { color: var(--golden); margin: 0; }
+        select { padding: 5px; background: var(--golden); border: none; border-radius: 4px; font-weight: bold; }
+        input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 5px; border: none; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: var(--golden); border: none; border-radius: 5px; font-weight: bold; cursor: pointer; color: var(--royal-blue); margin-top: 10px; }
+        .info-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #ffcc0055; font-size: 15px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="branding">
-        <h1>Astro Divine</h1>
-        <p>अंक ज्योतिष एवं भाग्य विश्लेषण</p>
+    <div class="header">
+        <h2 id="title">Astro Divine</h2>
+        <select id="lang-dropdown" onchange="updateUI()">
+            <option value="hi">हिंदी</option>
+            <option value="en">English</option>
+            <option value="mr">मराठी</option>
+        </select>
     </div>
 
+    <!-- इनपुट पेज -->
     <div id="form-view">
-        <label>पूरा नाम (Full Name)</label>
-        <input type="text" id="name" placeholder="अपना नाम लिखें">
-        <label>जन्म तिथि (DOB)</label>
+        <label id="lbl-name">पूरा नाम:</label>
+        <input type="text" id="name">
+        <label id="lbl-dob">जन्म तिथि:</label>
         <input type="date" id="dob">
-        <label>फोन नंबर (Phone Number)</label>
-        <input type="tel" id="phone" placeholder="अपना नंबर">
-        <button onclick="analyze()">विश्लेषण करें</button>
+        <label id="lbl-phone">फोन नंबर:</label>
+        <input type="tel" id="phone">
+        <button id="btn-submit" onclick="showReport()">विश्लेषण करें</button>
     </div>
 
-    <div id="report-view" class="result-box">
-        <div class="data-card">
-            <div class="info-row"><span>मूलांक:</span> <strong id="r-mool"></strong></div>
-            <div class="info-row"><span>भाग्यांक:</span> <strong id="r-bhag"></strong></div>
-            <div class="info-row"><span>शुभ अंक:</span> <strong id="r-lucky"></strong></div>
-            <div class="info-row"><span>आराध्य देव:</span> <strong id="r-god"></strong></div>
-        </div>
-        <button onclick="location.reload()">नया विश्लेषण</button>
+    <!-- रिपोर्ट पेज -->
+    <div id="report-view" style="display:none;">
+        <h3 id="res-title" style="text-align:center; color: var(--golden);">आपका विश्लेषण</h3>
+        <div class="info-row"><span id="txt-mool">मूलांक:</span> <strong id="r-mool"></strong></div>
+        <div class="info-row"><span id="txt-bhag">भाग्यांक:</span> <strong id="r-bhag"></strong></div>
+        <div class="info-row"><span id="txt-lucky">शुभ अंक:</span> <strong id="r-lucky"></strong></div>
+        <div class="info-row"><span id="txt-god">आराध्य देव:</span> <strong id="r-god"></strong></div>
+        <button onclick="reset()">नया विश्लेषण</button>
     </div>
 </div>
 
 <script>
+    const langData = {
+        hi: { title: "Astro Divine", name: "पूरा नाम:", dob: "जन्म तिथि:", phone: "फोन नंबर:", submit: "विश्लेषण करें", mool: "मूलांक:", bhag: "भाग्यांक:", lucky: "शुभ अंक:", god: "आराध्य देव:", res: "आपका विश्लेषण" },
+        en: { title: "Astro Divine", name: "Full Name:", dob: "DOB:", phone: "Phone:", submit: "Analyze", mool: "Psychic:", bhag: "Destiny:", lucky: "Lucky No:", god: "Deity:", res: "Your Analysis" },
+        mr: { title: "Astro Divine", name: "पूर्ण नाव:", dob: "जन्म तारीख:", phone: "फोन नंबर:", submit: "विश्लेषण पहा", mool: "मूलांक:", bhag: "भाग्यांक:", lucky: "शुभ अंक:", god: "आराध्य देव:", res: "तुमचे विश्लेषण" }
+    };
+
+    function reduce(n) { while(n > 9) n = n.toString().split('').reduce((a,b)=>+a + +b, 0); return n; }
+
+    function showReport() {
+        const name = document.getElementById('name').value;
+        const dob = document.getElementById('dob').value;
+        const phone = document.getElementById('phone').value;
+        localStorage.setItem('uName', name); localStorage.setItem('uDob', dob); localStorage.setItem('uPhone', phone);
+
+        let mool = reduce(new Date(dob).getDate());
+        let bhag = reduce(dob.replace(/-/g, '').split('').reduce((a,b)=>+a+ +b, 0));
+        
+        const data = {
+            1: { lucky: "1, 2, 4, 7", god: "सूर्य देव" }, 2: { lucky: "1, 2, 7", god: "भगवान शिव" },
+            3: { lucky: "3, 6, 9", god: "भगवान विष्णु" }, 4: { lucky: "1, 4, 7, 8", god: "गणेश जी" },
+            5: { lucky: "1, 5, 6", god: "माता दुर्गा" }, 6: { lucky: "3, 6, 9", god: "माता लक्ष्मी" },
+            7: { lucky: "1, 2, 4, 7", god: "भगवान विष्णु" }, 8: { lucky: "1, 4, 7, 8", god: "शनिदेव" },
+            9: { lucky: "3, 6, 9", god: "हनुमान जी" }
+        };
+
+        document.getElementById('r-mool').innerText = mool;
+        document.getElementById('r-bhag').innerText = bhag;
+        document.getElementById('r-lucky').innerText = data[mool].lucky;
+        document.getElementById('r-god').innerText = data[mool].god;
+        
+        document.getElementById('form-view').style.display = 'none';
+        document.getElementById('report-view').style.display = 'block';
+        updateUI();
+    }
+
+    function updateUI() {
+        let lang = document.getElementById('lang-dropdown').value;
+        let d = langData[lang];
+        document.getElementById('title').innerText = d.title;
+        document.getElementById('lbl-name').innerText = d.name;
+        document.getElementById('lbl-dob').innerText = d.dob;
+        document.getElementById('lbl-phone').innerText = d.phone;
+        document.getElementById('btn-submit').innerText = d.submit;
+        document.getElementById('res-title').innerText = d.res;
+        document.getElementById('txt-mool').innerText = d.mool;
+        document.getElementById('txt-bhag').innerText = d.bhag;
+        document.getElementById('txt-lucky').innerText = d.lucky;
+        document.getElementById('txt-god').innerText = d.god;
+    }
+
+    function reset() { location.reload(); }
+
     window.onload = () => {
         document.getElementById('name').value = localStorage.getItem('uName') || '';
         document.getElementById('dob').value = localStorage.getItem('uDob') || '';
         document.getElementById('phone').value = localStorage.getItem('uPhone') || '';
+        updateUI();
     };
-
-    function analyze() {
-        const name = document.getElementById('name').value;
-        const dob = document.getElementById('dob').value;
-        const phone = document.getElementById('phone').value;
-        
-        localStorage.setItem('uName', name);
-        localStorage.setItem('uDob', dob);
-        localStorage.setItem('uPhone', phone);
-        
-        // कैलकुलेशन लॉजिक...
-        alert("विश्लेषण तैयार है! (यहाँ आपका रॉयल ब्लू & गोल्डन रिपोर्ट कार्ड दिखेगा)");
-        document.getElementById('form-view').style.display = 'none';
-        document.getElementById('report-view').style.display = 'block';
-    }
 </script>
 </body>
 </html>
